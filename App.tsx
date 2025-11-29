@@ -24,14 +24,14 @@ const App: React.FC = () => {
   {
     id: 1,
     image: slide1,
-    title: "Pregledna nadzorna plošča",
-    desc: "Vsi vaši primeri in dokumenti na enem mestu."
+    title: "Pametni klepet",
+    desc: "Postavljajte vprašanja in prejmite takojšnje odgovore."
   },
   {
     id: 2,
     image: slide2,
-    title: "Pametni klepet",
-    desc: "Postavljajte vprašanja in prejmite takojšnje odgovore."
+    title: "Pregledna nadzorna plošča",
+    desc: "Vsi vaši primeri in dokumenti na enem mestu."
   },
   {
     id: 3,
