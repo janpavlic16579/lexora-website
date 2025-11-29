@@ -1,6 +1,10 @@
 
 import React, { useState, useEffect } from 'react';
 import { Menu, X, CheckCircle, Search, FileText, Globe, MessageSquare, GitMerge, ChevronRight, ChevronLeft, Database, Star } from 'lucide-react';
+import slide1 from "./assets/ss1.png";
+import slide2 from "./assets/ss2.png";
+import slide3 from "./assets/ss3.png";
+
 
 const App: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -16,26 +20,27 @@ const App: React.FC = () => {
   const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
 
   // Slideshow data
-  const slides = [
-    {
-      id: 1,
-      image: "https://placehold.co/1200x800/101010/333?text=Lexora+Dashboard",
-      title: "Pregledna nadzorna plošča",
-      desc: "Vsi vaši primeri in dokumenti na enem mestu."
-    },
-    {
-      id: 2,
-      image: "https://placehold.co/1200x800/101010/333?text=AI+Chat+Interface",
-      title: "Pametni klepet",
-      desc: "Postavljajte vprašanja in prejmite takojšnje odgovore."
-    },
-    {
-      id: 3,
-      image: "https://placehold.co/1200x800/101010/333?text=Legal+Analysis",
-      title: "Analiza dokumentov",
-      desc: "Samodejno zaznavanje tveganj v pogodbah."
-    }
-  ];
+ const slides = [
+  {
+    id: 1,
+    image: slide1,
+    title: "Pregledna nadzorna plošča",
+    desc: "Vsi vaši primeri in dokumenti na enem mestu."
+  },
+  {
+    id: 2,
+    image: slide2,
+    title: "Pametni klepet",
+    desc: "Postavljajte vprašanja in prejmite takojšnje odgovore."
+  },
+  {
+    id: 3,
+    image: slide3,
+    title: "Analiza dokumentov",
+    desc: "Samodejno zaznavanje tveganj v pogodbah."
+  }
+];
+
 
   const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % slides.length);
   const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
