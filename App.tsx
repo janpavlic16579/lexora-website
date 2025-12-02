@@ -64,7 +64,7 @@ const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
   setFormStatus('submitting');
   
-  const scriptURL = "https://script.google.com/macros/s/AKfycbx-4GD5HYa3PflZOaqRPPM4gRQ86qiAX9C_camdJTurk0MaDespX14CxVLlXrinKUPN/exec";
+  const scriptURL = "https://script.google.com/macros/s/AKfycbyr3_T8BD1Fd3veqk2rAeKwvYVdZAc9MGl3pbkzDmEO4w7nJwan-mrZl3JGtr_qKu93/exec";
   
   // Prepare form data for Google Apps Script (expects x-www-form-urlencoded)
   const body = new URLSearchParams(formData as any);
