@@ -644,7 +644,7 @@ const handleSubmit = async (e: React.FormEvent) => {
                     setFormData((prev) => ({ ...prev, company: e.target.value }))
                   }
                   className="w-full rounded-md bg-neutral-900 border border-neutral-700 px-4 py-3 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Lexora d.o.o."
+                  
                 />
             </div>
 
