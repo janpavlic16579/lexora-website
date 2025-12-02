@@ -45,52 +45,54 @@ const App: React.FC = () => {
 ];
 
 
-  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % slides.length);
-  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+ const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % slides.length);
+const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
 
-  // Auto advance slides
-  useEffect(() => {
-    const timer = setInterval(nextSlide, 5000);
-    return () => clearInterval(timer);
-  }, []);
+// Auto advance slides
+useEffect(() => {
+  const timer = setInterval(nextSlide, 5000);
+  return () => clearInterval(timer);
+}, []);
 
-  // Form Handlers
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
+// Form Handlers
+const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const { name, value } = e.target;
+  setFormData(prev => ({ ...prev, [name]: value }));
+};
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setFormStatus('submitting');
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setFormStatus('submitting');
+  
+  const scriptURL = "https://script.google.com/macros/s/AKfycbx-4GD5HYa3PflZOaqRPPM4gRQ86qiAX9C_camdJTurk0MaDespX14CxVLlXrinKUPN/exec";
+  
+  // Prepare form data for Google Apps Script (expects x-www-form-urlencoded)
+  const body = new URLSearchParams(formData as any);
+
+  try {
+    const res = await fetch(scriptURL, { method: "POST", body });
     
-    const scriptURL = "https://script.google.com/macros/s/AKfycbx-4GD5HYa3PflZOaqRPPM4gRQ86qiAX9C_camdJTurk0MaDespX14CxVLlXrinKUPN/exec";
-    // Prepare form data for Google Apps Script (expects x-www-form-urlencoded)
-    const body = new URLSearchParams(formData as any);
-
-    try {
-      const res = await fetch(scriptURL, { method: "POST", body });
-      
-      // Google Apps Script often returns 'opaque' type responses or CORS issues, 
-      // but the data is usually received. We treat opaque/ok as success.
-      if (res.type === 'opaque' || res.ok) {
-         setFormStatus('success');
-         setFormData({ name: '', email: '', phone: '', message: '' });
-      } else {
-         setFormStatus('error');
-      }
-    } catch (error) {
-       // Fallback for strict CORS blocks - try no-cors mode which sends data but cant read response
-       try {
-          await fetch(scriptURL, { method: "POST", body, mode: "no-cors" });
-          setFormStatus('success');
-          setFormData({ name: '', email: '', phone: '', message: '' });
-       } catch (innerError) {
-          console.error(innerError);
-          setFormStatus('error');
-       }
+    // Google Apps Script often returns 'opaque' type responses or CORS issues,
+    // but the data is usually received. We treat opaque/ok as success.
+    if (res.type === 'opaque' || res.ok) {
+       setFormStatus('success');
+       setFormData({ name: '', company: '', email: '', phone: '', message: '' });
+    } else {
+       setFormStatus('error');
     }
-  };
+  } catch (error) {
+     // Fallback for strict CORS blocks - try no-cors mode which sends data but cant read response
+     try {
+        await fetch(scriptURL, { method: "POST", body, mode: "no-cors" });
+        setFormStatus('success');
+        setFormData({ name: '', company: '', email: '', phone: '', message: '' });
+     } catch (innerError) {
+        console.error(innerError);
+        setFormStatus('error');
+     }
+  }
+};
+
 
   return (
     <div className="min-h-screen font-sans bg-neutral-950 text-white selection:bg-blue-500/30">
