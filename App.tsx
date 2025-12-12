@@ -555,7 +555,7 @@ const handleSubmit = async (e: React.FormEvent) => {
         </div>
       </section>
 
-      {/* DEMO SLIDESHOW */}
+      {/* DEMO SLIDESHOW REPLACED WITH VIDEO */}
       <section id="demo" className="bg-neutral-900 py-20 border-t border-white/5">
         <div className="mx-auto max-w-6xl px-6">
           <div className="mx-auto max-w-3xl text-center mb-12">
@@ -563,49 +563,15 @@ const handleSubmit = async (e: React.FormEvent) => {
             <p className="mt-3 text-neutral-400">Lexora v akciji.</p>
           </div>
 
-          <div className="relative rounded-2xl border border-white/10 bg-black shadow-[0_10px_60px_rgba(0,0,0,0.5)] overflow-hidden group aspect-[16/10] md:aspect-[16/9]">
-            
-            {slides.map((slide, index) => (
-              <div 
-                key={slide.id}
-                className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
-              >
-                <img 
-                  src={slide.image} 
-                  alt={slide.title} 
-                  className="w-full h-full object-cover opacity-80"
-                />
-                <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10 bg-gradient-to-t from-black via-black/80 to-transparent">
-                  <p className="text-white font-serif text-2xl mb-1">{slide.title}</p>
-                  <p className="text-neutral-400">{slide.desc}</p>
-                </div>
-              </div>
-            ))}
-
-            {/* Controls */}
-            <button 
-              onClick={prevSlide}
-              className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/10 backdrop-blur hover:bg-white/20 text-white flex items-center justify-center transition"
-            >
-              <ChevronLeft size={20} />
-            </button>
-            <button 
-              onClick={nextSlide}
-              className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/10 backdrop-blur hover:bg-white/20 text-white flex items-center justify-center transition"
-            >
-              <ChevronRight size={20} />
-            </button>
-
-            {/* Indicators */}
-            <div className="absolute top-4 right-4 z-20 flex gap-2">
-              {slides.map((_, idx) => (
-                <div 
-                  key={idx} 
-                  onClick={() => setCurrentSlide(idx)}
-                  className={`w-2 h-2 rounded-full cursor-pointer transition-all ${idx === currentSlide ? 'bg-white w-4' : 'bg-white/40 hover:bg-white'}`}
-                />
-              ))}
-            </div>
+          {/* Video Container */}
+          <div className="relative rounded-2xl border border-white/10 bg-black shadow-[0_10px_60px_rgba(0,0,0,0.5)] overflow-hidden w-full aspect-video">
+            <iframe 
+              className="absolute inset-0 w-full h-full"
+              src="https://www.youtube.com/embed/wbTpDGtHAs0" 
+              title="Lexora Demo"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+              allowFullScreen
+            ></iframe>
           </div>
         </div>
       </section>
