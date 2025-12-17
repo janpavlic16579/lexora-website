@@ -452,9 +452,7 @@ const handleSubmit = async (e: React.FormEvent) => {
                 <p className="text-neutral-400 mt-2 leading-relaxed">
                   Neposreden dostop do baze slovenskih sodb z uporabo naravnega jezika.
                 </p>
-                <div className="mt-4">
-                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-500/20 text-blue-300 border border-blue-500/20 uppercase tracking-wide">Kmalu</span>
-                </div>
+                
 
                 {/* ANIMATION CONTAINER: SCROLLING DB */}
                 <div className="mt-8 rounded-2xl bg-black/40 border border-neutral-800 p-4 relative overflow-hidden h-48 flex flex-col justify-center">
@@ -506,10 +504,9 @@ const handleSubmit = async (e: React.FormEvent) => {
                   <p className="text-neutral-400 mt-2 leading-relaxed">
                     Avtomatizirajte kompleksne procese z zaporedjem AI nalog. Od iskanja do priprave končnega dokumenta.
                   </p>
-
-
-
-                  
+                    <div className="mt-4">
+                       <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-500/20 text-blue-300 border border-blue-500/20 uppercase tracking-wide">Kmalu</span>
+                    </div>
                 </div>
 
                 {/* ANIMATION CONTAINER: PIPELINE */}
