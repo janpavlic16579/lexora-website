@@ -565,7 +565,7 @@ const handleSubmit = async (e: React.FormEvent) => {
           <div className="relative rounded-2xl border border-white/10 bg-black shadow-[0_10px_60px_rgba(0,0,0,0.5)] overflow-hidden w-full aspect-video">
             <iframe 
               className="absolute inset-0 w-full h-full"
-              src="https://www.youtube.com/embed/wbTpDGtHAs0" 
+              src="https://youtu.be/LzPo5sKb_7c" 
               title="Lexora Demo"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
               allowFullScreen
