@@ -5,7 +5,6 @@ import slide1 from "./assets/ss1.png";
 import slide2 from "./assets/ss2.png";
 import slide3 from "./assets/ss3.png";
 
-
 const App: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -565,7 +564,7 @@ const handleSubmit = async (e: React.FormEvent) => {
           <div className="relative rounded-2xl border border-white/10 bg-black shadow-[0_10px_60px_rgba(0,0,0,0.5)] overflow-hidden w-full aspect-video">
             <iframe 
               className="absolute inset-0 w-full h-full"
-              src="https://www.youtube.com/watch?v=LzPo5sKb_7c" 
+              src="https://www.youtube.com/embed/LzPo5sKb_7c"              
               title="Lexora Demo"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
               allowFullScreen
