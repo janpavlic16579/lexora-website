@@ -107,9 +107,9 @@ const handleSubmit = async (e: React.FormEvent) => {
             <a className="hover:text-white transition-colors" href="#contact">Povpraševanje</a>
           </nav>
 
-          <a href="#contact" className="hidden md:inline-flex items-center h-9 px-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition text-sm font-medium text-blue-100 hover:text-white">
-            Kontakt
-          </a>
+         <a href="https://app.lexora.si/" className="btn-demo hidden md:inline-flex items-center h-9 px-4 rounded-lg shadow-[0_0_20px_rgba(37,99,235,0.3)] text-white transition hover:-translate-y-0.5 text-sm font-semibold">
+            Preizkusi Lexoro
+        </a>
 
           <button 
             onClick={() => setIsMenuOpen(!isMenuOpen)}
