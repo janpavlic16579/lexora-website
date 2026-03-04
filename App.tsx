@@ -162,12 +162,12 @@ const handleSubmit = async (e: React.FormEvent) => {
             </p>
 
             <div className="flex flex-wrap items-center gap-4 mb-10">
-              <a href="#contact" className="btn-demo group relative overflow-hidden shadow-[0_0_30px_rgba(37,99,235,0.2)] text-white px-6 py-3.5 rounded-lg font-semibold transition hover:-translate-y-0.5">
-                <span className="relative z-10">Zanima me!</span>
+              <a href="https://app.lexora.si/" className="btn-demo group relative overflow-hidden shadow-[0_0_30px_rgba(37,99,235,0.2)] text-white px-6 py-3.5 rounded-lg font-semibold transition hover:-translate-y-0.5">
+                <span className="relative z-10">Preizkusi brezplačno</span>
               </a>
               <a href="#demo" className="px-6 py-3.5 rounded-lg text-sm font-medium text-neutral-300 hover:text-white border border-white/10 hover:border-white/20 hover:bg-white/5 transition-all flex items-center gap-2">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                Oglej si Platformo
+                Poglej kako deluje
               </a>
             </div>
 
