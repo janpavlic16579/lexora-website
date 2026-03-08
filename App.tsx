@@ -282,9 +282,37 @@ const App: React.FC = () => {
     { key: 'kazensko', id: 'cKIL157hnRs', title: 'Kazensko pravo', duration: '2 min' },
     { key: 'nepremicninsko', id: 'RMiwvjggF70', title: 'Nepremičninsko pravo', duration: '2 min' },
   ];
-  const [activeVideo, setActiveVideo] = useState(videos[0]);
+  const [activeVideo, setActiveVideo] = useState(videos[1]);
   const [activeWorkspaceTab, setActiveWorkspaceTab] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const demoSectionRef = useRef<HTMLElement>(null);
+  const [hasScrolledToDefault, setHasScrolledToDefault] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !hasScrolledToDefault) {
+          // Scroll to the default selected video (Gospodarsko pravo) when the section comes into view
+          const timer = setTimeout(() => {
+            scrollToVideo(1);
+            setHasScrolledToDefault(true);
+          }, 100);
+          return () => clearTimeout(timer);
+        }
+      },
+      { threshold: 0.1 } // Trigger when 10% of the section is visible
+    );
+
+    if (demoSectionRef.current) {
+      observer.observe(demoSectionRef.current);
+    }
+
+    return () => {
+      if (demoSectionRef.current) {
+        observer.unobserve(demoSectionRef.current);
+      }
+    };
+  }, [hasScrolledToDefault]);
 
   const processSteps = [
     {
@@ -1444,7 +1472,7 @@ const App: React.FC = () => {
       </section>
 
       {/* DEMO VIDEO SLIDESHOW */}
-      <section id="demo" className="bg-neutral-900 py-20 border-t border-white/5 overflow-hidden">
+      <section id="demo" ref={demoSectionRef} className="bg-neutral-900 py-20 border-t border-white/5 overflow-hidden">
         <div className="mx-auto max-w-5xl px-6 lg:px-8 mb-12">
           <div className="mx-auto max-w-2xl text-center mb-10">
             <h2 className="font-serif text-3xl md:text-4xl text-white">Predogled Platforme</h2>
