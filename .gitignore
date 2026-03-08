@@ -12,6 +12,13 @@ dist
 dist-ssr
 *.local
 
+# Generated and temporary files
+assets/index-*.js
+prompt-*.json
+*.mov
+*.mp4
+migrated_prompt_history/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

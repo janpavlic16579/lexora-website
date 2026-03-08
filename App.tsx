@@ -1,115 +1,408 @@
 
-import React, { useState, useEffect } from 'react';
-import { Menu, X, CheckCircle, Search, FileText, Globe, MessageSquare, GitMerge, ChevronRight, ChevronLeft, Database, Star } from 'lucide-react';
-import slide1 from "./assets/ss1.png";
-import slide2 from "./assets/ss2.png";
-import slide3 from "./assets/ss3.png";
+import React, { useState, useRef, useEffect } from 'react';
+import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
+import { Menu, X, CheckCircle, Search, FileText, Globe, MessageSquare, GitMerge, Database, Star, ArrowRight, Sparkles, Zap, Shield, Cpu, Check, Minus, Lock, File, Briefcase, Folder, History, Settings, MoreHorizontal, ChevronDown, ChevronUp, PanelLeft, ArrowDown, Paperclip, Mic, ArrowUp, Calendar, AlertCircle } from 'lucide-react';
+
+const StepAnimation = ({ step }: { step: any }) => {
+  switch (step.id) {
+    case "01": // Razumevanje dokumentov (Scanning/Analysis)
+      return (
+        <div className="relative w-full h-full flex items-center justify-center">
+           {/* Document */}
+           <div className="relative bg-neutral-900 border border-neutral-700 p-6 rounded-xl shadow-2xl w-48 h-64 flex flex-col gap-4 overflow-hidden">
+              <div className="flex items-center justify-between mb-2">
+                <FileText size={24} className="text-blue-400" />
+                <div className="w-2 h-2 rounded-full bg-blue-500" />
+              </div>
+              {/* Text lines */}
+              <div className="flex flex-col gap-3 opacity-50">
+                <div className="h-2 bg-neutral-600 rounded w-3/4" />
+                <div className="h-2 bg-neutral-600 rounded w-full" />
+                <div className="h-2 bg-neutral-600 rounded w-5/6" />
+                <div className="h-2 bg-neutral-600 rounded w-full" />
+                <div className="h-2 bg-neutral-600 rounded w-2/3" />
+                <div className="h-2 bg-neutral-600 rounded w-4/5" />
+              </div>
+              
+              {/* Scanner Line */}
+              <motion.div 
+                animate={{ top: ["-10%", "110%"] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                className="absolute left-0 right-0 h-[2px] bg-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.8)] z-10"
+              />
+              
+              {/* Highlighted section */}
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: [0, 1, 1, 0] }}
+                transition={{ duration: 3, repeat: Infinity, times: [0, 0.4, 0.6, 1] }}
+                className="absolute top-20 left-4 right-4 h-8 bg-blue-500/20 rounded"
+              />
+           </div>
+           
+           {/* Popups */}
+           <motion.div 
+             animate={{ scale: [0, 1, 1, 0], opacity: [0, 1, 1, 0], y: [0, -20, -20, 0] }}
+             transition={{ duration: 3, repeat: Infinity, delay: 1.5, times: [0, 0.1, 0.8, 1] }}
+             className="absolute top-1/3 -right-4 bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-bold px-3 py-1.5 rounded-lg backdrop-blur-md shadow-lg flex items-center gap-2"
+           >
+             <AlertCircle size={12} />
+             Tveganje
+           </motion.div>
+           
+           <motion.div 
+             animate={{ scale: [0, 1, 1, 0], opacity: [0, 1, 1, 0], y: [0, -20, -20, 0] }}
+             transition={{ duration: 3, repeat: Infinity, delay: 0.5, times: [0, 0.1, 0.8, 1] }}
+             className="absolute bottom-1/3 -left-4 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold px-3 py-1.5 rounded-lg backdrop-blur-md shadow-lg flex items-center gap-2"
+           >
+             <CheckCircle size={12} />
+             Dejstvo
+           </motion.div>
+        </div>
+      );
+    case "02": // Raziskovanje prava (Search/Connect)
+      return (
+        <div className="relative w-full h-full flex items-center justify-center">
+           {/* Central Search */}
+           <motion.div 
+             animate={{ scale: [1, 1.1, 1] }}
+             transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+             className="relative z-10 bg-neutral-900 p-6 rounded-full border border-emerald-500/30 shadow-[0_0_40px_rgba(16,185,129,0.15)]"
+           >
+             <Search size={48} className="text-emerald-400" />
+           </motion.div>
+           
+           {/* Orbiting items */}
+           {[0, 1, 2].map((i) => (
+             <motion.div
+               key={i}
+               animate={{ rotate: 360 }}
+               transition={{ duration: 10, repeat: Infinity, ease: "linear", delay: i * -3.3 }}
+               className="absolute inset-0"
+             >
+               <div className="absolute top-12 left-1/2 -translate-x-1/2">
+                 <motion.div 
+                   animate={{ rotate: -360 }}
+                   transition={{ duration: 10, repeat: Infinity, ease: "linear", delay: i * -3.3 }}
+                   className="bg-neutral-800 p-3 rounded-xl border border-white/10 shadow-lg"
+                 >
+                   {i === 0 ? <Globe size={20} className="text-blue-400" /> : 
+                    i === 1 ? <Shield size={20} className="text-purple-400" /> : 
+                    <FileText size={20} className="text-orange-400" />}
+                 </motion.div>
+               </div>
+             </motion.div>
+           ))}
+           
+           {/* Orbit circles */}
+           <div className="absolute inset-12 border border-white/5 rounded-full" />
+           <div className="absolute inset-24 border border-white/5 rounded-full border-dashed opacity-50" />
+        </div>
+      );
+    case "03": // Celovita analiza (Connecting dots)
+      return (
+        <div className="relative w-full h-full flex items-center justify-center">
+           <motion.div 
+             animate={{ boxShadow: ["0 0 0px rgba(168,85,247,0)", "0 0 40px rgba(168,85,247,0.2)", "0 0 0px rgba(168,85,247,0)"] }}
+             transition={{ duration: 2, repeat: Infinity }}
+             className="bg-neutral-900 p-6 rounded-2xl border border-purple-500/30 relative z-10"
+           >
+             <Cpu size={48} className="text-purple-400" />
+           </motion.div>
+           
+           {/* Connecting lines */}
+           {[0, 60, 120, 180, 240, 300].map((deg, i) => (
+             <div key={i} className="absolute inset-0 flex items-center justify-center" style={{ transform: `rotate(${deg}deg)` }}>
+               <motion.div 
+                 initial={{ width: 0, opacity: 0 }}
+                 animate={{ width: ["0%", "40%", "40%", "0%"], opacity: [0, 1, 1, 0] }}
+                 transition={{ duration: 3, delay: i * 0.2, repeat: Infinity }}
+                 className="h-[2px] bg-gradient-to-r from-purple-500/50 to-transparent origin-left absolute left-1/2"
+               />
+               <motion.div 
+                 initial={{ scale: 0 }}
+                 animate={{ scale: [0, 1, 1, 0] }}
+                 transition={{ duration: 3, delay: 0.5 + i * 0.2, repeat: Infinity }}
+                 className="absolute right-[10%] w-3 h-3 bg-purple-500 rounded-full shadow-[0_0_10px_rgba(168,85,247,0.8)]"
+               />
+             </div>
+           ))}
+        </div>
+      );
+    case "04": // Priprava dokumentov (Drafting/Typing)
+      return (
+        <div className="relative w-full h-full flex items-center justify-center">
+           <div className="relative">
+             {/* Background doc */}
+             <motion.div 
+               animate={{ rotate: [3, 6, 3] }}
+               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+               className="absolute inset-0 bg-neutral-800 rounded-xl border border-white/5 transform translate-x-2 -translate-y-2"
+             />
+             
+             {/* Main doc */}
+             <div className="relative bg-neutral-900 border border-orange-500/30 p-6 rounded-xl shadow-2xl w-56 h-72 flex flex-col gap-4">
+               <div className="flex items-center gap-3 mb-2 border-b border-white/5 pb-4">
+                 <div className="w-10 h-10 rounded-lg bg-orange-500/20 flex items-center justify-center">
+                   <GitMerge size={20} className="text-orange-400" />
+                 </div>
+                 <div className="flex flex-col gap-1">
+                   <div className="h-2 bg-neutral-600 rounded w-20" />
+                   <div className="h-1.5 bg-neutral-700 rounded w-12" />
+                 </div>
+               </div>
+               
+               <div className="space-y-3">
+                 {[1, 2, 3, 4, 5, 6].map((i) => (
+                   <motion.div 
+                     key={i}
+                     initial={{ width: 0, opacity: 0 }}
+                     animate={{ width: [`0%`, `${Math.random() * 30 + 60}%`], opacity: [0, 1] }}
+                     transition={{ duration: 0.5, delay: i * 0.3, repeat: Infinity, repeatDelay: 4 }}
+                     className="h-2 bg-neutral-700 rounded"
+                   />
+                 ))}
+               </div>
+               
+               <motion.div 
+                 animate={{ opacity: [0, 1, 0] }}
+                 transition={{ duration: 0.8, repeat: Infinity }}
+                 className="w-1 h-4 bg-orange-400 mt-2"
+               />
+               
+               <motion.div 
+                 initial={{ opacity: 0, y: 10 }}
+                 animate={{ opacity: [0, 1, 1, 0], y: [10, 0, 0, -10] }}
+                 transition={{ duration: 2, delay: 2, repeat: Infinity, repeatDelay: 2 }}
+                 className="absolute bottom-4 right-4 bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg"
+               >
+                 Generirano
+               </motion.div>
+             </div>
+           </div>
+        </div>
+      );
+    case "05": // Personalizirani agenti (Custom Process/Agent)
+      return (
+        <div className="relative w-full h-full flex items-center justify-center">
+           {/* Connection Line */}
+           <div className="absolute top-1/2 left-[20%] right-[20%] h-0.5 bg-neutral-800">
+             <motion.div 
+               animate={{ left: ["0%", "100%"], opacity: [0, 1, 0] }}
+               transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+               className="absolute top-0 h-full w-1/3 bg-gradient-to-r from-transparent via-pink-500 to-transparent"
+             />
+           </div>
+
+           {/* Step 1: Your Process (Rules) */}
+           <motion.div 
+             className="absolute left-[15%] bg-neutral-900 p-4 rounded-xl border border-neutral-700 shadow-xl flex flex-col gap-2 z-10"
+             animate={{ y: [0, -5, 0] }}
+             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+           >
+             <div className="flex items-center gap-2 border-b border-white/5 pb-2 mb-1">
+               <Settings size={14} className="text-neutral-400" />
+               <span className="text-[10px] font-bold text-neutral-500 uppercase tracking-wider">Vaš proces</span>
+             </div>
+             {[1, 2, 3].map((i) => (
+               <div key={i} className="flex items-center gap-2">
+                 <motion.div 
+                   initial={{ backgroundColor: "#262626" }}
+                   animate={{ backgroundColor: ["#262626", "#ec4899", "#262626"] }}
+                   transition={{ duration: 2, delay: i * 0.5, repeat: Infinity, repeatDelay: 2 }}
+                   className="w-2 h-2 rounded-full"
+                 />
+                 <div className="h-1.5 bg-neutral-700 rounded w-12" />
+               </div>
+             ))}
+           </motion.div>
+
+           {/* Step 2: The Agent (Processing) */}
+           <div className="relative z-20">
+             <motion.div 
+               animate={{ scale: [1, 1.1, 1], boxShadow: ["0 0 0px rgba(236,72,153,0)", "0 0 30px rgba(236,72,153,0.4)", "0 0 0px rgba(236,72,153,0)"] }}
+               transition={{ duration: 2, repeat: Infinity }}
+               className="bg-neutral-900 p-5 rounded-2xl border border-pink-500 shadow-2xl"
+             >
+               <Sparkles size={32} className="text-pink-400" />
+             </motion.div>
+             {/* Orbiting particles */}
+             <motion.div 
+               animate={{ rotate: 360 }}
+               transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+               className="absolute inset-[-10px] border border-pink-500/20 rounded-full border-dashed"
+             />
+           </div>
+
+           {/* Step 3: Result (Execution) */}
+           <motion.div 
+             className="absolute right-[15%] bg-neutral-900 p-4 rounded-xl border border-neutral-700 shadow-xl flex flex-col gap-2 z-10"
+             animate={{ y: [0, 5, 0] }}
+             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+           >
+             <div className="flex items-center gap-2 border-b border-white/5 pb-2 mb-1">
+               <FileText size={14} className="text-neutral-400" />
+               <span className="text-[10px] font-bold text-neutral-500 uppercase tracking-wider">Rezultat</span>
+             </div>
+             <div className="space-y-2">
+               <div className="h-1.5 bg-neutral-600 rounded w-16" />
+               <div className="h-1.5 bg-neutral-700 rounded w-12" />
+               <div className="h-1.5 bg-neutral-700 rounded w-14" />
+             </div>
+             <motion.div 
+               initial={{ scale: 0 }}
+               animate={{ scale: [0, 1, 1, 0] }}
+               transition={{ duration: 2, delay: 1.5, repeat: Infinity, repeatDelay: 2 }}
+               className="absolute -top-2 -right-2 bg-emerald-500 text-white p-1 rounded-full shadow-lg"
+             >
+               <Check size={12} />
+             </motion.div>
+           </motion.div>
+        </div>
+      );
+    default:
+      return null;
+  }
+};
 
 const App: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
   
+  // Video Gallery State
+  const videos = [
+    { key: 'civilno', id: 'LzPo5sKb_7c', title: 'Civilno pravo', duration: '2 min' },
+    { key: 'gospodarsko', id: 'KLJb0YxLeR0', title: 'Gospodarsko pravo', duration: '2 min' },
+    { key: 'delovno', id: 'LzPo5sKb_7c', title: 'Delovno pravo', duration: '2 min' },
+    { key: 'kazensko', id: 'cKIL157hnRs', title: 'Kazensko pravo', duration: '2 min' },
+    { key: 'nepremicninsko', id: 'RMiwvjggF70', title: 'Nepremičninsko pravo', duration: '2 min' },
+  ];
+  const [activeVideo, setActiveVideo] = useState(videos[0]);
+  const [activeWorkspaceTab, setActiveWorkspaceTab] = useState(0);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-    const [formData, setFormData] = useState({
-      name: "",
-      company: "",      // NOVO
-      email: "",
-      phone: "",
-      message: "",
-    });
-
-  
-  const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
-
-  // Slideshow data
- const slides = [
-  {
-    id: 1,
-    image: slide1,
-    title: "Pametni klepet",
-    desc: "Postavljajte vprašanja in prejmite takojšnje odgovore."
-  },
-  {
-    id: 2,
-    image: slide2,
-    title: "Pregledna nadzorna plošča",
-    desc: "Vsi vaši primeri in dokumenti na enem mestu."
-  },
-  {
-    id: 3,
-    image: slide3,
-    title: "Analiza dokumentov",
-    desc: "Samodejno zaznavanje tveganj v pogodbah."
-  }
-];
-
-
- const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % slides.length);
-const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
-
-// Auto advance slides
-useEffect(() => {
-  const timer = setInterval(nextSlide, 5000);
-  return () => clearInterval(timer);
-}, []);
-
-// Form Handlers
-const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-  const { name, value } = e.target;
-  setFormData(prev => ({ ...prev, [name]: value }));
-};
-
-const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  setFormStatus('submitting');
-  
-  const scriptURL = "https://script.google.com/macros/s/AKfycbyr3_T8BD1Fd3veqk2rAeKwvYVdZAc9MGl3pbkzDmEO4w7nJwan-mrZl3JGtr_qKu93/exec";
-  
-  // Prepare form data for Google Apps Script (expects x-www-form-urlencoded)
-  const body = new URLSearchParams(formData as any);
-
-  try {
-    const res = await fetch(scriptURL, { method: "POST", body });
-    
-    // Google Apps Script often returns 'opaque' type responses or CORS issues,
-    // but the data is usually received. We treat opaque/ok as success.
-    if (res.type === 'opaque' || res.ok) {
-       setFormStatus('success');
-       setFormData({ name: '', company: '', email: '', phone: '', message: '' });
-    } else {
-       setFormStatus('error');
+  const processSteps = [
+    {
+      id: "01",
+      title: "Razumevanje dokumentov",
+      description: "Naložite pogodbo, sodbo ali celoten spis. Lexora v nekaj sekundah izpostavi ključna dejstva, pomembne določbe in pravna tveganja. Namesto ročnega pregledovanja več sto strani dokumentacije dobite strukturiran pregled spisa v nekaj sekundah.",
+      details: [
+        "Povzame ključna dejstva in pravne določbe",
+        "Izpostavi pomembne člene in klavzule",
+        "Opozori na morebitna pravna tveganja",
+        "Primerja več dokumentov in poišče neskladja"
+      ],
+      icon: <FileText className="text-blue-400" />,
+      color: "from-blue-600 to-cyan-500",
+      checkColor: "text-blue-500",
+      checkBg: "bg-blue-500/10"
+    },
+    {
+      id: "02",
+      title: "Raziskovanje prava",
+      description: "Lexora poveže dokumente z zakonodajo in sodno prakso ter pomaga pri celoviti analizi zadeve.",
+      details: [
+        "Relevantni členi zakonodaje (PISRS)",
+        "Sodna praksa slovenskih sodišč (sodnapraksa.si)",
+        "Evropska zakonodaja in sodna praksa (EUR-LEX)",
+        "Neposredne reference na uporabljene pravne vire"
+      ],
+      icon: <Search className="text-emerald-400" />,
+      color: "from-emerald-600 to-teal-500",
+      checkColor: "text-emerald-500",
+      checkBg: "bg-emerald-500/10"
+    },
+    {
+      id: "03",
+      title: "Celovita analiza zadeve",
+      description: "Ker so v Lexori zbrani tako dokumenti kot pravni viri, lahko sistem pomaga tudi pri celoviti analizi zadeve.",
+      details: [
+        "Poveže dejstva primera z zakonodajo",
+        "Izpostavi ključna pravna vprašanja",
+        "Pomaga strukturirati pravno argumentacijo",
+        "Omogoča jasen pregled nad zadevo"
+      ],
+      icon: <Cpu className="text-purple-400" />,
+      color: "from-purple-600 to-indigo-500",
+      checkColor: "text-purple-500",
+      checkBg: "bg-purple-500/10"
+    },
+    {
+      id: "04",
+      title: "Hitrejša priprava pravnih dokumentov",
+      description: "Ko je pravni okvir zadeve jasen, Lexora pomaga pripraviti osnutke dokumentov na podlagi dejstev in dokumentov v spisu.",
+      details: [
+        "Osnutki dopisov",
+        "Strukturiranje tožb in odgovorov",
+        "Priprava pravnih mnenj",
+        "Upoštevanje dokumentov v spisu"
+      ],
+      icon: <GitMerge className="text-orange-400" />,
+      color: "from-orange-600 to-amber-500",
+      checkColor: "text-orange-500",
+      checkBg: "bg-orange-500/10"
+    },
+    {
+      id: "05",
+      title: "Personalizirani pravni agenti",
+      badge: "Kmalu",
+      description: "Naučite Lexoro, kako vaša pisarna rešuje določeno pravno nalogo. AI agent lahko nato ta postopek samostojno izvede od začetka do konca.",
+      details: [
+        "Analiza pogodb po kriterijih vaše pisarne",
+        "Preverjanje skladnosti dokumentov",
+        "Priprava strukturiranih pravnih analiz",
+        "Priprava dokumentov po standardih vaše pisarne"
+      ],
+      icon: <Sparkles className="text-pink-400" />,
+      color: "from-pink-600 to-rose-500",
+      checkColor: "text-pink-500",
+      checkBg: "bg-pink-500/10"
     }
-  } catch (error) {
-     // Fallback for strict CORS blocks - try no-cors mode which sends data but cant read response
-     try {
-        await fetch(scriptURL, { method: "POST", body, mode: "no-cors" });
-        setFormStatus('success');
-        setFormData({ name: '', company: '', email: '', phone: '', message: '' });
-     } catch (innerError) {
-        console.error(innerError);
-        setFormStatus('error');
-     }
-  }
-};
+  ];
 
-
+  const scrollToVideo = (index: number) => {
+    if (scrollContainerRef.current) {
+      const container = scrollContainerRef.current;
+      const targetElement = container.children[index] as HTMLElement;
+      if (targetElement) {
+        targetElement.scrollIntoView({
+          behavior: 'smooth',
+          block: 'nearest',
+          inline: 'center'
+        });
+      }
+      setActiveVideo(videos[index]);
+    }
+  };
+  
   return (
     <div className="min-h-screen font-sans bg-neutral-950 text-white selection:bg-blue-500/30">
+      {/* Scroll Progress Bar */}
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-1 bg-blue-600 z-[100] origin-left"
+        style={{ scaleX }}
+      />
       
       {/* HEADER */}
       <header className="fixed top-0 inset-x-0 z-50 bg-neutral-950/80 backdrop-blur-md border-b border-white/10">
-        <div className="mx-auto max-w-7xl px-4 lg:px-6 h-16 flex items-center justify-between">
+        <div className="mx-auto max-w-5xl px-6 lg:px-8 h-16 flex items-center justify-between">
           <a className="font-serif text-2xl tracking-tight text-white hover:text-blue-100 transition" href="#">Lexora</a>
 
           <nav className="hidden md:flex items-center gap-8 text-sm text-neutral-300">
-            <a className="hover:text-white transition-colors" href="#showcase">Funkcije</a>
             <a className="hover:text-white transition-colors" href="#demo">Predogled</a>
-            <a className="hover:text-white transition-colors" href="#contact">Povpraševanje</a>
+            <a className="hover:text-white transition-colors" href="https://onboarding.lexora.si/" target="_blank" rel="noopener noreferrer">Kako začeti</a>
+            <a className="hover:text-white transition-colors" href="#security">Varnost</a>
+            <a className="hover:text-white transition-colors" href="https://blog.lexora.si/" target="_blank" rel="noopener noreferrer">Blog</a>
           </nav>
 
-         <a href="https://app.lexora.si/" className="btn-demo hidden md:inline-flex items-center h-9 px-4 rounded-lg shadow-[0_0_20px_rgba(37,99,235,0.3)] text-white transition hover:-translate-y-0.5 text-sm font-semibold">
+          <a href="https://app.lexora.si/" className="btn-demo hidden md:inline-flex items-center h-9 px-4 rounded-lg shadow-[0_0_20px_rgba(37,99,235,0.3)] text-white transition hover:-translate-y-0.5 text-sm font-semibold">
             Preizkusi Lexoro
-        </a>
+          </a>
 
           <button 
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -123,564 +416,1193 @@ const handleSubmit = async (e: React.FormEvent) => {
         {/* Mobile Menu */}
         {isMenuOpen && (
           <div className="border-t border-white/10 bg-neutral-950/90 backdrop-blur md:hidden">
-            <nav className="mx-auto max-w-7xl px-4 py-4 flex flex-col gap-4 text-base text-neutral-200">
-              <a href="#showcase" onClick={() => setIsMenuOpen(false)}>Funkcije</a>
+            <nav className="mx-auto max-w-5xl px-6 py-4 flex flex-col gap-4 text-base text-neutral-200">
               <a href="#demo" onClick={() => setIsMenuOpen(false)}>Predogled</a>
-              <a href="#contact" onClick={() => setIsMenuOpen(false)}>Povpraševanje</a>
+              <a href="https://onboarding.lexora.si/" target="_blank" rel="noopener noreferrer" onClick={() => setIsMenuOpen(false)}>Kako začeti</a>
+              <a href="#security" onClick={() => setIsMenuOpen(false)}>Varnost</a>
+              <a href="https://blog.lexora.si/" target="_blank" rel="noopener noreferrer" onClick={() => setIsMenuOpen(false)}>Blog</a>
             </nav>
           </div>
         )}
       </header>
 
-      {/* HERO SECTION - UNCHANGED / RESTORED */}
-      <section className="relative pt-24 pb-12 lg:pt-32 lg:pb-24 overflow-hidden min-h-[90vh] flex items-center">
-        {/* Background Effects */}
-        <div className="absolute inset-0 z-0 pointer-events-none">
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:3rem_3rem] [mask-image:radial-gradient(ellipse_70%_70%_at_50%_40%,#000_60%,transparent_100%)]"></div>
-          <div className="absolute -top-24 -left-24 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[100px]"></div>
-          <div className="absolute top-1/2 right-0 w-[600px] h-[600px] bg-blue-800/5 rounded-full blur-[120px]"></div>
+      {/* HERO SECTION - REDESIGNED */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#030303] pt-32 pb-32 selection:bg-blue-500/30">
+        
+        {/* Dynamic Background */}
+        <div className="absolute inset-0 pointer-events-none">
+          {/* Grid Pattern */}
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
+          
+          {/* Main Spotlight */}
+          <div className="absolute top-[-20%] left-1/2 -translate-x-1/2 w-[60vw] h-[60vh] bg-blue-600/20 rounded-full blur-[120px] opacity-50 mix-blend-screen animate-pulse-slow"></div>
+          
+          {/* Secondary Glows */}
+          <div className="absolute top-[20%] left-[10%] w-[30vw] h-[30vh] bg-purple-500/10 rounded-full blur-[100px] opacity-30"></div>
+          <div className="absolute bottom-[10%] right-[10%] w-[30vw] h-[30vh] bg-emerald-500/10 rounded-full blur-[100px] opacity-20"></div>
+          
+          {/* Noise Texture */}
+          <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 mix-blend-overlay"></div>
         </div>
 
-        <div className="relative z-10 mx-auto max-w-7xl px-6 grid lg:grid-cols-2 gap-12 items-center">
-          {/* LEFT: CONTENT */}
-          <div className="text-left animate-fade-in-up">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 mb-6 rounded-full border border-blue-500/30 bg-blue-900/10 backdrop-blur-sm">
-              <span className="flex h-2 w-2 relative">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+        <div className="relative z-10 max-w-5xl mx-auto px-6 text-center flex flex-col items-center">
+          
+          {/* Badge */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-xl mb-8 hover:bg-white/10 transition-all cursor-default ring-1 ring-white/5 group hover:scale-105 hover:shadow-[0_0_20px_rgba(59,130,246,0.3)]"
+          >
+            <span className="flex h-2 w-2 relative">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+            </span>
+            <span className="text-xs font-medium text-blue-100/90 tracking-wide uppercase">AI digitalni sodelavec</span>
+          </motion.div>
+
+          {/* Headline */}
+          <motion.h1 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
+            className="font-serif text-5xl sm:text-6xl md:text-7xl tracking-tight mb-8 text-white leading-[1.1] relative z-10"
+          >
+            Vaša nova <br/>
+            <span className="relative inline-block mt-2">
+              <span className="absolute -inset-1 bg-blue-500/20 blur-2xl rounded-full opacity-50"></span>
+              <span className="relative text-transparent bg-clip-text bg-gradient-to-r from-white via-blue-100 to-blue-300 drop-shadow-sm">
+                pravna supermoč.
               </span>
-              <span className="font-sans text-xs font-semibold text-blue-300 tracking-wide uppercase">AI workspace za pravnike</span>
+              {/* Decorative Sparkle */}
+              <motion.div 
+                animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
+                transition={{ duration: 3, repeat: Infinity }}
+                className="absolute -top-4 -right-8 text-blue-400"
+              >
+                <Sparkles size={32} strokeWidth={1.5} />
+              </motion.div>
+            </span>
+          </motion.h1>
+
+          {/* Subtext */}
+          <motion.p 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+            className="font-sans text-lg md:text-xl text-neutral-400 max-w-2xl mx-auto mb-12 leading-relaxed"
+          >
+            Vstopi v novo generacijo pravnikov. Lexora avtomatizira analizo, raziskave in pripravo dokumentov, da se lahko posvetite <span className="text-white font-medium border-b border-blue-500/30 pb-0.5 hover:border-blue-400 transition-colors">zmagovanju primerov</span>.
+          </motion.p>
+
+          {/* Buttons */}
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-5 mb-24 w-full sm:w-auto"
+          >
+            <a href="https://app.lexora.si/" className="group relative w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 font-semibold text-white transition-all duration-500 bg-blue-600 rounded-full hover:bg-blue-500 hover:scale-105 focus:outline-none shadow-[0_0_40px_rgba(37,99,235,0.4)] hover:shadow-[0_0_60px_rgba(37,99,235,0.6)] ring-1 ring-white/20 overflow-hidden text-base">
+              <span className="relative z-10">Preizkusi Lexoro</span>
+              <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1 relative z-10" />
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-blue-400 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-[length:200%_100%] animate-shimmer"></div>
+            </a>
+            
+            <a href="https://calendly.com/jan-lexora/30min" target="_blank" rel="noopener noreferrer" className="group relative w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 font-semibold text-white transition-all duration-300 bg-white/5 rounded-full hover:bg-white/10 hover:scale-105 focus:outline-none ring-1 ring-white/10 backdrop-blur-sm text-base hover:ring-white/30">
+              <Calendar className="w-5 h-5 text-neutral-400 group-hover:text-white transition-colors" />
+              <span>Rezerviraj sestanek</span>
+            </a>
+          </motion.div>
+
+          {/* Social Proof */}
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 0.5 }}
+            className="flex flex-col items-center gap-6"
+          >
+            <p className="text-[11px] font-bold text-neutral-500 uppercase tracking-[0.2em]">Zaupajo nam slovenski pravniki</p>
+            <div className="flex -space-x-4 grayscale hover:grayscale-0 transition-all duration-500 cursor-default p-2">
+                 {['MJ', 'AK', 'TR', 'BP'].map((initials, i) => (
+                   <div key={i} className="w-12 h-12 rounded-full bg-neutral-900 border-2 border-neutral-950 flex items-center justify-center text-sm text-neutral-300 font-bold relative z-0 hover:z-10 hover:scale-110 transition-transform bg-gradient-to-br from-neutral-800 to-neutral-900 shadow-lg">
+                     {initials}
+                   </div>
+                 ))}
             </div>
+          </motion.div>
+        </div>
 
-            <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl leading-[1.1] tracking-tight mb-6 text-white">
-              Vaša nova <br/>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-white to-blue-200">pravna supermoč.</span>
-            </h1>
+        {/* Scroll Indicator */}
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.5, duration: 1 }}
+          className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 cursor-pointer group z-20"
+          onClick={() => {
+            const el = document.getElementById('how-it-helps');
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+          }}
+        >
+          <span className="text-[10px] font-bold text-neutral-500 uppercase tracking-[0.2em] group-hover:text-blue-400 transition-colors">Razišči</span>
+          <motion.div
+            animate={{ y: [0, 10, 0] }}
+            transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+            className="w-10 h-10 rounded-full border border-neutral-800 bg-neutral-900/80 backdrop-blur-sm flex items-center justify-center group-hover:border-blue-500/50 group-hover:bg-blue-500/10 transition-all shadow-[0_0_20px_rgba(0,0,0,0.5)] group-hover:shadow-[0_0_20px_rgba(59,130,246,0.3)]"
+          >
+            <ChevronDown className="w-5 h-5 text-neutral-400 group-hover:text-blue-400 transition-colors" />
+          </motion.div>
+        </motion.div>
+      </section>
 
-            <p className="font-sans text-lg text-neutral-400 max-w-xl mb-8 leading-relaxed">
-              Vstopi v novo generacijo pravnikov in <span className="text-blue-300 font-medium">revolucioniraj svojo prakso</span> z umetno inteligenco.
+      {/* HOW LEXORA HELPS SECTION */}
+      <section id="how-it-helps" className="relative bg-neutral-950 pt-24 pb-24 overflow-hidden">
+        <div className="mx-auto max-w-5xl px-6 lg:px-8">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-8"
+          >
+            <h2 className="font-serif text-4xl md:text-5xl text-white mb-4">Kako Lexora pospeši pravno delo</h2>
+            <p className="text-lg text-neutral-400 max-w-2xl mx-auto leading-relaxed">
+              Lexora pomaga pri analizi spisa, pravni raziskavi in pripravi osnutkov, da lahko pravnik hitreje razume zadevo in se osredotoči na <span className="text-white font-medium">pravno strategijo</span>.
             </p>
+          </motion.div>
 
-            <div className="flex flex-wrap items-center gap-4 mb-10">
-              <a href="https://app.lexora.si/" className="btn-demo group relative overflow-hidden shadow-[0_0_30px_rgba(37,99,235,0.2)] text-white px-6 py-3.5 rounded-lg font-semibold transition hover:-translate-y-0.5">
-                <span className="relative z-10">Preizkusi brezplačno</span>
-              </a>
-              <a href="#demo" className="px-6 py-3.5 rounded-lg text-sm font-medium text-neutral-300 hover:text-white border border-white/10 hover:border-white/20 hover:bg-white/5 transition-all flex items-center gap-2">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                Poglej kako deluje
-              </a>
-            </div>
+          {/* LAPTOP MOCKUP MOVED HERE */}
+          <div className="relative hidden lg:block h-[460px] w-full mt-32 mb-0" style={{ perspective: '2000px' }}>
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-blue-600 to-blue-400 rounded-full blur-[250px] opacity-20 animate-pulse"></div>
+              
+              {/* External Scroll Indicator */}
+              <div className="absolute left-[calc(50%+380px)] top-[calc(50%-60px)] -translate-y-1/2 flex flex-col items-center gap-4 z-50">
+                <motion.div 
+                  animate={{ y: [0, 15, 0] }} 
+                  transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+                  className="flex flex-col items-center gap-3"
+                >
+                  <p className="text-white/50 text-xs font-medium tracking-widest uppercase" style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>
+                    Podrsajte za celoten odgovor
+                  </p>
+                  <ArrowDown className="text-white/50" size={24} />
+                </motion.div>
+              </div>
 
-            <div className="flex items-center gap-4 text-xs font-medium text-neutral-500 uppercase tracking-wider">
-              <span>Narejena za slovenske pravnike 🇸🇮</span>
-              <div className="flex -space-x-3">
-                   <div className="w-8 h-8 rounded-full bg-neutral-800 border border-neutral-700 flex items-center justify-center text-[10px] text-neutral-400">P</div>
-                   <div className="w-8 h-8 rounded-full bg-neutral-800 border border-neutral-700 flex items-center justify-center text-[10px] text-neutral-400">J</div>
-                   <div className="w-8 h-8 rounded-full bg-neutral-800 border border-neutral-700 flex items-center justify-center text-[10px] text-neutral-400">L</div>
+              <div 
+                className="absolute inset-0 flex items-center justify-center"
+                style={{ 
+                  transformStyle: 'preserve-3d', 
+                  transform: 'scale(1.2) translateY(-50px) rotateX(0deg) rotateY(0deg) rotateZ(0deg)' 
+                }}
+              >
+                <div className="relative animate-float-slow" style={{ transformStyle: 'preserve-3d' }}>
+                  {/* Laptop Screen */}
+                  <div 
+                    className="relative w-[600px] h-[375px] bg-black rounded-2xl shadow-2xl overflow-hidden flex flex-col z-10"
+                    style={{ 
+                      border: '8px solid #0a0a0a',
+                      borderBottom: '16px solid #0a0a0a',
+                      boxShadow: '0 0 0 2px #333, 0 20px 50px rgba(0,0,0,0.8)',
+                      transformStyle: 'preserve-3d',
+                      transformOrigin: 'bottom center',
+                      transform: 'rotateX(0deg)' 
+                    }}
+                  >
+                  {/* Notch */}
+                  <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-24 h-5 bg-[#0a0a0a] rounded-b-lg z-50"></div>
+                  
+                  {/* Lexora UI Container */}
+                  <div className="flex-1 w-full bg-white overflow-hidden relative">
+                    {/* Screen Reflection Overlay */}
+                    <div className="absolute inset-0 pointer-events-none z-30 opacity-10 bg-gradient-to-tr from-transparent via-white/20 to-transparent"></div>
+                    
+                    {/* Scaled Content Container */}
+                    <div className="origin-top-left transform w-[1280px] h-[770px] flex bg-white" style={{ transform: 'scale(0.45625)' }}>
+                      
+                      {/* Sidebar */}
+                      <div className="w-64 bg-[#f9f9f9] border-r border-neutral-200 flex flex-col shrink-0 z-20">
+                        {/* Logo Area */}
+                        <div className="h-16 flex items-center justify-between px-6 shrink-0">
+                          <div className="flex items-center gap-2">
+                            <span className="font-serif text-xl text-neutral-900">Lexora</span>
+                            <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-white text-neutral-900 border border-neutral-200 tracking-wider">PRO</span>
+                          </div>
+                          <div className="w-8 h-8 rounded-lg bg-white border border-neutral-200 flex items-center justify-center text-neutral-500 hover:text-neutral-900 cursor-pointer transition-colors">
+                            <PanelLeft size={16} />
+                          </div>
+                        </div>
+
+                        {/* Workspace Selector */}
+                        <div className="px-4 py-3 shrink-0">
+                          <div className="bg-[#f3f4f6] rounded-xl p-3 flex items-center gap-3 border border-transparent hover:border-neutral-200 cursor-pointer transition-colors group">
+                            <div className="w-10 h-10 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center shrink-0">
+                              <Briefcase size={20} />
+                            </div>
+                            <div className="flex-1 overflow-hidden text-left">
+                              <div className="text-xs font-bold text-neutral-900 truncate uppercase tracking-wide">ZADEVA LUKA KRANJC</div>
+                              <div className="text-[10px] text-neutral-500 font-medium">10 dokumentov</div>
+                            </div>
+                            <ChevronDown size={14} className="text-neutral-400 group-hover:text-neutral-900 transition-colors" />
+                          </div>
+                        </div>
+
+                        {/* Navigation */}
+                        <div className="px-4 py-2 space-y-1 shrink-0">
+                          <div className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider px-3 mb-2 mt-2 text-left">ZADEVA LUKA KRANJC</div>
+                          <div className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-neutral-700 hover:bg-neutral-200 cursor-pointer transition-colors text-sm font-medium">
+                            <Folder size={18} className="text-neutral-500" /> Dokumenti
+                          </div>
+                          <div className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-neutral-700 hover:bg-neutral-200 cursor-pointer transition-colors text-sm font-medium">
+                            <History size={18} className="text-neutral-500" /> Zgodovina
+                          </div>
+                          <div className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-neutral-700 hover:bg-neutral-200 cursor-pointer transition-colors text-sm font-medium">
+                            <Settings size={18} className="text-neutral-500" /> Nastavitve
+                          </div>
+                        </div>
+
+                        {/* New Chat Button */}
+                        <div className="px-4 mt-4 shrink-0">
+                          <button className="w-full flex items-center justify-start gap-3 px-4 py-3 rounded-xl bg-white hover:bg-neutral-50 border border-neutral-200 text-sm font-semibold text-neutral-900 transition-colors shadow-sm group">
+                            <span className="text-lg leading-none text-neutral-400 group-hover:text-neutral-600 transition-colors">+</span> Nov klepet
+                          </button>
+                        </div>
+
+                        {/* Chat History */}
+                        <div className="px-4 py-4 flex-1 overflow-hidden flex flex-col mt-2">
+                          <div className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider px-3 mb-2 shrink-0 text-left">Klepeti</div>
+                          <div className="flex-1 overflow-y-auto custom-scrollbar space-y-1 pr-1">
+                            <div className="flex items-center justify-between px-3 py-2.5 rounded-lg bg-neutral-200/50 text-neutral-900 text-sm font-medium cursor-pointer border border-transparent hover:border-neutral-200 transition-all">
+                              <span className="truncate text-left">Pravni spisovni povzetek</span>
+                              <MoreHorizontal size={14} className="text-neutral-500 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* User Profile */}
+                        <div className="p-4 shrink-0 border-t border-neutral-200/50">
+                          <div className="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-white border border-neutral-200 hover:bg-neutral-50 cursor-pointer transition-colors shadow-sm">
+                            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-400 to-blue-500 shadow-inner"></div>
+                            <div className="text-xs font-semibold text-neutral-700 truncate flex-1 text-left">odvetnik@gmail.com</div>
+                            <ChevronUp size={14} className="text-neutral-400" />
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Main Chat Area */}
+                      <div className="flex-1 flex flex-col bg-white relative z-10 h-full">
+                        {/* Top Action Buttons */}
+                        <div className="h-16 flex items-center justify-start px-8 shrink-0 border-b border-neutral-100">
+                          <div className="flex gap-3">
+                            <div className="w-9 h-9 flex items-center justify-center rounded-lg border border-neutral-200 bg-white text-neutral-600 hover:text-neutral-900 hover:bg-neutral-50 cursor-pointer transition-colors shadow-sm">
+                              <PanelLeft size={18} />
+                            </div>
+                            <div className="w-9 h-9 flex items-center justify-center rounded-lg border border-neutral-200 bg-white text-neutral-600 hover:text-neutral-900 hover:bg-neutral-50 cursor-pointer transition-colors shadow-sm">
+                              <MoreHorizontal size={18} />
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Chat Content */}
+                        <div className="flex-1 overflow-y-auto p-8 flex flex-col items-center custom-scrollbar pb-32">
+                          <div className="w-full max-w-3xl space-y-8">
+                            
+                            {/* User Message - Right Aligned */}
+                            <div className="flex flex-col items-end mb-6">
+                              <div className="bg-[#0066ff] text-white text-sm leading-relaxed p-5 rounded-3xl rounded-tr-sm max-w-[85%] shadow-md text-left font-medium">
+                                Preglej celoten spis in pripravi strukturiran povzetek: stranke in vloge, dejansko stanje, tožbeni/obrambni zahtevki, sporna vprašanja in dosedanji procesni potek. Nato izlušči vse procesne roke in datume (tudi iz prilog) ter jih predstavi v tabeli (datum, rok, pravna podlaga, vir). Pri vsaki trditvi obvezno navedi dokument in strani.
+                              </div>
+                              <div className="flex gap-3 mt-2 px-2 opacity-60 hover:opacity-100 transition-opacity">
+                                <Paperclip size={14} className="text-neutral-500 cursor-pointer" />
+                                <span className="text-xs text-neutral-400 font-medium">Danes, 14:30</span>
+                              </div>
+                            </div>
+
+                            {/* Status Bars */}
+                            <div className="relative pl-10 space-y-3 mb-10">
+                              <div className="absolute left-0 top-3 text-neutral-800">
+                                <Sparkles size={20} className="text-blue-600" />
+                              </div>
+                              {[
+                                { text: "Iskanje po 5 dokumentih", icon: <FileText size={14} /> },
+                                { text: "Pridobljenih 1 člen", icon: <File size={14} /> },
+                                { text: "Pridobljenih 3 členov", icon: <File size={14} /> },
+                                { text: "Iskanje po 3 straneh dokumenta Sodba", icon: <FileText size={14} /> },
+                                { text: "Iskanje po 3 straneh dokumenta obtožnica", icon: <FileText size={14} /> },
+                                { text: "Iskanje po 4 straneh dokumenta KAZENSKA OVADBA", icon: <FileText size={14} /> }
+                              ].map((status, idx) => (
+                                <div key={idx} className="flex items-center justify-between bg-white border border-neutral-200 rounded-2xl px-4 py-3 hover:bg-neutral-50 transition-colors cursor-pointer shadow-sm group w-full max-w-2xl">
+                                  <div className="flex items-center gap-3">
+                                    <div className="text-neutral-500 group-hover:text-blue-600 transition-colors">{status.icon}</div>
+                                    <span className="text-xs text-neutral-700 font-semibold">{status.text}</span>
+                                  </div>
+                                  <div className="flex items-center gap-3">
+                                    <div className="flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-full">
+                                      <div className="w-3 h-3 rounded-full bg-emerald-500 flex items-center justify-center">
+                                        <Check size={8} className="text-white stroke-[4]" />
+                                      </div>
+                                      <span className="text-[10px] font-bold text-emerald-700 uppercase tracking-tight">Zaključeno</span>
+                                    </div>
+                                    <ChevronDown size={14} className="text-neutral-400 group-hover:text-neutral-600" />
+                                  </div>
+                                </div>
+                              ))}
+                              
+                              {/* Down Arrow Button */}
+                              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-white border border-neutral-200 rounded-full flex items-center justify-center shadow-md cursor-pointer hover:bg-neutral-50 z-10 transition-transform hover:scale-110">
+                                <ArrowDown size={14} className="text-neutral-600" />
+                              </div>
+                            </div>
+
+                          {/* AI Response */}
+                          <div className="text-neutral-800 text-sm leading-relaxed space-y-5 max-w-3xl text-left">
+                            <p>Na podlagi pregleda spisovne dokumentacije v zadevi <strong className="text-neutral-900 font-semibold">ZADEVA LUKA KRANJC (II K 1245/2024)</strong> pripravljam strukturiran povzetek in pregled procesnih rokov.</p>
+                            
+                            <h3 className="text-lg font-bold text-neutral-900 mt-6 mb-3">1. Strukturiran povzetek zadeve</h3>
+                            
+                            <h4 className="text-sm font-bold text-neutral-900 mt-5 mb-2 uppercase tracking-wide text-neutral-500">Stranke in vloge</h4>
+                            <ul className="space-y-3 list-none pl-0">
+                              <li className="flex items-start gap-2"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-neutral-400 shrink-0"></div><span><strong className="text-neutral-900 font-semibold">Obdolženec: Luka Kranjc</strong>, vodja nabave v družbi GAMMA Elektronika d.o.o. <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-neutral-100 text-[10px] font-semibold text-neutral-600 border border-neutral-200 ml-2 align-middle"><FileText size={10}/> obtožnica</span></span></li>
+                              <li className="flex items-start gap-2"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-neutral-400 shrink-0"></div><span><strong className="text-neutral-900 font-semibold">Oškodovanec: GAMMA Elektronika d.o.o.</strong>, ki jo zastopa direktor Andrej Vidmar <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-neutral-100 text-[10px] font-semibold text-neutral-600 border border-neutral-200 ml-2 align-middle"><FileText size={10}/> KAZENSKA OVADBA</span></span></li>
+                              <li className="flex items-start gap-2"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-neutral-400 shrink-0"></div><span><strong className="text-neutral-900 font-semibold">Tožilstvo: Okrožno državno tožilstvo v Ljubljani</strong>, zastopa ga okrožna državna tožilka mag. Nina Pirc <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-neutral-100 text-[10px] font-semibold text-neutral-600 border border-neutral-200 ml-2 align-middle"><FileText size={10}/> obtožnica</span></span></li>
+                              <li className="flex items-start gap-2"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-neutral-400 shrink-0"></div><span><strong className="text-neutral-900 font-semibold">Priče:</strong> Petra Zupan (računovodkinja) in Andrej Vidmar (direktor) <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-neutral-100 text-[10px] font-semibold text-neutral-600 border border-neutral-200 ml-2 align-middle"><FileText size={10}/> obtožnica</span></span></li>
+                            </ul>
+
+                            <h4 className="text-sm font-bold text-neutral-900 mt-6 mb-2 uppercase tracking-wide text-neutral-500">Dejansko stanje</h4>
+                            <p>Obdolženi Luka Kranjc je v obdobju med <strong className="text-neutral-900 font-semibold">februarjem 2023 in decembrom 2023</strong> kot vodja nabave odobril več naročil elektronskih komponent trem dobaviteljem: <strong className="text-neutral-900 font-semibold">ELEKTRO TRADE d.o.o., TEHNO PARTNER d.o.o. in GLOBAL COMPONENTS d.o.o.</strong> <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-neutral-100 text-[10px] font-semibold text-neutral-600 border border-neutral-200 mx-1 align-middle"><FileText size={10}/> obtožnica</span>. Podjetje je na podlagi teh naročil izplačalo skupno <strong className="text-neutral-900 font-semibold">84.750,00 EUR</strong>, vendar blago nikoli ni bilo dobavljeno ali evidentirano v skladišču <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-neutral-100 text-[10px] font-semibold text-neutral-600 border border-neutral-200 mx-1 align-middle"><FileText size={10}/> KAZENSKA OVADBA</span>. Tožilstvo mu očita, da je vedel ali bi moral vedeti, da gre za fiktivna naročila.</p>
+
+                            <h4 className="text-sm font-bold text-neutral-900 mt-6 mb-2 uppercase tracking-wide text-neutral-500">Tožbeni in obrambni zahtevki</h4>
+                            <ul className="space-y-3 list-none pl-0">
+                              <li className="flex items-start gap-2"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-neutral-400 shrink-0"></div><span><strong className="text-neutral-900 font-semibold">Tožilstvo:</strong> Zahteva obsodbo po 240. členu KZ-1 (zloraba položaja), izrek <strong className="text-neutral-900 font-semibold">pogojne obsodbe 1 leto zapora</strong> s preizkusno dobo 3 let ter naložitev plačila povzročene škode v višini 84.750,00 EUR <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-neutral-100 text-[10px] font-semibold text-neutral-600 border border-neutral-200 ml-1 align-middle"><FileText size={10}/> Sodba</span>.</span></li>
+                              <li className="flex items-start gap-2"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-neutral-400 shrink-0"></div><span><strong className="text-neutral-900 font-semibold">Obramba:</strong> Luka Kranjc <strong className="text-neutral-900 font-semibold">zanika krivdo</strong> <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-neutral-100 text-[10px] font-semibold text-neutral-600 border border-neutral-200 ml-1 align-middle"><FileText size={10}/> Demo files (17)</span>. Trdi, da je ravnal v skladu s postopki, da je naročila potrjeval na podlagi informacij sodelavcev.</span></li>
+                            </ul>
+
+                            <h4 className="text-sm font-bold text-neutral-900 mt-6 mb-2 uppercase tracking-wide text-neutral-500">Sporna vprašanja</h4>
+                            <ol className="space-y-3 list-decimal pl-5 marker:text-neutral-500 marker:font-medium">
+                              <li><strong className="text-neutral-900 font-semibold">Obstoj naklepa:</strong> Ali je obdolženec zavestno odobril fiktivna naročila z namenom povzročitve škode ali pridobitve koristi?</li>
+                              <li><strong className="text-neutral-900 font-semibold">Vzročna zveza:</strong> Ali je škoda nastala zaradi obdolženčeve zlorabe pooblastil ali zaradi pomanjkljivih kontrolnih mehanizmov v podjetju?</li>
+                              <li><strong className="text-neutral-900 font-semibold">Povezava z dobavitelji:</strong> Ali je bil obdolženec osebno povezan z novonastalimi podjetji-dobavitelji?</li>
+                            </ol>
+
+                            <h3 className="text-lg font-bold text-neutral-900 mt-8 mb-4 flex items-center justify-between">
+                              2. Procesni roki in pomembni datumi
+                              <div className="flex gap-2">
+                                <div className="p-1.5 rounded-md hover:bg-neutral-100 cursor-pointer transition-colors text-neutral-500">
+                                  <Paperclip size={16} />
+                                </div>
+                                <div className="p-1.5 rounded-md hover:bg-neutral-100 cursor-pointer transition-colors text-neutral-500">
+                                  <ArrowDown size={16} />
+                                </div>
+                              </div>
+                            </h3>
+                            
+                            <div className="rounded-2xl border border-neutral-200 overflow-hidden bg-white shadow-sm ring-1 ring-black/5">
+                              <table className="w-full text-xs text-left border-collapse">
+                                <thead>
+                                  <tr className="bg-neutral-50/80 text-neutral-500 uppercase tracking-wider font-semibold">
+                                    <th className="p-3 border-b border-neutral-200 w-32">Datum</th>
+                                    <th className="p-3 border-b border-neutral-200">Dogodek / Rok</th>
+                                    <th className="p-3 border-b border-neutral-200 w-32">Pravna podlaga</th>
+                                    <th className="p-3 border-b border-neutral-200 w-48">Vir</th>
+                                  </tr>
+                                </thead>
+                                <tbody className="divide-y divide-neutral-100">
+                                  <tr className="hover:bg-neutral-50/50 transition-colors">
+                                    <td className="p-3 font-medium text-neutral-900">Feb. 2023 - Dec. 2023</td>
+                                    <td className="p-3 text-neutral-700">Obdobje domnevne storitve kaznivega dejanja</td>
+                                    <td className="p-3 text-neutral-600">240. člen KZ-1</td>
+                                    <td className="p-3 text-neutral-500">"obtožnica.pdf", str. 1</td>
+                                  </tr>
+                                  <tr className="hover:bg-neutral-50/50 transition-colors">
+                                    <td className="p-3 font-medium text-neutral-900">15. 01. 2024</td>
+                                    <td className="p-3 text-neutral-700">Podana kazenska ovadba s strani podjetja</td>
+                                    <td className="p-3 text-neutral-600">146. člen ZKP</td>
+                                    <td className="p-3 text-neutral-500">"KAZENSKA OVADBA.pdf", str. 1, 4</td>
+                                  </tr>
+                                  <tr className="hover:bg-neutral-50/50 transition-colors">
+                                    <td className="p-3 font-medium text-neutral-900">05. 02. 2024</td>
+                                    <td className="p-3 text-neutral-700">Zaslišanje osumljenca pred policijo</td>
+                                    <td className="p-3 text-neutral-600">148. člen ZKP</td>
+                                    <td className="p-3 text-neutral-500">"ZAPISNIK o zaslišanju.pdf", str. 1</td>
+                                  </tr>
+                                  <tr className="hover:bg-neutral-50/50 transition-colors">
+                                    <td className="p-3 font-medium text-neutral-900">10. 03. 2024</td>
+                                    <td className="p-3 text-neutral-700">Predlog ODT za uvedbo preiskave</td>
+                                    <td className="p-3 text-neutral-600">167. člen ZKP</td>
+                                    <td className="p-3 text-neutral-500">"Zapisnik o zaslišanju.pdf", str. 8</td>
+                                  </tr>
+                                  <tr className="hover:bg-neutral-50/50 transition-colors">
+                                    <td className="p-3 font-medium text-neutral-900">20. 09. 2024</td>
+                                    <td className="p-3 text-neutral-700">Vložitev obtožnice</td>
+                                    <td className="p-3 text-neutral-600">268. člen ZKP</td>
+                                    <td className="p-3 text-neutral-500">"obtožnica.pdf", str. 1, 3</td>
+                                  </tr>
+                                  <tr className="hover:bg-neutral-50/50 transition-colors">
+                                    <td className="p-3 font-medium text-neutral-900">20. 02. 2025</td>
+                                    <td className="p-3 text-neutral-700">Izdaja obsodilne sodbe prve stopnje</td>
+                                    <td className="p-3 text-neutral-600">353. člen ZKP</td>
+                                    <td className="p-3 text-neutral-500">"Sodba.pdf", str. 1</td>
+                                  </tr>
+                                  <tr className="bg-blue-50/60 hover:bg-blue-50 transition-colors border-l-4 border-l-blue-500">
+                                    <td className="p-3 font-bold text-blue-700">V 15 dneh</td>
+                                    <td className="p-3 font-bold text-blue-800">Rok za pritožbo zoper sodbo</td>
+                                    <td className="p-3 text-blue-700 font-medium">363. člen ZKP</td>
+                                    <td className="p-3 text-blue-600">"Sodba.pdf", str. 3</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+
+                            <div className="p-4 rounded-xl bg-orange-50 border border-orange-200 mt-6 flex gap-4 items-start shadow-sm">
+                              <div className="p-2 bg-orange-100 rounded-full shrink-0 text-orange-600 mt-0.5">
+                                <Sparkles size={16} />
+                              </div>
+                              <div>
+                                <h5 className="text-sm font-bold text-orange-900 mb-1">Opozorilo: Tek pritožbenega roka</h5>
+                                <p className="text-orange-800 text-xs leading-relaxed">Glede na datum izdaje sodbe (<strong className="text-orange-900 font-semibold">20. februar 2025</strong>) je zadeva trenutno v fazi teka roka za pritožbo (15 dni od vročitve). Potrebno je preveriti točen datum vročitve sodbe obrambi, da se ne zamudi prekluzivni rok za vložitev pritožbe. <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-white text-[10px] font-semibold text-orange-700 border border-orange-200 ml-1 align-middle"><FileText size={10}/> Sodba</span></p>
+                              </div>
+                            </div>
+
+                            <div className="flex gap-4 mt-8 px-2 justify-end opacity-70">
+                              <div className="flex items-center gap-2 text-xs text-neutral-500 hover:text-neutral-800 cursor-pointer transition-colors">
+                                <Paperclip size={14} /> Kopiraj
+                              </div>
+                              <div className="flex items-center gap-2 text-xs text-neutral-500 hover:text-neutral-800 cursor-pointer transition-colors">
+                                <ArrowDown size={14} /> Prenesi
+                              </div>
+                              <div className="flex items-center gap-2 text-xs text-neutral-500 hover:text-neutral-800 cursor-pointer transition-colors">
+                                <MoreHorizontal size={14} /> Več
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        {/* Input Area - Fixed at bottom of scaled container */}
+                        <div className="absolute bottom-8 left-0 right-0 z-20 flex justify-center px-8">
+                          <div className="w-full max-w-3xl bg-white border border-neutral-200 rounded-[2rem] p-3 shadow-2xl ring-1 ring-black/5 flex items-end gap-2">
+                            <div className="p-2 text-neutral-400 hover:text-neutral-600 cursor-pointer transition-colors rounded-full hover:bg-neutral-100">
+                              <Paperclip size={20} />
+                            </div>
+                            <textarea 
+                              disabled
+                              placeholder="Pošljite sporočilo..." 
+                              className="flex-1 bg-transparent text-sm text-neutral-900 placeholder-neutral-400 focus:outline-none resize-none h-14 py-3 max-h-32"
+                            />
+                            <div className="flex items-center gap-2 pb-1">
+                              <button className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-600 hover:text-neutral-900 transition-colors bg-neutral-100 hover:bg-neutral-200 px-3 py-1.5 rounded-lg border border-neutral-200 uppercase tracking-wide">
+                                <Cpu size={12} /> Hitri odgovori
+                              </button>
+                              <div className="p-2 text-neutral-400 hover:text-neutral-600 cursor-pointer transition-colors rounded-full hover:bg-neutral-100">
+                                <Mic size={20} />
+                              </div>
+                              <div className="w-9 h-9 rounded-full bg-neutral-900 flex items-center justify-center text-white hover:bg-black transition-colors shadow-md cursor-pointer">
+                                <ArrowUp size={18} />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+
+                {/* Laptop Base */}
+                <div 
+                  className="absolute top-full left-0 w-[600px] h-[375px] rounded-[2rem] z-0"
+                  style={{ 
+                    transformOrigin: 'top center',
+                    transform: 'rotateX(90deg)',
+                    transformStyle: 'preserve-3d',
+                    background: 'linear-gradient(to bottom, #2a2a2a, #1a1a1a)',
+                    boxShadow: '0 40px 100px rgba(0,0,0,0.9), inset 0 1px 2px rgba(255,255,255,0.1)'
+                  }}
+                >
+                  {/* Hinge Area */}
+                  <div className="absolute top-0 left-0 w-full h-4 bg-[#111] rounded-t-lg"></div>
+
+                  {/* Keyboard Well */}
+                  <div className="absolute top-8 left-1/2 -translate-x-1/2 w-[88%] h-[52%] bg-[#121212] rounded-xl shadow-[inset_0_2px_10px_rgba(0,0,0,1)] p-2.5 flex flex-col gap-1">
+                    {/* Keys */}
+                    {Array.from({ length: 6 }).map((_, row) => (
+                      <div key={row} className="flex justify-between gap-1 h-full">
+                        {Array.from({ length: row === 0 ? 14 : row === 5 ? 7 : 15 }).map((_, col) => (
+                          <div 
+                            key={col} 
+                            className={`bg-[#050505] rounded shadow-[0_1px_0_#000] border border-white/5 flex items-center justify-center ${
+                              row === 5 && col === 3 ? 'flex-[6]' : 'flex-1'
+                            }`}
+                          >
+                            <div className="w-full h-full rounded-[1px] bg-white/[0.02]"></div>
+                          </div>
+                        ))}
+                      </div>
+                    ))}
+                  </div>
+                  {/* Trackpad */}
+                  <div className="absolute bottom-6 left-1/2 -translate-x-1/2 w-[38%] h-[32%] bg-gradient-to-b from-[#1a1a1a] to-[#222] rounded-xl shadow-[inset_0_1px_4px_rgba(0,0,0,0.5)] border border-white/5"></div>
+                  
+                  {/* Front Lip */}
+                  <div className="absolute bottom-0 left-0 w-full h-5 bg-[#1a1a1a] rounded-b-[2rem] shadow-[inset_0_-1px_5px_rgba(0,0,0,0.8)] overflow-hidden">
+                    <div className="absolute top-0 left-0 w-full h-[1px] bg-white/10"></div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
+          
+          <div className="text-center mb-12 relative z-20">
+            <p className="text-sm text-neutral-500 italic">
+              * Vsi podatki, uporabljeni na spletni strani za prikaz delovanja aplikacije, so izmišljeni.
+            </p>
+          </div>
 
-          {/* RIGHT: VISUAL UI INTERFACE (3D CARD) */}
-          <div className="relative hidden lg:block perspective-1000 h-[500px] w-full">
-             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-gradient-to-r from-blue-600 to-blue-400 rounded-full blur-[90px] opacity-20 animate-pulse"></div>
-
-             <div className="absolute inset-0 flex items-center justify-center tilt-card">
-                {/* Background Layer */}
-                <div className="absolute w-[420px] h-[520px] bg-neutral-900/60 backdrop-blur-sm border border-white/5 rounded-2xl transform translate-z-[-50px] translate-x-12 translate-y-8 flex flex-col p-6 overflow-hidden">
-                   <div className="flex items-center gap-2 mb-4 opacity-50">
-                     <div className="w-3 h-3 rounded-full bg-neutral-600"></div>
-                     <div className="w-3 h-3 rounded-full bg-neutral-600"></div>
-                     <div className="w-3 h-3 rounded-full bg-neutral-600"></div>
-                   </div>
-                   <div className="space-y-2 font-mono text-xs text-blue-500/40">
-                     <p>{'>'} Loading LawData_v4...</p>
-                     <p>{'>'} Analyzing context...</p>
-                     <p>{'>'} Vectorizing input...</p>
-                     <p>{'>'} Found 142 matches.</p>
-                     <div className="grid grid-cols-4 gap-2 mt-4 opacity-20">
-                        <div className="h-12 bg-blue-500/20 rounded animate-pulse"></div>
-                        <div className="h-12 bg-blue-500/20 rounded animate-pulse" style={{animationDelay: '0.2s'}}></div>
-                        <div className="h-12 bg-blue-500/20 rounded animate-pulse" style={{animationDelay: '0.4s'}}></div>
-                        <div className="h-12 bg-blue-500/20 rounded animate-pulse" style={{animationDelay: '0.6s'}}></div>
-                     </div>
-                   </div>
+          <div className="grid md:grid-cols-3 lg:grid-cols-5 gap-4 mb-24 max-w-5xl mx-auto">
+            {[
+              { title: "Pregled dokumentacije", icon: <FileText className="text-blue-400" />, delay: 0, targetId: "step-01" },
+              { title: "Raziskava zakonodaje", icon: <Search className="text-emerald-400" />, delay: 0.1, targetId: "step-02" },
+              { title: "Iskanje sodne prakse", icon: <Globe className="text-purple-400" />, delay: 0.2, targetId: "step-03" },
+              { title: "Priprava osnutkov", icon: <MessageSquare className="text-orange-400" />, delay: 0.3, targetId: "step-04" },
+              { title: "Personalizirani agenti", icon: <Sparkles className="text-pink-400" />, delay: 0.4, targetId: "step-05" }
+            ].map((item, i) => (
+              <motion.div 
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: item.delay }}
+                viewport={{ once: true }}
+                whileHover={{ y: -5, scale: 1.02 }}
+                onClick={() => {
+                  const el = document.getElementById(item.targetId);
+                  if (el) {
+                    const yOffset = -100; // offset for the fixed header
+                    const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                    window.scrollTo({ top: y, behavior: 'smooth' });
+                  }
+                }}
+                className="p-5 rounded-2xl bg-neutral-900/40 border border-white/5 flex flex-col items-center text-center group hover:border-blue-500/30 hover:bg-blue-500/5 transition-all duration-500 cursor-pointer"
+              >
+                <div className="w-12 h-12 rounded-xl bg-neutral-950 border border-white/10 flex items-center justify-center mb-4 group-hover:shadow-[0_0_20px_rgba(37,99,235,0.2)] transition-all">
+                  {React.cloneElement(item.icon as React.ReactElement, { size: 20 })}
                 </div>
+                <h3 className="text-sm font-bold text-white mb-2">{item.title}</h3>
+                <div className="w-8 h-1 bg-blue-600/20 rounded-full mt-2 group-hover:w-16 group-hover:bg-blue-600 transition-all duration-500" />
+              </motion.div>
+            ))}
+          </div>
 
-                {/* Main Interface */}
-                <div className="relative w-[400px] bg-[#0a0a0a]/90 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-6 glow-border animate-float-slow">
-                  <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-4">
-                     <div className="flex items-center gap-2">
-                       <div className="w-6 h-6 rounded bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center text-[10px] font-bold text-white">L</div>
-                       <span className="text-sm font-medium text-neutral-200">Nov Primer</span>
-                     </div>
-                     <div className="px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 text-[10px] border border-blue-500/20">Online</div>
+          {/* DETAILED STEPS */}
+
+          <div className="space-y-24">
+            {processSteps.map((step, i) => (
+              <motion.div 
+                key={i}
+                id={`step-${step.id}`}
+                initial={{ opacity: 0, y: 60 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                className="grid lg:grid-cols-2 gap-12 items-center scroll-mt-32"
+              >
+                <div className={i % 2 === 1 ? 'lg:order-2' : ''}>
+                  <div className="flex items-center gap-6 mb-6">
+                    <div className="w-14 h-14 rounded-2xl bg-neutral-900/50 border border-white/10 flex items-center justify-center shadow-xl shrink-0">
+                      <span className={`font-mono text-xl font-bold text-transparent bg-clip-text bg-gradient-to-br ${step.color}`}>
+                        {step.id}
+                      </span>
+                    </div>
+                    <div>
+                      <h3 className="font-serif text-3xl text-white leading-tight">
+                        {step.title}
+                      </h3>
+                      {/* @ts-ignore */}
+                      {step.badge && (
+                        <span className="inline-block mt-2 px-2 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-300 text-[10px] font-bold uppercase tracking-wider">
+                          {/* @ts-ignore */}
+                          {step.badge}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  <p className="text-lg text-neutral-400 mb-8 leading-relaxed">
+                    {step.description}
+                  </p>
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    {step.details.map((detail, j) => (
+                      <motion.li 
+                        key={j} 
+                        whileHover={{ x: 5 }}
+                        className="flex items-center gap-4 text-base text-neutral-300"
+                      >
+                        {/* @ts-ignore */}
+                        <div className={`w-6 h-6 rounded-full ${step.checkBg} flex items-center justify-center shrink-0`}>
+                          {/* @ts-ignore */}
+                          <CheckCircle size={14} className={step.checkColor} />
+                        </div>
+                        {detail}
+                      </motion.li>
+                    ))}
+                  </ul>
+                </div>
+                
+                <div className={`relative aspect-[4/3] rounded-[2.5rem] bg-neutral-900/40 border border-white/5 overflow-hidden flex items-center justify-center group ${i % 2 === 1 ? 'lg:order-1' : ''}`}>
+                   <div className={`absolute inset-0 bg-gradient-to-br ${step.color} opacity-5 blur-[100px]`} />
+                   <StepAnimation step={step} />
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* WORKSPACE SECTION */}
+      <section className="bg-neutral-900/50 py-24 border-y border-white/5 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,rgba(37,99,235,0.05)_0%,transparent_50%)]" />
+        <div className="mx-auto max-w-5xl px-6 lg:px-8 relative z-10">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="font-serif text-4xl md:text-5xl text-white mb-6">Vse za delo na zadevi na enem mestu</h2>
+            <p className="text-lg text-neutral-400 max-w-2xl mx-auto leading-relaxed">
+              Za vsako zadevo v Lexori ustvarite personalizirano AI delovno okolje. Tako imate celoten kontekst primera na enem mestu, brez potrebe po stalnem preklapljanju med različnimi sistemi.
+            </p>
+          </motion.div>
+
+          <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="lg:col-span-5"
+            >
+              <div className="flex flex-col gap-3">
+                {[
+                  { label: "Dokumenti zadeve", icon: <FileText size={20} />, desc: "Naložite in organizirajte vse spise, pogodbe in dokaze." },
+                  { label: "Pravna raziskava", icon: <Search size={20} />, desc: "Iščite po zakonodaji in sodni praksi znotraj konteksta." },
+                  { label: "Vprašanja in odgovori", icon: <MessageSquare size={20} />, desc: "Klepetajte z dokumenti in hitro poiščite informacije." },
+                  { label: "Osnutki dokumentov", icon: <GitMerge size={20} />, desc: "Generirajte osnutke pogodb in vlog na podlagi primera." }
+                ].map((item, i) => (
+                  <button 
+                    key={i} 
+                    onClick={() => setActiveWorkspaceTab(i)}
+                    className={`text-left p-5 rounded-2xl border transition-all duration-300 flex items-start gap-4 ${
+                      activeWorkspaceTab === i 
+                        ? 'bg-blue-600/10 border-blue-500/30 shadow-[0_0_30px_rgba(37,99,235,0.1)]' 
+                        : 'bg-neutral-950/50 border-white/5 hover:border-white/10 hover:bg-neutral-900'
+                    }`}
+                  >
+                    <div className={`mt-1 w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-colors ${
+                      activeWorkspaceTab === i ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20' : 'bg-neutral-900 text-neutral-500'
+                    }`}>
+                      {item.icon}
+                    </div>
+                    <div>
+                      <span className={`block text-lg font-bold mb-1 transition-colors ${
+                        activeWorkspaceTab === i ? 'text-white' : 'text-neutral-300'
+                      }`}>{item.label}</span>
+                      <span className={`block text-sm transition-colors ${
+                        activeWorkspaceTab === i ? 'text-blue-200/70' : 'text-neutral-500'
+                      }`}>{item.desc}</span>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </motion.div>
+            
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="lg:col-span-7 relative"
+            >
+               <div className="absolute inset-0 bg-blue-500/10 blur-[100px] rounded-full animate-pulse-soft" />
+               <div className="relative bg-[#0A0A0A] rounded-2xl border border-white/10 shadow-2xl overflow-hidden flex flex-col h-[500px]">
+                  {/* Window Header */}
+                  <div className="h-12 border-b border-white/10 bg-neutral-900/50 flex items-center px-4 gap-2 shrink-0">
+                    <div className="flex gap-1.5">
+                      <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
+                      <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                      <div className="w-3 h-3 rounded-full bg-green-500/80"></div>
+                    </div>
+                    <div className="ml-4 flex-1 flex justify-center">
+                      <div className="bg-black/50 border border-white/5 rounded-md px-3 py-1 text-xs text-neutral-500 font-mono flex items-center gap-2">
+                        <Lock size={10} /> lexora.si / zadeva-124
+                      </div>
+                    </div>
                   </div>
 
-                  <div className="space-y-4 mb-6">
-                    <div className="flex gap-3">
-                       <div className="w-8 h-8 rounded-full bg-blue-600/10 border border-blue-500/30 flex items-center justify-center shrink-0">
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="text-blue-400"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z" fill="currentColor"/></svg>
-                       </div>
-                       <div className="bg-neutral-800/80 p-3 rounded-2xl rounded-tl-none border border-white/5 text-xs text-neutral-300 leading-relaxed shadow-sm">
-                          Analiziral sem pogodbo. <span className="text-blue-400 font-medium">Člen 4.2</span> ni skladen z ZOR zaradi nedavne sodbe VS RS. Predlagam spremembo.
-                       </div>
-                    </div>
+                  {/* Window Content */}
+                  <div className="flex-1 relative overflow-hidden bg-neutral-950">
+                    <AnimatePresence mode="wait">
+                      {activeWorkspaceTab === 0 && (
+                        <motion.div 
+                          key="tab0"
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          transition={{ duration: 0.3 }}
+                          className="absolute inset-0 p-6 flex flex-col gap-4"
+                        >
+                          <div className="flex items-center justify-between mb-2">
+                            <h3 className="text-white font-medium">Dokumenti zadeve</h3>
+                            <button className="text-xs bg-blue-600 text-white px-3 py-1.5 rounded-lg flex items-center gap-1">
+                              <span className="text-lg leading-none">+</span> Naloži
+                            </button>
+                          </div>
+                          {[
+                            { name: "Tožba_vzorec_final.pdf", size: "2.4 MB", date: "Danes, 10:42" },
+                            { name: "Pogodba_o_zaposlitvi_Janez_Novak.docx", size: "1.1 MB", date: "Včeraj, 14:15" },
+                            { name: "Sklep_sodišča_priloga.pdf", size: "4.8 MB", date: "12. maj 2026" },
+                            { name: "Korespondenca_stranka.eml", size: "156 KB", date: "10. maj 2026" }
+                          ].map((file, i) => (
+                            <div key={i} className="flex items-center justify-between p-3 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] transition-colors cursor-pointer group">
+                              <div className="flex items-center gap-3">
+                                <div className="w-10 h-10 rounded-lg bg-blue-500/10 text-blue-400 flex items-center justify-center group-hover:bg-blue-500 group-hover:text-white transition-colors">
+                                  <FileText size={18} />
+                                </div>
+                                <div>
+                                  <div className="text-sm text-neutral-200 font-medium">{file.name}</div>
+                                  <div className="text-xs text-neutral-500">{file.size}</div>
+                                </div>
+                              </div>
+                              <div className="text-xs text-neutral-500">{file.date}</div>
+                            </div>
+                          ))}
+                        </motion.div>
+                      )}
 
-                    <div className="flex gap-3 justify-end">
-                       <div className="bg-blue-600 p-3 rounded-2xl rounded-tr-none text-xs text-white leading-relaxed shadow-lg max-w-[80%]">
-                          Pripravi nov osnutek člena in navedi vir.
-                       </div>
+                      {activeWorkspaceTab === 1 && (
+                        <motion.div 
+                          key="tab1"
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          transition={{ duration: 0.3 }}
+                          className="absolute inset-0 p-6 flex flex-col"
+                        >
+                          <div className="relative mb-6">
+                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500" size={18} />
+                            <input type="text" disabled value="Odpoved pogodbe iz poslovnega razloga" className="w-full bg-neutral-900 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-sm text-white focus:outline-none" />
+                          </div>
+                          <div className="flex-1 space-y-4">
+                            <div className="text-xs font-semibold text-neutral-500 uppercase tracking-wider mb-2">Zakonodaja (ZDR-1)</div>
+                            <div className="p-4 rounded-xl border border-emerald-500/20 bg-emerald-500/5">
+                              <div className="text-emerald-400 text-sm font-bold mb-1">89. člen (razlogi za redno odpoved)</div>
+                              <div className="text-xs text-neutral-300 leading-relaxed">
+                                (1) Razlogi za redno odpoved pogodbe o zaposlitvi delavcu s strani delodajalca so:
+                                <br/>- prenehanje potreb po opravljanju določenega dela pod pogoji iz pogodbe o zaposlitvi, zaradi ekonomskih, organizacijskih, tehnoloških, strukturnih ali podobnih razlogov na strani delodajalca (poslovni razlog)...
+                              </div>
+                            </div>
+                            <div className="text-xs font-semibold text-neutral-500 uppercase tracking-wider mt-6 mb-2">Sodna praksa</div>
+                            <div className="p-4 rounded-xl border border-white/5 bg-white/[0.02]">
+                              <div className="text-blue-400 text-sm font-bold mb-1">VDSS sodba Pdp 123/2023</div>
+                              <div className="text-xs text-neutral-400 leading-relaxed">
+                                Sodišče je odločilo, da mora delodajalec pri odpovedi iz poslovnega razloga dokazati dejansko prenehanje potreb po delu in ne le formalne ukinitve delovnega mesta...
+                              </div>
+                            </div>
+                          </div>
+                        </motion.div>
+                      )}
+
+                      {activeWorkspaceTab === 2 && (
+                        <motion.div 
+                          key="tab2"
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          transition={{ duration: 0.3 }}
+                          className="absolute inset-0 p-6 flex flex-col"
+                        >
+                          <div className="flex-1 space-y-4 overflow-hidden flex flex-col justify-end pb-4">
+                            <div className="flex gap-3 max-w-[85%] self-end">
+                              <div className="bg-blue-600 text-white p-3 rounded-2xl rounded-tr-sm text-sm">
+                                Kakšen je odpovedni rok za g. Novaka glede na priloženo pogodbo?
+                              </div>
+                            </div>
+                            <div className="flex gap-3 max-w-[85%]">
+                              <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center shrink-0 mt-1">
+                                <Sparkles size={14} className="text-blue-400" />
+                              </div>
+                              <div className="bg-neutral-900 border border-white/10 text-neutral-200 p-4 rounded-2xl rounded-tl-sm text-sm leading-relaxed">
+                                Glede na <span className="text-blue-400 cursor-pointer hover:underline">Pogodba_o_zaposlitvi_Janez_Novak.docx (člen 12)</span> in dejstvo, da je zaposlen 8 let, znaša njegov odpovedni rok v primeru redne odpovedi iz poslovnega razloga <strong className="text-white">45 dni</strong> v skladu s 94. členom ZDR-1.
+                              </div>
+                            </div>
+                          </div>
+                          <div className="mt-auto relative">
+                            <input type="text" disabled placeholder="Vprašaj Lexoro..." className="w-full bg-neutral-900 border border-white/10 rounded-xl py-3 pl-4 pr-12 text-sm text-white focus:outline-none" />
+                            <div className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white">
+                              <ArrowRight size={16} />
+                            </div>
+                          </div>
+                        </motion.div>
+                      )}
+
+                      {activeWorkspaceTab === 3 && (
+                        <motion.div 
+                          key="tab3"
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          transition={{ duration: 0.3 }}
+                          className="absolute inset-0 p-6 flex flex-col"
+                        >
+                          <div className="flex items-center justify-between mb-4">
+                            <h3 className="text-white font-medium">Osnutek: Odpoved pogodbe</h3>
+                            <div className="flex gap-2">
+                              <button className="text-xs bg-neutral-800 text-neutral-300 px-3 py-1.5 rounded-lg hover:bg-neutral-700 transition">Kopiraj</button>
+                              <button className="text-xs bg-blue-600 text-white px-3 py-1.5 rounded-lg hover:bg-blue-500 transition">Izvozi v Word</button>
+                            </div>
+                          </div>
+                          <div className="flex-1 bg-white rounded-xl p-6 overflow-hidden relative">
+                            <div className="absolute top-0 left-0 w-full h-8 bg-gradient-to-b from-white to-transparent z-10"></div>
+                            <div className="absolute bottom-0 left-0 w-full h-12 bg-gradient-to-t from-white to-transparent z-10"></div>
+                            <div className="text-black font-serif text-sm leading-relaxed space-y-4 opacity-90">
+                              <p className="text-right font-sans text-xs text-gray-500">Ljubljana, 15. maj 2026</p>
+                              <p className="font-bold text-center text-base uppercase mt-4">Redna odpoved pogodbe o zaposlitvi iz poslovnega razloga</p>
+                              <p>Spoštovani g. Janez Novak,</p>
+                              <p>Na podlagi 1. alineje prvega odstavka 89. člena Zakona o delovnih razmerjih (ZDR-1) vam podajamo redno odpoved pogodbe o zaposlitvi, sklenjene dne 12. 4. 2018, za delovno mesto "Vodja prodaje".</p>
+                              <p className="font-bold">Obrazložitev:</p>
+                              <p>Zaradi organizacijskih sprememb v podjetju in ukinitve oddelka za terensko prodajo je prenehala potreba po opravljanju vašega dela pod pogoji iz pogodbe o zaposlitvi...</p>
+                            </div>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+               </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* COMPARISON SECTION */}
+      <section className="bg-neutral-900/50 py-24 border-t border-white/5 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(37,99,235,0.05)_0%,transparent_50%)]" />
+        <div className="mx-auto max-w-5xl px-6 lg:px-8 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 mb-6 rounded-full border border-blue-500/30 bg-blue-900/10 backdrop-blur-sm">
+              <span className="font-sans text-xs font-semibold text-blue-300 tracking-wide uppercase">Primerjava</span>
+            </div>
+            <h2 className="font-serif text-4xl md:text-5xl text-white mb-8">Specializirano za pravno delo</h2>
+            <div className="text-lg text-neutral-400 max-w-3xl mx-auto leading-relaxed space-y-4">
+              <p>Splošni AI modeli, kot so ChatGPT, Gemini ali Claude, so zasnovani za širok spekter nalog in nimajo jasnega ter celovitega dostopa do pravnih virov. <span className="text-white font-medium">Lexora pa je zasnovana posebej za delo pravnikov.</span></p>
+              <p>Omogoča delo v kontekstu konkretne pravne zadeve — z dokumenti, zakonodajo in sodno prakso na enem mestu.</p>
+              <p>Splošni AI modeli pomagajo pri posameznih vprašanjih. <span className="text-white font-medium">Lexora pa omogoča delo na celotni pravni zadevi</span>, zato lahko pravnik hitreje razume primer in pripravi pravno stališče.</p>
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mb-16"
+          >
+            <div className="bg-neutral-950 rounded-3xl border border-white/10 overflow-hidden shadow-2xl">
+              <div className="overflow-x-auto">
+                <table className="w-full text-left border-collapse">
+                  <thead>
+                    <tr className="border-b border-white/10 bg-neutral-900/50">
+                      <th className="p-6 text-sm font-medium text-neutral-400 uppercase tracking-wider w-1/2">Funkcionalnost</th>
+                      <th className="p-6 text-center text-lg font-serif font-normal text-white bg-blue-600/10 border-x border-blue-500/20 w-1/4">Lexora</th>
+                      <th className="p-6 text-center text-sm font-medium text-neutral-400 uppercase tracking-wider w-1/4">Splošni AI modeli</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/5">
+                    {[
+                      { feature: "Hiter pregled celotnega spisa (pogodbe, sodbe, dopisi)", lexora: true, general: false },
+                      { feature: "Delo v kontekstu celotne zadeve", lexora: true, general: false },
+                      { feature: "Povezovanje dejstev z zakonodajo", lexora: true, general: false },
+                      { feature: "Iskanje relevantne sodne prakse", lexora: true, general: false },
+                      { feature: "Strukturirana analiza pravnega problema", lexora: true, general: false },
+                      { feature: "Priprava pravnih osnutkov (tožbe, odgovori, pravna mnenja)", lexora: true, general: false },
+                      { feature: "Delo z dokumenti, zakonodajo in sodno prakso na enem mestu", lexora: true, general: false },
+                      { feature: "Odgovori na splošna pravna vprašanja", lexora: true, general: true },
+                    ].map((row, i) => (
+                      <tr key={i} className="hover:bg-white/[0.02] transition-colors">
+                        <td className="p-6 text-neutral-300 font-medium">{row.feature}</td>
+                        <td className="p-6 text-center bg-blue-600/5 border-x border-blue-500/10">
+                          {row.lexora ? (
+                            <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-emerald-500/10 text-emerald-400">
+                              <Check size={18} strokeWidth={3} />
+                            </div>
+                          ) : (
+                            <Minus size={18} className="mx-auto text-neutral-600" />
+                          )}
+                        </td>
+                        <td className="p-6 text-center">
+                          {row.general ? (
+                            <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-emerald-500/10 text-emerald-400">
+                              <Check size={18} strokeWidth={3} />
+                            </div>
+                          ) : (
+                            <Minus size={18} className="mx-auto text-neutral-600" />
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </motion.div>
+
+
+        </div>
+      </section>
+
+      {/* SECURITY SECTION */}
+      <section id="security" className="bg-neutral-950 py-24 border-t border-white/5 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(16,185,129,0.05)_0%,transparent_50%)]" />
+        <div className="mx-auto max-w-5xl px-6 lg:px-8 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+            >
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 mb-6 rounded-full border border-emerald-500/30 bg-emerald-900/10 backdrop-blur-sm">
+                <Lock size={14} className="text-emerald-400" />
+                <span className="font-sans text-xs font-semibold text-emerald-300 tracking-wide uppercase">Varnost in zasebnost</span>
+              </div>
+              <h2 className="font-serif text-4xl md:text-5xl text-white mb-8">Vaši podatki ostanejo vaši.</h2>
+              <p className="text-lg text-neutral-400 mb-10 leading-relaxed">
+                Zavedamo se, da je zaupnost v pravnem poklicu na prvem mestu. Lexora je zasnovana z najvišjimi varnostnimi standardi, ki zagotavljajo, da so vaši dokumenti in podatki strank popolnoma varni.
+              </p>
+              
+              <ul className="space-y-6">
+                {[
+                  { title: "Brez učenja modelov", desc: "Vaši dokumenti in poizvedbe se nikoli ne uporabljajo za učenje ali izboljševanje AI modelov." },
+                  { title: "Enkripcija podatkov", desc: "Vsi podatki so šifrirani med prenosom (TLS 1.3) in v mirovanju (AES-256)." },
+                  { title: "Skladnost z GDPR", desc: "Infrastruktura je v celoti skladna z evropsko zakonodajo o varstvu osebnih podatkov." }
+                ].map((item, i) => (
+                  <motion.li 
+                    key={i}
+                    whileHover={{ x: 5 }}
+                    className="flex gap-4"
+                  >
+                    <div className="w-8 h-8 rounded-full bg-emerald-500/10 flex items-center justify-center shrink-0 mt-1">
+                      <CheckCircle size={16} className="text-emerald-500" />
+                    </div>
+                    <div>
+                      <h4 className="text-white font-medium mb-1">{item.title}</h4>
+                      <p className="text-sm text-neutral-400 leading-relaxed">{item.desc}</p>
+                    </div>
+                  </motion.li>
+                ))}
+              </ul>
+            </motion.div>
+            
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="relative"
+            >
+               <div className="absolute inset-0 bg-emerald-500/10 blur-[100px] rounded-full animate-pulse-soft" />
+               <div className="relative bg-neutral-900 rounded-[3rem] border border-white/10 p-10 shadow-2xl overflow-hidden group">
+                  <div className="absolute inset-0 bg-gradient-to-br from-emerald-600/5 to-transparent" />
+                  
+                  <div className="relative z-10 flex flex-col items-center text-center">
+                    <div className="w-24 h-24 rounded-full bg-neutral-950 border border-emerald-500/20 flex items-center justify-center mb-8 shadow-[0_0_40px_rgba(16,185,129,0.1)] group-hover:shadow-[0_0_60px_rgba(16,185,129,0.2)] transition-shadow duration-500">
+                      <Shield size={40} className="text-emerald-400" />
                     </div>
                     
-                    <div className="flex gap-2 items-center text-[10px] text-neutral-500 ml-11">
-                      <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse"></span>
-                      <span>Generiram odgovor...</span>
+                    <div className="space-y-4 w-full">
+                      <div className="bg-neutral-950/50 border border-white/5 rounded-2xl p-4 flex items-center justify-between">
+                        <span className="text-sm text-neutral-400">Podatkovni centri</span>
+                        <span className="text-sm font-medium text-white flex items-center gap-2">
+                          <Globe size={14} className="text-emerald-500" />
+                          EU (Frankfurt)
+                        </span>
+                      </div>
+                      <div className="bg-neutral-950/50 border border-white/5 rounded-2xl p-4 flex items-center justify-between">
+                        <span className="text-sm text-neutral-400">Zadrževanje podatkov</span>
+                        <span className="text-sm font-medium text-white flex items-center gap-2">
+                          <Database size={14} className="text-emerald-500" />
+                          Popoln nadzor
+                        </span>
+                      </div>
+                      <div className="bg-neutral-950/50 border border-white/5 rounded-2xl p-4 flex items-center justify-between">
+                        <span className="text-sm text-neutral-400">Dostop do podatkov</span>
+                        <span className="text-sm font-medium text-white flex items-center gap-2">
+                          <Lock size={14} className="text-emerald-500" />
+                          Samo vi
+                        </span>
+                      </div>
                     </div>
                   </div>
-
-                  <div className="relative">
-                     <div className="h-10 w-full bg-neutral-950 rounded-lg border border-white/10 flex items-center px-3">
-                       <div className="w-0.5 h-4 bg-blue-500 animate-pulse mr-2"></div>
-                       <span className="text-xs text-neutral-500">Vprašaj Lexoro...</span>
-                     </div>
-                     <div className="absolute right-2 top-2 p-1.5 bg-blue-600 rounded-md shadow-lg shadow-blue-600/20 cursor-pointer hover:bg-blue-500 transition">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                     </div>
-                  </div>
-                </div>
-
-                {/* Floating Widgets */}
-                <div className="absolute -right-6 top-20 bg-neutral-800/90 backdrop-blur border border-white/10 p-3 rounded-xl shadow-xl animate-float-medium">
-                   <div className="text-[10px] text-neutral-400 uppercase font-semibold mb-1">Relevantnost</div>
-                   <div className="flex items-end gap-1 h-8">
-                     <div className="w-1.5 bg-blue-600 h-[40%] rounded-sm"></div>
-                     <div className="w-1.5 bg-blue-500 h-[70%] rounded-sm"></div>
-                     <div className="w-1.5 bg-blue-400 h-[100%] rounded-sm"></div>
-                     <div className="w-1.5 bg-white h-[60%] rounded-sm"></div>
-                   </div>
-                </div>
-                
-                <div className="absolute -left-4 bottom-20 bg-neutral-800/90 backdrop-blur border border-white/10 px-3 py-2 rounded-lg shadow-xl animate-float-fast flex items-center gap-2">
-                   <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                   <span className="text-[10px] font-mono text-neutral-300">VS RS II Ips 12/2023</span>
-                </div>
-             </div>
+               </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* FEATURES SECTION (Enhanced Animations & KMALU badges) */}
-      <section id="showcase" className="py-20 md:py-24 bg-neutral-950 text-white border-t border-white/5">
-        <div className="mx-auto max-w-6xl px-6">
-          <header className="mb-14">
-            <h2 className="font-serif text-4xl md:text-5xl tracking-tight text-white">Funkcionalnosti</h2>
-            <p className="text-neutral-400 mt-4 max-w-2xl">
-              Vse, kar pravnik potrebuje za hitro raziskavo in odgovore — na enem mestu.
-            </p>
-          </header>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-
-            {/* 1. DOKUMENT QA (Swapped to 1st) */}
-            <article className="group relative overflow-hidden rounded-3xl bg-neutral-900/50 ring-1 ring-white/10 hover:ring-blue-500/40 transition duration-500">
-              <div className="absolute -inset-40 bg-gradient-to-tr from-blue-500/10 via-teal-400/5 to-transparent blur-3xl opacity-0 group-hover:opacity-100 transition pointer-events-none"></div>
-              
-              <div className="p-8 pt-12">
-                <div className="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center mb-6">
-                  <MessageSquare className="text-blue-400" size={24} />
-                </div>
-                <h3 className="text-2xl font-semibold pr-24 leading-tight">Dokument QA</h3>
-                <p className="text-neutral-400 mt-2 leading-relaxed">
-                  Pogovarjaj se s svojimi dokumenti in pridobi takojšnje odgovore.
-                </p>
-
-                {/* ANIMATION CONTAINER: CHAT */}
-                <div className="mt-8 rounded-2xl bg-black/40 border border-neutral-800 p-4 relative overflow-hidden h-48 flex flex-col justify-end space-y-4">
-                   {/* User Message */}
-                   <div className="self-end max-w-[80%] p-3 rounded-2xl rounded-tr-none bg-blue-600 text-xs text-white shadow-lg">
-                      Povzetek 5. člena?
-                   </div>
-                   
-                   {/* Result Card (Now relative and stacked to prevent overlap) */}
-                   <div className="relative bg-neutral-800/95 backdrop-blur border border-green-500/30 p-3 rounded-xl shadow-xl animate-[pulse_3s_ease-in-out_infinite]">
-                      <div className="flex items-start gap-3">
-                         <div className="w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center shrink-0 mt-0.5">
-                            <CheckCircle size={14} className="text-green-400" />
-                         </div>
-                         <div className="space-y-1">
-                            <p className="text-[10px] text-green-400 font-bold uppercase">Odgovor</p>
-                            <p className="text-xs text-neutral-300 leading-snug">
-                               5. člen določa <span className="text-white font-medium bg-white/10 px-1 rounded">30-dnevni rok</span> za pritožbo.
-                            </p>
-                         </div>
-                      </div>
-                   </div>
-                </div>
-              </div>
-            </article>
-
-            {/* 2. ZAKONODAJA (NEW: Digital Scanner/Decoder Effect) */}
-            <article className="group relative overflow-hidden rounded-3xl bg-neutral-900/50 ring-1 ring-white/10 hover:ring-blue-500/40 transition duration-500">
-              <div className="absolute -inset-40 bg-gradient-to-tr from-blue-500/10 via-sky-400/5 to-transparent blur-3xl opacity-0 group-hover:opacity-100 transition pointer-events-none"></div>
-              
-              <div className="p-8 pt-12">
-                <div className="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center mb-6">
-                  <FileText className="text-blue-400" size={24} />
-                </div>
-                <h3 className="text-2xl font-semibold pr-24 leading-tight">Iskanje po zakonodaji</h3>
-                <p className="text-neutral-400 mt-2 leading-relaxed">
-                  Vedno ažurni členi zakonov in predpisi iz PISRS.
-                </p>
-
-                {/* ANIMATION CONTAINER: DIGITAL SCANNER */}
-                <div className="mt-8 rounded-2xl bg-black/40 border border-neutral-800 relative overflow-hidden h-48 flex items-center justify-center px-6">
-                   {/* Background Documents (Blurred) */}
-                   <div className="w-full space-y-4 opacity-30 blur-[1px]">
-                      <div className="flex gap-2">
-                         <div className="w-8 h-2 bg-neutral-600 rounded"></div>
-                         <div className="w-full h-2 bg-neutral-700 rounded"></div>
-                      </div>
-                      <div className="w-3/4 h-2 bg-neutral-700 rounded"></div>
-                      
-                      {/* Target Section (Placeholder) */}
-                      <div className="py-2"></div>
-
-                      <div className="w-full h-2 bg-neutral-700 rounded"></div>
-                      <div className="flex gap-2">
-                         <div className="w-12 h-2 bg-neutral-600 rounded"></div>
-                         <div className="w-2/3 h-2 bg-neutral-700 rounded"></div>
-                      </div>
-                   </div>
-
-                   {/* Laser Scanner Line */}
-                   <div className="absolute inset-x-0 h-8 bg-gradient-to-b from-blue-500/0 via-blue-500/20 to-blue-500/0 border-b border-blue-400/50 animate-scan-vertical pointer-events-none z-20 shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>
-
-                   {/* The Decoded Clause (Pops up in middle) */}
-                   <div className="absolute z-10 w-[85%] bg-neutral-900 border border-blue-500/50 rounded p-3 shadow-2xl animate-pulse">
-                      <div className="flex items-center justify-between mb-2">
-                         <span className="text-[10px] font-mono text-blue-400">ZDR-1: 142. člen</span>
-                         <span className="px-1.5 py-0.5 bg-green-500/20 text-green-400 text-[8px] font-bold rounded border border-green-500/20">VELJAVEN</span>
-                      </div>
-                      <div className="space-y-1.5">
-                         <div className="h-2 w-full bg-neutral-200 rounded-sm"></div>
-                         <div className="h-2 w-full bg-neutral-200 rounded-sm"></div>
-                         <div className="h-2 w-4/5 bg-neutral-200 rounded-sm"></div>
-                      </div>
-                   </div>
-                </div>
-              </div>
-            </article>
-
-            {/* 3. PRAVO EU (NEW: Directive Connection Network) */}
-            <article className="group relative overflow-hidden rounded-3xl bg-neutral-900/50 ring-1 ring-white/10 hover:ring-blue-500/40 transition duration-500">
-              <div className="absolute -inset-40 bg-gradient-to-tr from-indigo-500/10 via-blue-500/5 to-transparent blur-3xl opacity-0 group-hover:opacity-100 transition pointer-events-none"></div>
-              
-              <div className="p-8 pt-12">
-                <div className="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center mb-6">
-                    <Globe className="text-blue-400" size={24} />
-                </div>
-                
-                <h3 className="text-2xl font-semibold pr-4 leading-tight">Iskanje po pravu EU</h3>
-                <p className="text-neutral-400 mt-2 leading-relaxed">
-                  Povezava z EUR-Lex direktivami, uredbami in sodbami.
-                </p>
-                <div className="mt-4">
-                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-500/20 text-blue-300 border border-blue-500/20 uppercase tracking-wide">Kmalu</span>
-                </div>
-
-                {/* ANIMATION CONTAINER: EU STARS CONNECTION */}
-                <div className="mt-8 rounded-2xl bg-black/40 border border-neutral-800 relative overflow-hidden h-48 flex items-center justify-center">
-                   
-                   {/* Background Grid */}
-                   <div className="absolute inset-0 opacity-20" style={{backgroundImage: 'radial-gradient(#3b82f6 1px, transparent 1px)', backgroundSize: '20px 20px'}}></div>
-
-                   {/* Central "Directive" Node */}
-                   <div className="relative z-20 w-12 h-14 bg-blue-900/80 border border-blue-400/50 rounded flex flex-col items-center justify-center shadow-[0_0_30px_rgba(59,130,246,0.3)]">
-                      <div className="w-6 h-1 bg-blue-400 mb-1 rounded-full"></div>
-                      <div className="w-4 h-1 bg-blue-400/50 mb-1 rounded-full"></div>
-                      <div className="w-5 h-1 bg-blue-400/50 rounded-full"></div>
-                   </div>
-
-                   {/* Rotating Ring of Stars */}
-                   <div className="absolute z-10 w-40 h-40 animate-spin-slow">
-                      {[...Array(12)].map((_, i) => (
-                         <div 
-                           key={i}
-                           className="absolute w-2 h-2 text-yellow-400"
-                           style={{
-                              top: '50%',
-                              left: '50%',
-                              transform: `rotate(${i * 30}deg) translate(70px) rotate(-${i * 30}deg)` // Keep stars upright if needed, or rotate with ring
-                           }}
-                         >
-                            <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow-[0_0_5px_rgba(250,204,21,0.8)]">
-                               <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                            </svg>
-                         </div>
-                      ))}
-                   </div>
-
-                   {/* Connection Lines (Simulated Data Beams) */}
-                   <svg className="absolute inset-0 w-full h-full pointer-events-none z-0">
-                      <line x1="50%" y1="50%" x2="50%" y2="15%" stroke="url(#grad1)" strokeWidth="1" className="opacity-0 animate-pulse" style={{animationDuration: '2s'}} />
-                      <line x1="50%" y1="50%" x2="80%" y2="65%" stroke="url(#grad1)" strokeWidth="1" className="opacity-0 animate-pulse" style={{animationDelay: '0.5s', animationDuration: '2s'}} />
-                      <line x1="50%" y1="50%" x2="20%" y2="65%" stroke="url(#grad1)" strokeWidth="1" className="opacity-0 animate-pulse" style={{animationDelay: '1s', animationDuration: '2s'}} />
-                      <defs>
-                        <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
-                          <stop offset="0%" style={{stopColor:'transparent', stopOpacity:0}} />
-                          <stop offset="50%" style={{stopColor:'#3b82f6', stopOpacity:1}} />
-                          <stop offset="100%" style={{stopColor:'transparent', stopOpacity:0}} />
-                        </linearGradient>
-                      </defs>
-                   </svg>
-                </div>
-              </div>
-            </article>
-
-            {/* 4. SODNA PRAKSA (Swapped to 4th) */}
-            <article className="group relative overflow-hidden rounded-3xl bg-neutral-900/50 ring-1 ring-white/10 hover:ring-blue-500/40 transition duration-500">
-              <div className="absolute -inset-40 bg-gradient-to-tr from-blue-600/10 via-blue-500/5 to-transparent blur-3xl opacity-0 group-hover:opacity-100 transition pointer-events-none"></div>
-              
-              <div className="p-8 pt-12">
-                <div className="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center mb-6">
-                    <Search className="text-blue-400" size={24} />
-                </div>
-
-                <h3 className="text-2xl font-semibold pr-4 leading-tight">Iskanje po sodni praksi</h3>
-                <p className="text-neutral-400 mt-2 leading-relaxed">
-                  Neposreden dostop do baze slovenskih sodb z uporabo naravnega jezika.
-                </p>
-                
-
-                {/* ANIMATION CONTAINER: SCROLLING DB */}
-                <div className="mt-8 rounded-2xl bg-black/40 border border-neutral-800 p-4 relative overflow-hidden h-48 flex flex-col justify-center">
-                   {/* Background scrolling code */}
-                   <div className="absolute inset-0 opacity-20 flex flex-col gap-2 p-4 animate-scroll-up pointer-events-none font-mono text-[10px] text-neutral-400">
-                      {[...Array(10)].map((_, i) => (
-                        <div key={i} className="flex gap-2">
-                           <span className="text-blue-700">ID_{1000+i}</span>
-                           <span>VS RS Sodba II Ips {200+i}/2023...</span>
-                        </div>
-                      ))}
-                      {[...Array(10)].map((_, i) => (
-                        <div key={`d-${i}`} className="flex gap-2">
-                           <span className="text-blue-700">ID_{1000+i}</span>
-                           <span>VS RS Sodba II Ips {200+i}/2023...</span>
-                        </div>
-                      ))}
-                   </div>
-                   
-                   {/* Foreground "Found" Card */}
-                   <div className="relative z-10 bg-neutral-800/90 backdrop-blur border border-blue-500/30 p-3 rounded-lg shadow-2xl shadow-blue-900/20 transform group-hover:scale-105 transition duration-500">
-                      <div className="flex items-center gap-2 mb-2 border-b border-white/5 pb-2">
-                         <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                         <span className="text-xs font-semibold text-white">Najdena precedenčna sodba</span>
-                      </div>
-                      <div className="space-y-1.5">
-                         <div className="h-1.5 w-full bg-neutral-700 rounded-full"></div>
-                         <div className="h-1.5 w-3/4 bg-neutral-700 rounded-full"></div>
-                         <div className="flex items-center gap-2 mt-2">
-                            <span className="text-[10px] px-1.5 py-0.5 bg-blue-500/20 text-blue-300 rounded">98% ujemanje</span>
-                         </div>
-                      </div>
-                   </div>
-                </div>
-              </div>
-            </article>
-
-            {/* 5. WORKFLOWI (Enhanced: Pipeline Flow) */}
-            <article className="md:col-span-2 group relative overflow-hidden rounded-3xl bg-neutral-900/50 ring-1 ring-white/10 hover:ring-blue-500/40 transition duration-500">
-              <div className="absolute -inset-40 bg-gradient-to-tr from-blue-500/10 via-indigo-500/5 to-transparent blur-3xl opacity-0 group-hover:opacity-100 transition pointer-events-none"></div>
-              
-              <div className="p-8 pt-12 flex flex-col md:flex-row items-center gap-8">
-                <div className="flex-1">
-                  <div className="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center mb-6">
-                        <GitMerge className="text-blue-400" size={24} />
-                  </div>
-                  
-                  <h3 className="text-2xl font-semibold leading-tight">AI Workflowi</h3>
-                  <p className="text-neutral-400 mt-2 leading-relaxed">
-                    Avtomatizirajte kompleksne procese z zaporedjem AI nalog. Od iskanja do priprave končnega dokumenta.
-                  </p>
-                    <div className="mt-4">
-                       <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-500/20 text-blue-300 border border-blue-500/20 uppercase tracking-wide">Kmalu</span>
-                    </div>
-                </div>
-
-                {/* ANIMATION CONTAINER: PIPELINE */}
-                <div className="w-full md:w-1/2 h-48 rounded-2xl bg-black/40 border border-neutral-800 relative overflow-hidden flex items-center justify-center px-8">
-                   {/* Connecting Line */}
-                   <div className="absolute top-1/2 left-16 right-16 h-0.5 bg-neutral-800 -translate-y-1/2"></div>
-                   
-                   {/* Flowing Particle */}
-                   <div className="absolute top-1/2 left-16 right-16 h-1 -translate-y-1/2 pointer-events-none overflow-hidden">
-                      <div className="flow-packet"></div>
-                   </div>
-
-                   {/* Steps */}
-                   <div className="relative z-10 w-full flex justify-between">
-                      {/* Step 1 */}
-                      <div className="flex flex-col items-center gap-2">
-                         <div className="w-10 h-10 rounded-full bg-neutral-800 border border-neutral-600 flex items-center justify-center shadow-lg group-hover:border-blue-500 transition-colors duration-500">
-                            <Search size={16} className="text-neutral-400" />
-                         </div>
-                         <span className="text-[10px] text-neutral-500">Iskanje</span>
-                      </div>
-                      
-                      {/* Step 2 */}
-                      <div className="flex flex-col items-center gap-2">
-                         <div className="w-10 h-10 rounded-full bg-neutral-800 border border-neutral-600 flex items-center justify-center shadow-lg group-hover:border-blue-500 transition-colors duration-500 delay-150">
-                            <FileText size={16} className="text-neutral-400" />
-                         </div>
-                         <span className="text-[10px] text-neutral-500">Analiza</span>
-                      </div>
-
-                      {/* Step 3 (Final) */}
-                      <div className="flex flex-col items-center gap-2">
-                         <div className="w-12 h-12 rounded-full bg-neutral-800 border-2 border-blue-500 flex items-center justify-center shadow-[0_0_20px_rgba(59,130,246,0.3)] node-pulse">
-                             <CheckCircle size={20} className="text-blue-400" />
-                         </div>
-                         <span className="text-[10px] text-blue-400 font-bold">Rešitev</span>
-                      </div>
-                   </div>
-                </div>
-              </div>
-            </article>
-
-          </div>
-        </div>
-      </section>
-
-      {/* DEMO SLIDESHOW REPLACED WITH VIDEO */}
-      <section id="demo" className="bg-neutral-900 py-20 border-t border-white/5">
-        <div className="mx-auto max-w-6xl px-6">
-          <div className="mx-auto max-w-3xl text-center mb-12">
+      {/* DEMO VIDEO SLIDESHOW */}
+      <section id="demo" className="bg-neutral-900 py-20 border-t border-white/5 overflow-hidden">
+        <div className="mx-auto max-w-5xl px-6 lg:px-8 mb-12">
+          <div className="mx-auto max-w-2xl text-center mb-10">
             <h2 className="font-serif text-3xl md:text-4xl text-white">Predogled Platforme</h2>
-            <p className="mt-3 text-neutral-400">Lexora v akciji.</p>
+            <p className="mt-3 text-neutral-400">Izberite področje in si oglejte Lexoro v akciji.</p>
           </div>
 
-          {/* Video Container */}
-          <div className="relative rounded-2xl border border-white/10 bg-black shadow-[0_10px_60px_rgba(0,0,0,0.5)] overflow-hidden w-full aspect-video">
-            <iframe 
-              className="absolute inset-0 w-full h-full"
-              src="https://www.youtube.com/embed/LzPo5sKb_7c"              
-              title="Lexora Demo"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-              allowFullScreen
-            ></iframe>
+          {/* Navigation Tabs (Above Slideshow) */}
+          <div className="flex flex-wrap justify-center gap-2">
+            {videos.map((video, index) => (
+              <button
+                key={video.key}
+                onClick={() => scrollToVideo(index)}
+                className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 border ${
+                  activeVideo.key === video.key 
+                    ? 'bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-600/20' 
+                    : 'bg-neutral-800 border-white/5 text-neutral-400 hover:text-white hover:border-white/20'
+                }`}
+              >
+                {video.title}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Full Width Horizontal Slideshow Container */}
+        <div className="relative group w-full">
+          {/* Decorative Glow */}
+          <div className="absolute -inset-4 bg-gradient-to-r from-blue-600/10 to-blue-400/10 rounded-[2rem] blur-3xl opacity-50 pointer-events-none"></div>
+          
+          <div 
+            ref={scrollContainerRef}
+            className="relative flex overflow-x-hidden snap-x snap-mandatory scroll-smooth py-20 px-[10%] md:px-[20%]"
+          >
+            {videos.map((video) => (
+              <div 
+                key={video.key}
+                className="w-[90%] md:w-[80%] shrink-0 snap-center px-1 md:px-2"
+              >
+                <div className={`w-full aspect-video rounded-3xl overflow-hidden border transition-all duration-700 ease-out shadow-[0_40px_100px_rgba(0,0,0,0.9)] ${
+                  activeVideo.key === video.key 
+                    ? 'border-blue-500/60 scale-[1.15] md:scale-125 z-20 opacity-100 shadow-blue-500/40' 
+                    : 'border-white/5 scale-75 z-0 opacity-10 grayscale blur-[3px]'
+                }`}>
+                  <iframe 
+                    className="w-full h-full"
+                    src={`https://www.youtube.com/embed/${video.id}?autoplay=0&rel=0&controls=0&modestbranding=1&showinfo=0`} 
+                    title={`Lexora Demo - ${video.title}`}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    allowFullScreen
+                  ></iframe>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Navigation Arrows */}
+          <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-4 md:px-12 pointer-events-none">
+            <button 
+              onClick={() => {
+                const currentIndex = videos.findIndex(v => v.key === activeVideo.key);
+                if (currentIndex > 0) scrollToVideo(currentIndex - 1);
+              }}
+              className={`w-12 h-12 rounded-full bg-black/60 backdrop-blur border border-white/10 flex items-center justify-center text-white transition-all pointer-events-auto ${
+                videos.findIndex(v => v.key === activeVideo.key) === 0 ? 'opacity-0 invisible' : 'opacity-0 group-hover:opacity-100'
+              }`}
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+            </button>
+            <button 
+              onClick={() => {
+                const currentIndex = videos.findIndex(v => v.key === activeVideo.key);
+                if (currentIndex < videos.length - 1) scrollToVideo(currentIndex + 1);
+              }}
+              className={`w-12 h-12 rounded-full bg-black/60 backdrop-blur border border-white/10 flex items-center justify-center text-white transition-all pointer-events-auto ${
+                videos.findIndex(v => v.key === activeVideo.key) === videos.length - 1 ? 'opacity-0 invisible' : 'opacity-0 group-hover:opacity-100'
+              }`}
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div className="mx-auto max-w-6xl px-6 mt-12">
+          {/* Active Video Info */}
+          <div className="text-center animate-fade-in">
+            <h3 className="text-2xl font-serif text-white mb-2">{activeVideo.title}</h3>
+            <p className="text-sm text-neutral-500 font-mono uppercase tracking-widest">Predstavitev uporabe • {activeVideo.duration}</p>
           </div>
         </div>
       </section>
 
-      {/* POVPRAŠEVANJE (Contact Form) */}
-      <section id="contact" className="bg-black text-white py-20 font-sans">
-        <div className="mx-auto max-w-2xl px-6">
-          <h2 className="font-serif text-3xl md:text-4xl text-center mb-6">Pošljite povpraševanje</h2>
-          <p className="text-neutral-300 text-center mb-10">
-            Izpolnite spodnji obrazec in kontaktirali vas bomo v najkrajšem možnem času.
-          </p>
+      {/* CALL TO ACTION SECTION */}
+      <section className="bg-blue-600 py-24 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.15)_0%,transparent_70%)]" />
+        <div className="mx-auto max-w-4xl px-6 lg:px-8 text-center relative z-10">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="font-serif text-4xl md:text-6xl text-white mb-8 leading-tight">Rezervirajte termin za predstavitev</h2>
+            <p className="text-xl text-blue-100 mb-12 leading-relaxed max-w-2xl mx-auto">
+              Spoznajte, kako lahko Lexora postane vaša nova pravna supermoč. V 30 minutah vam pokažemo vse ključne funkcionalnosti.
+            </p>
+            
+            <motion.a 
+              href="https://calendly.com/jan-lexora/30min" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="inline-flex items-center gap-3 px-10 py-5 rounded-xl bg-white text-blue-600 font-bold text-lg hover:shadow-[0_20px_60px_rgba(255,255,255,0.3)] transition-all"
+            >
+              Rezerviraj predstavitev
+              <ArrowRight size={20} />
+            </motion.a>
+          </motion.div>
+        </div>
+      </section>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <label htmlFor="name" className="block text-sm font-medium text-neutral-300">Ime in priimek</label>
-              <input 
-                type="text" 
-                id="name" 
-                name="name" 
-                value={formData.name}
-                onChange={handleInputChange}
-                required
-                className="mt-1 block w-full rounded-md bg-neutral-900 border border-neutral-700 text-white placeholder-neutral-500 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
-              />
+      {/* MISSION SECTION (Moved to Footer area) */}
+      <section className="bg-neutral-950 py-16 relative overflow-hidden border-t border-white/5">
+        <div className="mx-auto max-w-4xl px-6 lg:px-8 relative z-10">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center"
+          >
+            <h2 className="font-serif text-3xl md:text-4xl text-white mb-6">Prihodnost prava</h2>
+            <div className="space-y-4 text-base md:text-lg text-neutral-400 leading-relaxed mb-8">
+              <p>
+                Lexora pravnika ne nadomešča. Deluje kot <span className="text-white font-medium">digitalni pravni asistent</span>, ki vam omogoča, da več časa namenite pravni presoji in strategiji.
+              </p>
+              <p>
+                Umetna inteligenca postopoma postaja del pravne prakse. Orodja, ki pomagajo pri analizi dokumentov in pravni raziskavi, lahko pomembno prispevajo k večji učinkovitosti pri delu.
+              </p>
+              <p className="text-blue-200/80">
+                Spremljajte najnovejše trende in vpoglede v prihodnost pravne tehnologije na našem blogu.
+              </p>
             </div>
-
-            <div className="space-y-2">
-                <label className="block text-sm font-medium text-gray-200">
-                  Podjetje
-                </label>
-                <input
-                  type="text"
-                  name="company"
-                  value={formData.company}
-                  onChange={(e) =>
-                    setFormData((prev) => ({ ...prev, company: e.target.value }))
-                  }
-                  className="w-full rounded-md bg-neutral-900 border border-neutral-700 px-4 py-3 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  
-                />
-            </div>
-
-
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-neutral-300">E-pošta</label>
-              <input 
-                type="email" 
-                id="email" 
-                name="email" 
-                value={formData.email}
-                onChange={handleInputChange}
-                required
-                className="mt-1 block w-full rounded-md bg-neutral-900 border border-neutral-700 text-white placeholder-neutral-500 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="phone" className="block text-sm font-medium text-neutral-300">Telefonska številka</label>
-              <input 
-                type="tel" 
-                id="phone" 
-                name="phone"
-                value={formData.phone}
-                onChange={handleInputChange} 
-                className="mt-1 block w-full rounded-md bg-neutral-900 border border-neutral-700 text-white placeholder-neutral-500 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="message" className="block text-sm font-medium text-neutral-300">Sporočilo</label>
-              <textarea 
-                id="message" 
-                name="message" 
-                rows={4} 
-                value={formData.message}
-                onChange={handleInputChange}
-                required
-                className="mt-1 block w-full rounded-md bg-neutral-900 border border-neutral-700 text-white placeholder-neutral-500 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
-              ></textarea>
-            </div>
-
-            <div className="text-center">
-              <button 
-                type="submit" 
-                disabled={formStatus === 'submitting'}
-                className="btn-demo px-8 py-3 rounded-lg text-white font-semibold disabled:opacity-70 disabled:cursor-not-allowed"
-              >
-                {formStatus === 'submitting' ? 'Pošiljam...' : 'Pošlji povpraševanje'}
-              </button>
-              
-              {formStatus === 'success' && (
-                <p className="mt-4 text-sm text-green-400 animate-fade-in">✅ Hvala! Vaše povpraševanje smo prejeli.</p>
-              )}
-              {formStatus === 'error' && (
-                <p className="mt-4 text-sm text-red-400 animate-fade-in">⚠️ Prišlo je do napake. Poskusite znova.</p>
-              )}
-
-              <div className="mt-10 pt-6 border-t border-neutral-800">
-                <p className="text-sm text-neutral-400 font-bold mb-2 uppercase tracking-wide">Kontakt</p>
-                <div className="flex flex-col items-center gap-1 text-sm text-neutral-400">
-                   <p>Telefon: <span className="ai-anim font-medium">068 686 880</span></p>
-                   <p>Mail: <span className="ai-anim font-medium">jan@lexora.si</span></p>
-                </div>
-              </div>
-            </div>
-          </form>
+            
+            <a 
+              href="https://blog.lexora.si/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/5 hover:bg-white/10 text-white text-sm font-medium transition-all hover:scale-105 border border-white/10"
+            >
+              Obišči Lexora Blog
+              <ArrowRight size={16} />
+            </a>
+          </motion.div>
         </div>
       </section>
 
       {/* FOOTER */}
       <footer className="bg-neutral-950 text-neutral-300 border-t border-white/5">
-        <div className="mx-auto max-w-6xl px-6 py-10">
+        <div className="mx-auto max-w-5xl px-6 lg:px-8 py-10">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             
             <div className="flex flex-col gap-1">
@@ -690,9 +1612,10 @@ const handleSubmit = async (e: React.FormEvent) => {
             
             <div className="flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-10">
               <nav className="flex flex-wrap gap-x-6 gap-y-3 text-sm">
-                <a className="hover:text-white transition-colors" href="#showcase">Funkcije</a>
                 <a className="hover:text-white transition-colors" href="#demo">Predogled</a>
-                <a className="hover:text-white transition-colors" href="#contact">Povpraševanje</a>
+                <a className="hover:text-white transition-colors" href="https://onboarding.lexora.si/" target="_blank" rel="noopener noreferrer">Kako začeti</a>
+                <a className="hover:text-white transition-colors" href="#security">Varnost</a>
+                <a className="hover:text-white transition-colors" href="https://blog.lexora.si/" target="_blank" rel="noopener noreferrer">Blog</a>
               </nav>
               
               {/* Social Icons */}

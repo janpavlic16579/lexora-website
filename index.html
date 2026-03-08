@@ -6,11 +6,10 @@
   <title>Lexora — AI za pravnike.</title>
   <meta name="description" content="Lexora je napredna AI platforma za pravnike v Sloveniji. Povečajte produktivnost, pospešite postopke in avtomatizirajte pravne naloge z umetno inteligenco.">
 
-<!-- Favicon -->
-<link rel="icon" href="/favicon.png" type="image/png" sizes="32x32">
-<link rel="apple-touch-icon" href="/favicon.png" sizes="180x180">
-<link rel="shortcut icon" href="/favicon.png" type="image/png">
-
+  <!-- Favicon -->
+  <link rel="icon" href="/assets/favicon.png?v=2" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/assets/favicon.png?v=2" sizes="180x180">
+  <link rel="shortcut icon" href="/assets/favicon.png?v=2" type="image/png">
 
   <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -23,36 +22,36 @@
               850: '#1f1f1f',
               900: '#171717',
               950: '#0a0a0a',
+            },
+            blue: {
+              400: '#60a5fa',
+              500: '#3b82f6',
+              600: '#2563eb',
             }
           },
           fontFamily: {
-            serif: ['Georgia','Times New Roman','serif'],
-            sans: ['Inter','system-ui','Arial','sans-serif'],
+            serif: ['Georgia', 'Times New Roman', 'serif'],
+            sans: ['Inter', 'system-ui', 'Arial', 'sans-serif'],
           },
           animation: {
-            'float-slow': 'float 6s ease-in-out infinite',
-            'float-medium': 'float 5s ease-in-out infinite',
+            'float-slow': 'float 8s ease-in-out infinite',
+            'float-medium': 'float 6s ease-in-out infinite',
             'float-fast': 'float 4s ease-in-out infinite',
-            'spin-slow': 'spin 12s linear infinite',
-            'scroll-up': 'scrollUp 10s linear infinite',
-            'scan-vertical': 'scanVertical 3s ease-in-out infinite',
+            'pulse-soft': 'pulseSoft 4s ease-in-out infinite',
+            'glow': 'glow 4s ease-in-out infinite',
           },
           keyframes: {
             float: {
               '0%, 100%': { transform: 'translateY(0)' },
               '50%': { transform: 'translateY(-20px)' },
             },
-            scrollUp: {
-              '0%': { transform: 'translateY(0)' },
-              '100%': { transform: 'translateY(-50%)' },
+            pulseSoft: {
+              '0%, 100%': { opacity: 0.4, scale: 1 },
+              '50%': { opacity: 0.6, scale: 1.05 },
             },
-            highlightLine: {
-              '0%': { width: '0%' },
-              '100%': { width: '100%' }
-            },
-            scanVertical: {
-              '0%': { top: '-10%' },
-              '100%': { top: '110%' }
+            glow: {
+              '0%, 100%': { opacity: 0.3, filter: 'blur(80px)' },
+              '50%': { opacity: 0.5, filter: 'blur(100px)' },
             }
           }
         }
@@ -63,14 +62,51 @@
   <style>
     /* Global Styles */
     html { scroll-behavior: smooth; }
-    body { background-color: #0a0a0a; color: white; }
+    body { 
+      background-color: #0a0a0a; 
+      color: white; 
+      overflow-x: hidden;
+    }
     
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #0a0a0a; }
+    ::-webkit-scrollbar-thumb { 
+      background: #262626; 
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover { background: #404040; }
+
+    /* Typography Refinements */
+    .font-serif {
+      letter-spacing: -0.02em;
+    }
+    
+    .font-sans {
+      letter-spacing: -0.01em;
+    }
+
     /* Gradient Button Flow */
     .btn-demo {
       background: linear-gradient(135deg, #3b82f6, #2563eb, #1d4ed8);
       background-size: 200% 200%;
       animation: btnFlow 6s ease infinite;
+      position: relative;
+      overflow: hidden;
     }
+    .btn-demo::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .btn-demo:hover::after { opacity: 1; }
+    
     @keyframes btnFlow{ 0%{background-position:0% 0%} 50%{background-position:100% 100%} 100%{background-position:0% 0%} }
 
     /* Text Gradient Flow */
@@ -83,6 +119,28 @@
       animation: aiFlow 6s ease infinite;
     }
     @keyframes aiFlow{ 0%{background-position:0% 0%} 50%{background-position:100% 100%} 100%{background-position:0% 0%} }
+
+    /* Glassmorphism */
+    .glass {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .glass-dark {
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    /* Mesh Background */
+    .mesh-bg {
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.15) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(30, 64, 175, 0.1) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(37, 99, 235, 0.1) 0px, transparent 50%),
+        radial-gradient(at 0% 100%, rgba(30, 64, 175, 0.15) 0px, transparent 50%);
+    }
 
     /* 3D Tilt Card */
     .perspective-1000 { perspective: 1000px; }
@@ -174,12 +232,11 @@
     "react/": "https://aistudiocdn.com/react@^19.2.0/"
   }
 }
-  </script>
+</script>
+<link rel="stylesheet" href="/index.css">
 </head>
 <body class="bg-neutral-950 text-white antialiased selection:bg-blue-500/30 selection:text-white">
   <div id="root"></div>
-
-  <!-- DODANO: vstop v React aplikacijo -->
-  <script type="module" src="/index.tsx"></script>
+<script type="module" src="/index.tsx"></script>
 </body>
 </html>
