@@ -1566,24 +1566,21 @@ const App: React.FC = () => {
       </section>
 
       {/* MISSION SECTION (Moved to Footer area) */}
-      <section className="bg-neutral-950 py-16 relative overflow-hidden border-t border-white/5">
-        <div className="mx-auto max-w-4xl px-6 lg:px-8 relative z-10">
+      <section className="bg-neutral-950 py-24 relative overflow-hidden border-t border-white/5">
+        <div className="mx-auto max-w-3xl px-6 lg:px-8 relative z-10">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center"
+            className="text-center flex flex-col items-center"
           >
-            <h2 className="font-serif text-3xl md:text-4xl text-white mb-6">Prihodnost prava</h2>
-            <div className="space-y-4 text-base md:text-lg text-neutral-400 leading-relaxed mb-8">
+            <h2 className="font-serif text-3xl md:text-4xl text-white mb-8">Prihodnost prava</h2>
+            <div className="space-y-6 text-base md:text-lg text-neutral-400 leading-relaxed mb-12 font-light">
               <p>
                 Lexora pravnika ne nadomešča. Deluje kot <span className="text-white font-medium">digitalni pravni asistent</span>, ki vam omogoča, da več časa namenite pravni presoji in strategiji.
               </p>
               <p>
                 Umetna inteligenca postopoma postaja del pravne prakse. Orodja, ki pomagajo pri analizi dokumentov in pravni raziskavi, lahko pomembno prispevajo k večji učinkovitosti pri delu.
-              </p>
-              <p className="text-blue-200/80">
-                Spremljajte najnovejše trende in vpoglede v prihodnost pravne tehnologije na našem blogu.
               </p>
             </div>
             
@@ -1591,10 +1588,10 @@ const App: React.FC = () => {
               href="https://blog.lexora.si/" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/5 hover:bg-white/10 text-white text-sm font-medium transition-all hover:scale-105 border border-white/10"
+              className="group relative inline-flex items-center gap-3 px-8 py-3.5 rounded-full bg-blue-600/10 hover:bg-blue-600/20 text-blue-400 hover:text-blue-300 text-sm font-medium transition-all duration-300 hover:scale-105 border border-blue-500/30 hover:border-blue-400/50 shadow-[0_0_20px_rgba(37,99,235,0.1)] hover:shadow-[0_0_30px_rgba(37,99,235,0.2)]"
             >
-              Obišči Lexora Blog
-              <ArrowRight size={16} />
+              <span>Preberi blog</span>
+              <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
             </a>
           </motion.div>
         </div>
