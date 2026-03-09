@@ -1,7 +1,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
-import { Menu, X, CheckCircle, Search, FileText, Globe, MessageSquare, GitMerge, Database, Star, ArrowRight, Sparkles, Zap, Shield, Cpu, Check, Minus, Lock, File, Briefcase, Folder, History, Settings, MoreHorizontal, ChevronDown, ChevronUp, PanelLeft, ArrowDown, Paperclip, Mic, ArrowUp, Calendar, AlertCircle } from 'lucide-react';
+import { Menu, X, CheckCircle, Search, FileText, Globe, MessageSquare, GitMerge, Database, Star, ArrowRight, Sparkles, Zap, Shield, Cpu, Check, Minus, Lock, File, Briefcase, Folder, History, Settings, MoreHorizontal, ChevronDown, ChevronUp, PanelLeft, ArrowDown, Paperclip, Mic, ArrowUp, Calendar, AlertCircle, Scale, Copy, ThumbsUp, ThumbsDown } from 'lucide-react';
 
 const StepAnimation = ({ step }: { step: any }) => {
   switch (step.id) {
@@ -730,168 +730,87 @@ const App: React.FC = () => {
                             {/* User Message - Right Aligned */}
                             <div className="flex flex-col items-end mb-6">
                               <div className="bg-[#0066ff] text-white text-sm leading-relaxed p-5 rounded-3xl rounded-tr-sm max-w-[85%] shadow-md text-left font-medium">
-                                Preglej celoten spis in pripravi strukturiran povzetek: stranke in vloge, dejansko stanje, tožbeni/obrambni zahtevki, sporna vprašanja in dosedanji procesni potek. Nato izlušči vse procesne roke in datume (tudi iz prilog) ter jih predstavi v tabeli (datum, rok, pravna podlaga, vir). Pri vsaki trditvi obvezno navedi dokument in strani.
+                                Analiziraj izpolnjevanje znakov kaznivega dejanja po 240. členu KZ-1. Ali tožilstvo v obtožnici sploh ponuja neposredne dokaze za direktni naklep ali zgolj sklepa nanj na podlagi višine škode 84.750eur?
                               </div>
                               <div className="flex gap-3 mt-2 px-2 opacity-60 hover:opacity-100 transition-opacity">
-                                <Paperclip size={14} className="text-neutral-500 cursor-pointer" />
-                                <span className="text-xs text-neutral-400 font-medium">Danes, 14:30</span>
+                                <Copy size={14} className="text-neutral-500 cursor-pointer" />
                               </div>
                             </div>
 
                             {/* Status Bars */}
                             <div className="relative pl-10 space-y-3 mb-10">
                               <div className="absolute left-0 top-3 text-neutral-800">
-                                <Sparkles size={20} className="text-blue-600" />
+                                <Sparkles size={20} className="text-neutral-800" />
                               </div>
                               {[
-                                { text: "Iskanje po 5 dokumentih", icon: <FileText size={14} /> },
-                                { text: "Pridobljenih 1 člen", icon: <File size={14} /> },
-                                { text: "Pridobljenih 3 členov", icon: <File size={14} /> },
-                                { text: "Iskanje po 3 straneh dokumenta Sodba", icon: <FileText size={14} /> },
-                                { text: "Iskanje po 3 straneh dokumenta obtožnica", icon: <FileText size={14} /> },
-                                { text: "Iskanje po 4 straneh dokumenta KAZENSKA OVADBA", icon: <FileText size={14} /> }
+                                { text: "Pridobljenih 2 členov", icon: <File size={14} />, status: "Zaključeno", isError: false },
+                                { text: "Iskanje po 6 dokumentih", icon: <FileText size={14} />, status: "Zaključeno", isError: false },
+                                { text: "Iskanje po sodni praksi: 24 odločb", icon: <Scale size={14} />, status: "Zaključeno", isError: false },
+                                { text: "Spletno iskanje (5)", icon: <Globe size={14} />, status: "Zaključeno", isError: false }
                               ].map((status, idx) => (
                                 <div key={idx} className="flex items-center justify-between bg-white border border-neutral-200 rounded-2xl px-4 py-3 hover:bg-neutral-50 transition-colors cursor-pointer shadow-sm group w-full max-w-2xl">
                                   <div className="flex items-center gap-3">
-                                    <div className="text-neutral-500 group-hover:text-blue-600 transition-colors">{status.icon}</div>
+                                    <div className="text-neutral-500 group-hover:text-neutral-800 transition-colors">{status.icon}</div>
                                     <span className="text-xs text-neutral-700 font-semibold">{status.text}</span>
                                   </div>
                                   <div className="flex items-center gap-3">
-                                    <div className="flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-full">
-                                      <div className="w-3 h-3 rounded-full bg-emerald-500 flex items-center justify-center">
-                                        <Check size={8} className="text-white stroke-[4]" />
+                                    <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full ${status.isError ? 'bg-red-50 border border-red-200' : 'bg-emerald-50 border border-emerald-200'}`}>
+                                      <div className={`w-3 h-3 rounded-full flex items-center justify-center ${status.isError ? 'bg-red-500' : 'bg-emerald-500'}`}>
+                                        {status.isError ? <X size={8} className="text-white stroke-[4]" /> : <Check size={8} className="text-white stroke-[4]" />}
                                       </div>
-                                      <span className="text-[10px] font-bold text-emerald-700 uppercase tracking-tight">Zaključeno</span>
+                                      <span className={`text-[10px] font-bold uppercase tracking-tight ${status.isError ? 'text-red-700' : 'text-emerald-700'}`}>{status.status}</span>
                                     </div>
                                     <ChevronDown size={14} className="text-neutral-400 group-hover:text-neutral-600" />
                                   </div>
                                 </div>
                               ))}
-                              
-                              {/* Down Arrow Button */}
-                              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-white border border-neutral-200 rounded-full flex items-center justify-center shadow-md cursor-pointer hover:bg-neutral-50 z-10 transition-transform hover:scale-110">
-                                <ArrowDown size={14} className="text-neutral-600" />
-                              </div>
                             </div>
 
                           {/* AI Response */}
                           <div className="text-neutral-800 text-sm leading-relaxed space-y-5 max-w-3xl text-left">
-                            <p>Na podlagi pregleda spisovne dokumentacije v zadevi <strong className="text-neutral-900 font-semibold">ZADEVA LUKA KRANJC (II K 1245/2024)</strong> pripravljam strukturiran povzetek in pregled procesnih rokov.</p>
+                            <p>Analiza izpolnjevanja znakov kaznivega dejanja po 240. členu KZ-1 (Zloraba položaja ali zaupanja pri gospodarski dejavnosti) in vprašanje dokazanosti direktnega naklepa v obtožnici razkrivata naslednje:</p>
                             
-                            <h3 className="text-lg font-bold text-neutral-900 mt-6 mb-3">1. Strukturiran povzetek zadeve</h3>
+                            <h3 className="text-lg font-bold text-neutral-900 mt-6 mb-3">1. Pravna kvalifikacija in zakonski znaki (240. člen KZ-1)</h3>
                             
-                            <h4 className="text-sm font-bold text-neutral-900 mt-5 mb-2 uppercase tracking-wide text-neutral-500">Stranke in vloge</h4>
+                            <p>Dejanje se obdolžencu očita po <strong className="text-neutral-900 font-semibold">drugem odstavku 240. člena KZ-1</strong>, ki predstavlja kvalificirano obliko tega dejanja <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-neutral-100 text-[10px] font-semibold text-neutral-600 border border-neutral-200 ml-1 align-middle"><FileText size={10}/> obtožnica</span>. Ključni elementi so:</p>
+
                             <ul className="space-y-3 list-none pl-0">
-                              <li className="flex items-start gap-2"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-neutral-400 shrink-0"></div><span><strong className="text-neutral-900 font-semibold">Obdolženec: Luka Kranjc</strong>, vodja nabave v družbi GAMMA Elektronika d.o.o. <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-neutral-100 text-[10px] font-semibold text-neutral-600 border border-neutral-200 ml-2 align-middle"><FileText size={10}/> obtožnica</span></span></li>
-                              <li className="flex items-start gap-2"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-neutral-400 shrink-0"></div><span><strong className="text-neutral-900 font-semibold">Oškodovanec: GAMMA Elektronika d.o.o.</strong>, ki jo zastopa direktor Andrej Vidmar <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-neutral-100 text-[10px] font-semibold text-neutral-600 border border-neutral-200 ml-2 align-middle"><FileText size={10}/> KAZENSKA OVADBA</span></span></li>
-                              <li className="flex items-start gap-2"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-neutral-400 shrink-0"></div><span><strong className="text-neutral-900 font-semibold">Tožilstvo: Okrožno državno tožilstvo v Ljubljani</strong>, zastopa ga okrožna državna tožilka mag. Nina Pirc <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-neutral-100 text-[10px] font-semibold text-neutral-600 border border-neutral-200 ml-2 align-middle"><FileText size={10}/> obtožnica</span></span></li>
-                              <li className="flex items-start gap-2"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-neutral-400 shrink-0"></div><span><strong className="text-neutral-900 font-semibold">Priče:</strong> Petra Zupan (računovodkinja) in Andrej Vidmar (direktor) <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-neutral-100 text-[10px] font-semibold text-neutral-600 border border-neutral-200 ml-2 align-middle"><FileText size={10}/> obtožnica</span></span></li>
+                              <li className="flex items-start gap-2"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-neutral-900 shrink-0"></div><span><strong className="text-neutral-900 font-semibold">Velika premoženjska škoda/korist:</strong> Meja za "veliko" škodo je v KZ-1 določena nad <strong className="text-neutral-900 font-semibold">50.000 EUR</strong> <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-neutral-100 text-[10px] font-semibold text-neutral-600 border border-neutral-200 ml-1 align-middle"><Globe size={10}/> zakonodaja.com</span>. Znesek 84.750 EUR ta prag presega.</span></li>
+                              <li className="flex items-start gap-2"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-neutral-900 shrink-0"></div><span><strong className="text-neutral-900 font-semibold">Direktni naklep ("hotel"):</strong> Za kvalificirano obliko po drugem odstavku ni dovolj le eventualni naklep (privolitev v posledico), temveč zakon izrecno zahteva, da je storilec <strong className="text-neutral-900 font-semibold">hotel</strong> sebi ali komu drugemu pridobiti takšno korist ali drugemu povzročiti takšno škodo <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-neutral-100 text-[10px] font-semibold text-neutral-600 border border-neutral-200 ml-1 align-middle"><File size={10}/> pisrs.si</span>. To se v pravni teoriji in sodni praksi imenuje <strong className="text-neutral-900 font-semibold">obarvani naklep</strong> (<em className="text-neutral-900">dolus coloratus</em>) <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-neutral-100 text-[10px] font-semibold text-neutral-600 border border-neutral-200 ml-1 align-middle"><Scale size={10}/> sodnapraksa.si</span>.</span></li>
                             </ul>
 
-                            <h4 className="text-sm font-bold text-neutral-900 mt-6 mb-2 uppercase tracking-wide text-neutral-500">Dejansko stanje</h4>
-                            <p>Obdolženi Luka Kranjc je v obdobju med <strong className="text-neutral-900 font-semibold">februarjem 2023 in decembrom 2023</strong> kot vodja nabave odobril več naročil elektronskih komponent trem dobaviteljem: <strong className="text-neutral-900 font-semibold">ELEKTRO TRADE d.o.o., TEHNO PARTNER d.o.o. in GLOBAL COMPONENTS d.o.o.</strong> <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-neutral-100 text-[10px] font-semibold text-neutral-600 border border-neutral-200 mx-1 align-middle"><FileText size={10}/> obtožnica</span>. Podjetje je na podlagi teh naročil izplačalo skupno <strong className="text-neutral-900 font-semibold">84.750,00 EUR</strong>, vendar blago nikoli ni bilo dobavljeno ali evidentirano v skladišču <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-neutral-100 text-[10px] font-semibold text-neutral-600 border border-neutral-200 mx-1 align-middle"><FileText size={10}/> KAZENSKA OVADBA</span>. Tožilstvo mu očita, da je vedel ali bi moral vedeti, da gre za fiktivna naročila.</p>
+                            <h3 className="text-lg font-bold text-neutral-900 mt-6 mb-3">2. Analiza dokazov za naklep v obtožnici</h3>
+                            
+                            <p>Tožilstvo v obtožnici navaja, da je obdolženec odobril naročila, <em className="text-neutral-900">"čeprav je vedel ali bi moral vedeti, da navedena podjetja dejansko ne bodo dobavila naročenega blaga"</em> <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-neutral-100 text-[10px] font-semibold text-neutral-600 border border-neutral-200 ml-1 align-middle"><FileText size={10}/> obtožnica</span>.</p>
 
-                            <h4 className="text-sm font-bold text-neutral-900 mt-6 mb-2 uppercase tracking-wide text-neutral-500">Tožbeni in obrambni zahtevki</h4>
-                            <ul className="space-y-3 list-none pl-0">
-                              <li className="flex items-start gap-2"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-neutral-400 shrink-0"></div><span><strong className="text-neutral-900 font-semibold">Tožilstvo:</strong> Zahteva obsodbo po 240. členu KZ-1 (zloraba položaja), izrek <strong className="text-neutral-900 font-semibold">pogojne obsodbe 1 leto zapora</strong> s preizkusno dobo 3 let ter naložitev plačila povzročene škode v višini 84.750,00 EUR <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-neutral-100 text-[10px] font-semibold text-neutral-600 border border-neutral-200 ml-1 align-middle"><FileText size={10}/> Sodba</span>.</span></li>
-                              <li className="flex items-start gap-2"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-neutral-400 shrink-0"></div><span><strong className="text-neutral-900 font-semibold">Obramba:</strong> Luka Kranjc <strong className="text-neutral-900 font-semibold">zanika krivdo</strong> <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-neutral-100 text-[10px] font-semibold text-neutral-600 border border-neutral-200 ml-1 align-middle"><FileText size={10}/> Demo files (17)</span>. Trdi, da je ravnal v skladu s postopki, da je naročila potrjeval na podlagi informacij sodelavcev.</span></li>
-                            </ul>
+                            <p><strong className="text-neutral-900 font-semibold">Ali obstajajo neposredni dokazi za direktni naklep?</strong> Pregled spisa kaže, da tožilstvo <strong className="text-neutral-900 font-semibold">ne ponuja neposrednih dokazov</strong> (npr. priznanja, dokazanega prejema podkupnine ali neposredne komunikacije o namernem oškodovanju), temveč na direktni naklep <strong className="text-neutral-900 font-semibold">sklepa posredno</strong> na podlagi naslednjih okoliščin:</p>
 
-                            <h4 className="text-sm font-bold text-neutral-900 mt-6 mb-2 uppercase tracking-wide text-neutral-500">Sporna vprašanja</h4>
-                            <ol className="space-y-3 list-decimal pl-5 marker:text-neutral-500 marker:font-medium">
-                              <li><strong className="text-neutral-900 font-semibold">Obstoj naklepa:</strong> Ali je obdolženec zavestno odobril fiktivna naročila z namenom povzročitve škode ali pridobitve koristi?</li>
-                              <li><strong className="text-neutral-900 font-semibold">Vzročna zveza:</strong> Ali je škoda nastala zaradi obdolženčeve zlorabe pooblastil ali zaradi pomanjkljivih kontrolnih mehanizmov v podjetju?</li>
-                              <li><strong className="text-neutral-900 font-semibold">Povezava z dobavitelji:</strong> Ali je bil obdolženec osebno povezan z novonastalimi podjetji-dobavitelji?</li>
+                            <ol className="space-y-3 list-decimal pl-4">
+                              <li><strong className="text-neutral-900 font-semibold">Funkcija obdolženca:</strong> Kot vodja nabave je imel pooblastila in dolžnost nadzora, ki jih je po mnenju tožilstva opustil <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-neutral-100 text-[10px] font-semibold text-neutral-600 border border-neutral-200 ml-1 align-middle"><FileText size={10}/> Zaključna beseda državnega tožilca</span>.</li>
+                              <li><strong className="text-neutral-900 font-semibold">Narava dobaviteljev:</strong> Podjetja so bila registrirana kratek čas, z njimi se prej ni poslovalo, komunikacija pa je bila le prek e-pošte.</li>
+                              <li><strong className="text-neutral-900 font-semibold">Višina škode:</strong> Tožilstvo uporablja višino škode (84.750 EUR) kot indikator resnosti in namernosti dejanja, vendar sodna praksa poudarja, da zgolj višina škode ne more avtomatično nadomestiti dokazovanja voljnega elementa naklepa <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-neutral-100 text-[10px] font-semibold text-neutral-600 border border-neutral-200 ml-1 align-middle"><Scale size={10}/> sodnapraksa.si</span>.</li>
                             </ol>
 
-                            <h3 className="text-lg font-bold text-neutral-900 mt-8 mb-4 flex items-center justify-between">
-                              2. Procesni roki in pomembni datumi
-                              <div className="flex gap-2">
-                                <div className="p-1.5 rounded-md hover:bg-neutral-100 cursor-pointer transition-colors text-neutral-500">
-                                  <Paperclip size={16} />
-                                </div>
-                                <div className="p-1.5 rounded-md hover:bg-neutral-100 cursor-pointer transition-colors text-neutral-500">
-                                  <ArrowDown size={16} />
-                                </div>
-                              </div>
-                            </h3>
-                            
-                            <div className="rounded-2xl border border-neutral-200 overflow-hidden bg-white shadow-sm ring-1 ring-black/5">
-                              <table className="w-full text-xs text-left border-collapse">
-                                <thead>
-                                  <tr className="bg-neutral-50/80 text-neutral-500 uppercase tracking-wider font-semibold">
-                                    <th className="p-3 border-b border-neutral-200 w-32">Datum</th>
-                                    <th className="p-3 border-b border-neutral-200">Dogodek / Rok</th>
-                                    <th className="p-3 border-b border-neutral-200 w-32">Pravna podlaga</th>
-                                    <th className="p-3 border-b border-neutral-200 w-48">Vir</th>
-                                  </tr>
-                                </thead>
-                                <tbody className="divide-y divide-neutral-100">
-                                  <tr className="hover:bg-neutral-50/50 transition-colors">
-                                    <td className="p-3 font-medium text-neutral-900">Feb. 2023 - Dec. 2023</td>
-                                    <td className="p-3 text-neutral-700">Obdobje domnevne storitve kaznivega dejanja</td>
-                                    <td className="p-3 text-neutral-600">240. člen KZ-1</td>
-                                    <td className="p-3 text-neutral-500">"obtožnica.pdf", str. 1</td>
-                                  </tr>
-                                  <tr className="hover:bg-neutral-50/50 transition-colors">
-                                    <td className="p-3 font-medium text-neutral-900">15. 01. 2024</td>
-                                    <td className="p-3 text-neutral-700">Podana kazenska ovadba s strani podjetja</td>
-                                    <td className="p-3 text-neutral-600">146. člen ZKP</td>
-                                    <td className="p-3 text-neutral-500">"KAZENSKA OVADBA.pdf", str. 1, 4</td>
-                                  </tr>
-                                  <tr className="hover:bg-neutral-50/50 transition-colors">
-                                    <td className="p-3 font-medium text-neutral-900">05. 02. 2024</td>
-                                    <td className="p-3 text-neutral-700">Zaslišanje osumljenca pred policijo</td>
-                                    <td className="p-3 text-neutral-600">148. člen ZKP</td>
-                                    <td className="p-3 text-neutral-500">"ZAPISNIK o zaslišanju.pdf", str. 1</td>
-                                  </tr>
-                                  <tr className="hover:bg-neutral-50/50 transition-colors">
-                                    <td className="p-3 font-medium text-neutral-900">10. 03. 2024</td>
-                                    <td className="p-3 text-neutral-700">Predlog ODT za uvedbo preiskave</td>
-                                    <td className="p-3 text-neutral-600">167. člen ZKP</td>
-                                    <td className="p-3 text-neutral-500">"Zapisnik o zaslišanju.pdf", str. 8</td>
-                                  </tr>
-                                  <tr className="hover:bg-neutral-50/50 transition-colors">
-                                    <td className="p-3 font-medium text-neutral-900">20. 09. 2024</td>
-                                    <td className="p-3 text-neutral-700">Vložitev obtožnice</td>
-                                    <td className="p-3 text-neutral-600">268. člen ZKP</td>
-                                    <td className="p-3 text-neutral-500">"obtožnica.pdf", str. 1, 3</td>
-                                  </tr>
-                                  <tr className="hover:bg-neutral-50/50 transition-colors">
-                                    <td className="p-3 font-medium text-neutral-900">20. 02. 2025</td>
-                                    <td className="p-3 text-neutral-700">Izdaja obsodilne sodbe prve stopnje</td>
-                                    <td className="p-3 text-neutral-600">353. člen ZKP</td>
-                                    <td className="p-3 text-neutral-500">"Sodba.pdf", str. 1</td>
-                                  </tr>
-                                  <tr className="bg-blue-50/60 hover:bg-blue-50 transition-colors border-l-4 border-l-blue-500">
-                                    <td className="p-3 font-bold text-blue-700">V 15 dneh</td>
-                                    <td className="p-3 font-bold text-blue-800">Rok za pritožbo zoper sodbo</td>
-                                    <td className="p-3 text-blue-700 font-medium">363. člen ZKP</td>
-                                    <td className="p-3 text-blue-600">"Sodba.pdf", str. 3</td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </div>
+                            <h3 className="text-lg font-bold text-neutral-900 mt-6 mb-3">3. Težave v argumentaciji tožilstva</h3>
 
-                            <div className="p-4 rounded-xl bg-orange-50 border border-orange-200 mt-6 flex gap-4 items-start shadow-sm">
-                              <div className="p-2 bg-orange-100 rounded-full shrink-0 text-orange-600 mt-0.5">
-                                <Sparkles size={16} />
-                              </div>
-                              <div>
-                                <h5 className="text-sm font-bold text-orange-900 mb-1">Opozorilo: Tek pritožbenega roka</h5>
-                                <p className="text-orange-800 text-xs leading-relaxed">Glede na datum izdaje sodbe (<strong className="text-orange-900 font-semibold">20. februar 2025</strong>) je zadeva trenutno v fazi teka roka za pritožbo (15 dni od vročitve). Potrebno je preveriti točen datum vročitve sodbe obrambi, da se ne zamudi prekluzivni rok za vložitev pritožbe. <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-white text-[10px] font-semibold text-orange-700 border border-orange-200 ml-1 align-middle"><FileText size={10}/> Sodba</span></p>
-                              </div>
-                            </div>
+                            <p>Tožilstvo uporablja formulacijo <strong className="text-neutral-900 font-semibold">"vedel ali bi moral vedeti"</strong> <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-neutral-100 text-[10px] font-semibold text-neutral-600 border border-neutral-200 ml-1 align-middle"><FileText size={10}/> obtožnica</span>, kar je procesno tvegano:</p>
 
-                            <div className="flex gap-4 mt-8 px-2 justify-end opacity-70">
+                            <ul className="space-y-3 list-none pl-0">
+                              <li className="flex items-start gap-2"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-neutral-900 shrink-0"></div><span>Standard <strong className="text-neutral-900 font-semibold">"bi moral vedeti"</strong> se nanaša na malomarnost, ne na direktni naklep.</span></li>
+                              <li className="flex items-start gap-2"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-neutral-900 shrink-0"></div><span>Za obsodbo po drugem odstavku 240. člena KZ-1 mora sodišče ugotoviti, da je obdolženec <strong className="text-neutral-900 font-semibold">hotel</strong> povzročiti škodo. Če obramba dokaže, da je šlo le za površnost ali sistemsko napako skladišča (kar obdolženec trdi v zagovoru <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-neutral-100 text-[10px] font-semibold text-neutral-600 border border-neutral-200 ml-1 align-middle"><FileText size={10}/> ZAPISNIK o zaslišanju</span>), direktni naklep ne bo podan.</span></li>
+                            </ul>
+
+                            <p><strong className="text-neutral-900 font-semibold">Povzetek:</strong> Tožilstvo v obtožnici dejansko <strong className="text-neutral-900 font-semibold">sklepa na naklep</strong> iz okoliščin dejanja in višine škode. Neposrednih dokazov o tem, da je obdolženec zavestno zasledoval cilj oškodovanja podjetja (motiva ali neposredne koristi zanj), v spisu trenutno ni videti. Obramba ima močan argument v tem, da tožilstvo ni izkazalo povezave med obdolžencem in dobavitelji, kar je le na ravni "suma".</p>
+
+                            <div className="flex gap-4 mt-8 px-2 justify-start opacity-70">
                               <div className="flex items-center gap-2 text-xs text-neutral-500 hover:text-neutral-800 cursor-pointer transition-colors">
-                                <Paperclip size={14} /> Kopiraj
+                                <Copy size={16} />
                               </div>
                               <div className="flex items-center gap-2 text-xs text-neutral-500 hover:text-neutral-800 cursor-pointer transition-colors">
-                                <ArrowDown size={14} /> Prenesi
+                                <ThumbsUp size={16} />
                               </div>
                               <div className="flex items-center gap-2 text-xs text-neutral-500 hover:text-neutral-800 cursor-pointer transition-colors">
-                                <MoreHorizontal size={14} /> Več
+                                <ThumbsDown size={16} />
                               </div>
                             </div>
                           </div>
