@@ -276,13 +276,13 @@ const App: React.FC = () => {
   
   // Video Gallery State
   const videos = [
-    { key: 'civilno', id: 'LzPo5sKb_7c', title: 'Civilno pravo', duration: '2 min' },
+    { key: 'civilno', id: '7DG85wHOuqs', title: 'Civilno pravo', duration: '2 min' },
     { key: 'gospodarsko', id: 'KLJb0YxLeR0', title: 'Gospodarsko pravo', duration: '2 min' },
-    { key: 'delovno', id: 'LzPo5sKb_7c', title: 'Delovno pravo', duration: '2 min' },
     { key: 'kazensko', id: 'cKIL157hnRs', title: 'Kazensko pravo', duration: '2 min' },
     { key: 'nepremicninsko', id: 'RMiwvjggF70', title: 'Nepremičninsko pravo', duration: '2 min' },
+    { key: 'delovno', id: 'LzPo5sKb_7c', title: 'Delovno pravo', duration: '2 min' },
   ];
-  const [activeVideo, setActiveVideo] = useState(videos[1]);
+  const [activeVideo, setActiveVideo] = useState(videos[0]);
   const [activeWorkspaceTab, setActiveWorkspaceTab] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const demoSectionRef = useRef<HTMLElement>(null);
@@ -292,9 +292,9 @@ const App: React.FC = () => {
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting && !hasScrolledToDefault) {
-          // Scroll to the default selected video (Gospodarsko pravo) when the section comes into view
+          // Scroll to the default selected video (Civilno pravo) when the section comes into view
           const timer = setTimeout(() => {
-            scrollToVideo(1);
+            scrollToVideo(0);
             setHasScrolledToDefault(true);
           }, 100);
           return () => clearTimeout(timer);
@@ -410,12 +410,6 @@ const App: React.FC = () => {
   
   return (
     <div className="min-h-screen font-sans bg-neutral-950 text-white selection:bg-blue-500/30">
-      {/* Scroll Progress Bar */}
-      <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-blue-600 z-[100] origin-left"
-        style={{ scaleX }}
-      />
-      
       {/* HEADER */}
       <header className="fixed top-0 inset-x-0 z-50 bg-neutral-950/80 backdrop-blur-md border-b border-white/10">
         <div className="mx-auto max-w-5xl px-6 lg:px-8 h-16 flex items-center justify-between">
