@@ -514,7 +514,7 @@ const App: React.FC = () => {
             transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
             className="font-sans text-lg md:text-xl text-neutral-400 max-w-2xl mx-auto mb-12 leading-relaxed"
           >
-            Vstopi v novo generacijo pravnikov. Lexora avtomatizira analizo, raziskave in pripravo dokumentov, da se lahko posvetite <span className="text-white font-medium border-b border-blue-500/30 pb-0.5 hover:border-blue-400 transition-colors">zmagovanju primerov</span>.
+            Lexora pomaga pri analizi dokumentov, pravni raziskavi in pripravi osnutkov, da se lahko osredotočite na <span className="text-white font-medium border-b border-blue-500/30 pb-0.5 hover:border-blue-400 transition-colors">pravno presojo in strategijo</span>.
           </motion.p>
 
           {/* Buttons */}
@@ -1518,10 +1518,13 @@ const App: React.FC = () => {
             <h2 className="font-serif text-3xl md:text-4xl text-white mb-8">Prihodnost prava</h2>
             <div className="space-y-6 text-base md:text-lg text-neutral-400 leading-relaxed mb-12 font-light">
               <p>
-                Lexora pravnika ne nadomešča. Deluje kot <span className="text-white font-medium">digitalni pravni asistent</span>, ki vam omogoča, da več časa namenite pravni presoji in strategiji.
+                Lexora pravnika ne nadomešča. Deluje kot <span className="text-white font-medium">digitalni pravni asistent</span>, ki vam omogoča, da več časa namenite pravni presoji, argumentaciji in strategiji.
               </p>
               <p>
-                Umetna inteligenca postopoma postaja del pravne prakse. Orodja, ki pomagajo pri analizi dokumentov in pravni raziskavi, lahko pomembno prispevajo k večji učinkovitosti pri delu.
+                Umetna inteligenca postopoma postaja del pravne prakse. Orodja za analizo dokumentov in pravno raziskavo lahko bistveno povečajo učinkovitost dela pravnikov.
+              </p>
+              <p>
+                Na našem blogu raziskujemo, kako se pravo spreminja v dobi umetne inteligence - ter kako lahko nove tehnologije postanejo vaša konkurenčna prednost.
               </p>
             </div>
             
