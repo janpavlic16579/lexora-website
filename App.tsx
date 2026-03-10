@@ -280,7 +280,7 @@ const App: React.FC = () => {
     { key: 'gospodarsko', id: 'KLJb0YxLeR0', title: 'Gospodarsko pravo', duration: '2 min' },
     { key: 'kazensko', id: 'cKIL157hnRs', title: 'Kazensko pravo', duration: '2 min' },
     { key: 'nepremicninsko', id: 'RMiwvjggF70', title: 'Nepremičninsko pravo', duration: '2 min' },
-    { key: 'delovno', id: 'LzPo5sKb_7c', title: 'Delovno pravo', duration: '2 min' },
+    { key: 'delovno', id: 'LzPo5sKb_7c', title: 'Splošni pregled', duration: '2 min' },
   ];
   const [activeVideo, setActiveVideo] = useState(videos[0]);
   const [activeWorkspaceTab, setActiveWorkspaceTab] = useState(0);
@@ -419,7 +419,6 @@ const App: React.FC = () => {
             <a className="hover:text-white transition-colors" href="#demo">Predogled</a>
             <a className="hover:text-white transition-colors" href="https://onboarding.lexora.si/" target="_blank" rel="noopener noreferrer">Kako začeti</a>
             <a className="hover:text-white transition-colors" href="#security">Varnost</a>
-            <a className="hover:text-white transition-colors" href="https://blog.lexora.si/" target="_blank" rel="noopener noreferrer">Blog</a>
           </nav>
 
           <a href="https://app.lexora.si/" className="btn-demo hidden md:inline-flex items-center h-9 px-4 rounded-lg shadow-[0_0_20px_rgba(37,99,235,0.3)] text-white transition hover:-translate-y-0.5 text-sm font-semibold">
@@ -442,7 +441,6 @@ const App: React.FC = () => {
               <a href="#demo" onClick={() => setIsMenuOpen(false)}>Predogled</a>
               <a href="https://onboarding.lexora.si/" target="_blank" rel="noopener noreferrer" onClick={() => setIsMenuOpen(false)}>Kako začeti</a>
               <a href="#security" onClick={() => setIsMenuOpen(false)}>Varnost</a>
-              <a href="https://blog.lexora.si/" target="_blank" rel="noopener noreferrer" onClick={() => setIsMenuOpen(false)}>Blog</a>
             </nav>
           </div>
         )}
