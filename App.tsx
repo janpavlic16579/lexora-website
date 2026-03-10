@@ -480,7 +480,7 @@ const App: React.FC = () => {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
             </span>
-            <span className="text-xs font-medium text-blue-100/90 tracking-wide uppercase">AI digitalni sodelavec</span>
+            <span className="text-xs font-medium text-blue-100/90 tracking-wide uppercase">AI, ki razume slovensko pravo</span>
           </motion.div>
 
           {/* Headline */}
