@@ -1,7 +1,13 @@
 
 import React, { useState, useRef, useEffect } from 'react';
+import { Routes, Route, Link } from 'react-router-dom';
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
 import { Menu, X, CheckCircle, Search, FileText, Globe, MessageSquare, GitMerge, Database, Star, ArrowRight, Sparkles, Zap, Shield, Cpu, Check, Minus, Lock, File, Briefcase, Folder, History, Settings, MoreHorizontal, ChevronDown, ChevronUp, PanelLeft, ArrowDown, Paperclip, Mic, ArrowUp, Calendar, AlertCircle, Scale, Copy, ThumbsUp, ThumbsDown } from 'lucide-react';
+
+import PogojiUporabe from './src/pages/PogojiUporabe';
+import PolitikaPiskotkov from './src/pages/PolitikaPiskotkov';
+import PolitikaZasebnosti from './src/pages/PolitikaZasebnosti';
+import ONas from './src/pages/ONas';
 
 const StepAnimation = ({ step }: { step: any }) => {
   switch (step.id) {
@@ -265,7 +271,7 @@ const StepAnimation = ({ step }: { step: any }) => {
   }
 };
 
-const App: React.FC = () => {
+const LandingPage: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -419,10 +425,11 @@ const App: React.FC = () => {
             <a className="hover:text-white transition-colors" href="#demo">Predogled</a>
             <a className="hover:text-white transition-colors" href="https://onboarding.lexora.si/" target="_blank" rel="noopener noreferrer">Kako začeti</a>
             <a className="hover:text-white transition-colors" href="#security">Varnost</a>
+            <Link className="hover:text-white transition-colors" to="/o-nas">O nas</Link>
           </nav>
 
           <a href="https://app.lexora.si/" className="btn-demo hidden md:inline-flex items-center h-9 px-4 rounded-lg shadow-[0_0_20px_rgba(37,99,235,0.3)] text-white transition hover:-translate-y-0.5 text-sm font-semibold">
-            Preizkusi Lexoro
+            Preizkusi Lexoro brezplačno
           </a>
 
           <button 
@@ -441,6 +448,7 @@ const App: React.FC = () => {
               <a href="#demo" onClick={() => setIsMenuOpen(false)}>Predogled</a>
               <a href="https://onboarding.lexora.si/" target="_blank" rel="noopener noreferrer" onClick={() => setIsMenuOpen(false)}>Kako začeti</a>
               <a href="#security" onClick={() => setIsMenuOpen(false)}>Varnost</a>
+              <Link to="/o-nas" onClick={() => setIsMenuOpen(false)}>O nas</Link>
             </nav>
           </div>
         )}
@@ -478,7 +486,7 @@ const App: React.FC = () => {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
             </span>
-            <span className="text-xs font-medium text-blue-100/90 tracking-wide uppercase">AI, ki razume slovensko pravo</span>
+            <span className="text-xs font-medium text-blue-100/90 tracking-wide uppercase">AI, ki razume slovensko in evropsko pravo</span>
           </motion.div>
 
           {/* Headline */}
@@ -523,7 +531,7 @@ const App: React.FC = () => {
             className="flex flex-col sm:flex-row items-center justify-center gap-5 mb-24 w-full sm:w-auto"
           >
             <a href="https://app.lexora.si/" className="group relative w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 font-semibold text-white transition-all duration-500 bg-blue-600 rounded-full hover:bg-blue-500 hover:scale-105 focus:outline-none shadow-[0_0_40px_rgba(37,99,235,0.4)] hover:shadow-[0_0_60px_rgba(37,99,235,0.6)] ring-1 ring-white/20 overflow-hidden text-base">
-              <span className="relative z-10">Preizkusi Lexoro</span>
+              <span className="relative z-10">Preizkusi Lexoro brezplačno</span>
               <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1 relative z-10" />
               <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-blue-400 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-[length:200%_100%] animate-shimmer"></div>
             </a>
@@ -1540,50 +1548,77 @@ const App: React.FC = () => {
       </section>
 
       {/* FOOTER */}
-      <footer className="bg-neutral-950 text-neutral-300 border-t border-white/5">
-        <div className="mx-auto max-w-5xl px-6 lg:px-8 py-10">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-            
-            <div className="flex flex-col gap-1">
-              <p className="font-serif text-xl text-white">Lexora</p>
-              <p className="text-xs text-neutral-500">© {new Date().getFullYear()} Lexora</p>
+      <footer className="bg-neutral-950 text-neutral-400 border-t border-white/5 pt-16 pb-8">
+        <div className="mx-auto max-w-5xl px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+            <div className="md:col-span-2">
+              <p className="font-serif text-2xl text-white mb-4">Lexora</p>
+              <p className="text-sm text-neutral-500 max-w-xs leading-relaxed">
+                Vaša nova pravna supermoč. AI asistent za hitrejšo in natančnejšo pravno analizo.
+              </p>
             </div>
             
-            <div className="flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-10">
-              <nav className="flex flex-wrap gap-x-6 gap-y-3 text-sm">
-                <a className="hover:text-white transition-colors" href="#demo">Predogled</a>
-                <a className="hover:text-white transition-colors" href="https://onboarding.lexora.si/" target="_blank" rel="noopener noreferrer">Kako začeti</a>
-                <a className="hover:text-white transition-colors" href="#security">Varnost</a>
-                <a className="hover:text-white transition-colors" href="https://blog.lexora.si/" target="_blank" rel="noopener noreferrer">Blog</a>
-              </nav>
-              
-              {/* Social Icons */}
-              <div className="flex items-center gap-5">
-                {/* LinkedIn */}
-                <a href="https://www.linkedin.com/company/lexora-si/" className="text-neutral-400 hover:text-white transition-colors" aria-label="LinkedIn">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                  </svg>
-                </a>
-                {/* X (Twitter) */}
-                <a href="https://x.com/LexoraAI" className="text-neutral-400 hover:text-white transition-colors" aria-label="X">
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/>
-                  </svg>
-                </a>
-                {/* YouTube */}
-                <a href="https://www.youtube.com/@LexoraAI-e3o9z" className="text-neutral-400 hover:text-white transition-colors" aria-label="YouTube">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                  </svg>
-                </a>
-              </div>
+            <div>
+              <h3 className="text-white font-semibold mb-4 text-sm tracking-wider uppercase">Produkt</h3>
+              <ul className="space-y-3 text-sm">
+                <li><a className="hover:text-white transition-colors" href="#demo">Predogled</a></li>
+                <li><a className="hover:text-white transition-colors" href="https://onboarding.lexora.si/" target="_blank" rel="noopener noreferrer">Kako začeti</a></li>
+                <li><a className="hover:text-white transition-colors" href="#security">Varnost</a></li>
+                <li><Link className="hover:text-white transition-colors" to="/o-nas">O nas</Link></li>
+                <li><a className="hover:text-white transition-colors" href="https://blog.lexora.si/" target="_blank" rel="noopener noreferrer">Blog</a></li>
+              </ul>
             </div>
 
+            <div>
+              <h3 className="text-white font-semibold mb-4 text-sm tracking-wider uppercase">Pogoji in zasebnost</h3>
+              <ul className="space-y-3 text-sm">
+                <li><Link className="hover:text-white transition-colors" to="/pogoji-uporabe">Pogoji uporabe</Link></li>
+                <li><Link className="hover:text-white transition-colors" to="/politika-zasebnosti">Politika zasebnosti</Link></li>
+                <li><Link className="hover:text-white transition-colors" to="/politika-piskotkov">Politika piškotkov</Link></li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="flex flex-col md:flex-row items-center justify-between pt-8 border-t border-white/10 gap-6">
+            <p className="text-xs text-neutral-500">© {new Date().getFullYear()} Lexora. Vse pravice pridržane.</p>
+            
+            {/* Social Icons */}
+            <div className="flex items-center gap-5">
+              {/* LinkedIn */}
+              <a href="https://www.linkedin.com/company/lexora-si/" className="text-neutral-500 hover:text-white transition-colors" aria-label="LinkedIn">
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+              </a>
+              {/* X (Twitter) */}
+              <a href="https://x.com/LexoraAI" className="text-neutral-500 hover:text-white transition-colors" aria-label="X">
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/>
+                </svg>
+              </a>
+              {/* YouTube */}
+              <a href="https://www.youtube.com/@LexoraAI-e3o9z" className="text-neutral-500 hover:text-white transition-colors" aria-label="YouTube">
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                </svg>
+              </a>
+            </div>
           </div>
         </div>
       </footer>
     </div>
+  );
+};
+
+const App: React.FC = () => {
+  return (
+    <Routes>
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/pogoji-uporabe" element={<PogojiUporabe />} />
+      <Route path="/politika-piskotkov" element={<PolitikaPiskotkov />} />
+      <Route path="/politika-zasebnosti" element={<PolitikaZasebnosti />} />
+      <Route path="/o-nas" element={<ONas />} />
+    </Routes>
   );
 };
 
