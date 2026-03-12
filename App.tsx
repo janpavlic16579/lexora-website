@@ -463,6 +463,9 @@ const LandingPage: React.FC = () => {
         
         {/* Dynamic Background */}
         <div className="absolute inset-0 pointer-events-none">
+          {/* Grid Pattern */}
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
+          
           {/* Main Spotlight */}
           <div className="absolute top-[-20%] left-1/2 -translate-x-1/2 w-[60vw] h-[60vh] bg-blue-600/20 rounded-full blur-[120px] opacity-50 mix-blend-screen animate-pulse-slow"></div>
           
@@ -499,8 +502,8 @@ const LandingPage: React.FC = () => {
           >
             Vaša nova <br/>
             <span className="relative inline-block mt-2">
-              <span className="absolute -inset-1 bg-blue-500/20 blur-2xl rounded-full opacity-50"></span>
-              <span className="relative text-transparent bg-clip-text bg-gradient-to-r from-white via-blue-100 to-blue-300 drop-shadow-sm">
+              <span className="absolute -inset-1 bg-blue-500/20 blur-2xl rounded-full opacity-30"></span>
+              <span className="relative text-transparent bg-clip-text bg-gradient-to-r from-white via-blue-200 to-blue-400">
                 pravna supermoč.
               </span>
               {/* Decorative Sparkle */}
@@ -531,13 +534,13 @@ const LandingPage: React.FC = () => {
             transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
             className="flex flex-col sm:flex-row items-center justify-center gap-5 mb-24 w-full sm:w-auto"
           >
-            <a href="https://app.lexora.si/" className="group relative w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 font-semibold text-white transition-all duration-500 bg-blue-600 rounded-full hover:bg-blue-500 hover:scale-105 focus:outline-none shadow-[0_0_40px_rgba(37,99,235,0.4)] hover:shadow-[0_0_60px_rgba(37,99,235,0.6)] ring-1 ring-white/20 overflow-hidden text-base">
+            <a href="https://app.lexora.si/" className="group relative w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 font-semibold text-white transition-all duration-500 bg-blue-600 rounded-full hover:bg-blue-500 hover:scale-105 focus:outline-none shadow-lg shadow-blue-900/20 ring-1 ring-white/10 overflow-hidden text-base">
               <span className="relative z-10">Preizkusi Lexoro brezplačno</span>
               <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1 relative z-10" />
               <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-blue-400 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-[length:200%_100%] animate-shimmer"></div>
             </a>
             
-            <a href="https://calendly.com/jan-lexora/30min" target="_blank" rel="noopener noreferrer" className="group relative w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 font-semibold text-white transition-all duration-300 bg-white/5 rounded-full hover:bg-white/10 hover:scale-105 focus:outline-none ring-1 ring-white/10 backdrop-blur-sm text-base hover:ring-white/30">
+            <a href="https://calendly.com/jan-lexora/30min" target="_blank" rel="noopener noreferrer" className="group relative w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 font-semibold text-white transition-all duration-300 bg-white/5 rounded-full hover:bg-white/10 hover:scale-105 focus:outline-none ring-1 ring-white/10 backdrop-blur-sm text-base hover:ring-white/20">
               <Calendar className="w-5 h-5 text-neutral-400 group-hover:text-white transition-colors" />
               <span>Rezerviraj sestanek</span>
             </a>
@@ -548,12 +551,12 @@ const LandingPage: React.FC = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0.5 }}
-            className="flex flex-col items-center gap-6"
+            className="flex flex-col items-center gap-4"
           >
-            <p className="text-[11px] font-bold text-neutral-500 uppercase tracking-[0.2em]">Zaupajo nam slovenski pravniki</p>
-            <div className="flex -space-x-4 grayscale hover:grayscale-0 transition-all duration-500 cursor-default p-2">
+            <p className="text-[10px] font-bold text-neutral-500 uppercase tracking-[0.2em]">Zaupajo nam slovenski pravniki</p>
+            <div className="flex -space-x-3 grayscale hover:grayscale-0 transition-all duration-500 cursor-default p-2">
                  {['MJ', 'AK', 'TR', 'BP'].map((initials, i) => (
-                   <div key={i} className="w-12 h-12 rounded-full bg-neutral-900 border-2 border-neutral-950 flex items-center justify-center text-sm text-neutral-300 font-bold relative z-0 hover:z-10 hover:scale-110 transition-transform bg-gradient-to-br from-neutral-800 to-neutral-900 shadow-lg">
+                   <div key={i} className="w-10 h-10 rounded-full bg-neutral-900 border border-neutral-800 flex items-center justify-center text-xs text-neutral-400 font-medium relative z-0 hover:z-10 hover:scale-110 transition-transform bg-gradient-to-br from-neutral-800 to-neutral-900 shadow-sm">
                      {initials}
                    </div>
                  ))}
