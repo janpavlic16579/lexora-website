@@ -7,27 +7,27 @@ const PolitikaPiskotkov: React.FC = () => {
   return (
     <div className="min-h-screen bg-neutral-950 text-neutral-300 font-sans selection:bg-blue-500/30">
       <header className="fixed top-0 inset-x-0 z-50 bg-neutral-950/80 backdrop-blur-md border-b border-white/10">
-        <div className="mx-auto max-w-4xl px-6 lg:px-8 h-16 flex items-center">
+        <div className="mx-auto max-w-4xl px-6 lg:px-8 h-16 flex items-center justify-between">
           <Link to="/" className="inline-flex items-center gap-2 text-neutral-400 hover:text-white transition-colors text-sm font-medium">
             <ArrowLeft size={16} />
             Nazaj na prvo stran
           </Link>
+          <nav className="flex items-center gap-2">
+            <Link to="/pogoji-uporabe" className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${location.pathname === '/pogoji-uporabe' ? 'bg-white text-black' : 'bg-white/5 text-neutral-400 hover:bg-white/10 hover:text-white border border-white/10'}`}>
+              Pogoji uporabe
+            </Link>
+            <Link to="/politika-zasebnosti" className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${location.pathname === '/politika-zasebnosti' ? 'bg-white text-black' : 'bg-white/5 text-neutral-400 hover:bg-white/10 hover:text-white border border-white/10'}`}>
+              Politika zasebnosti
+            </Link>
+            <Link to="/politika-piskotkov" className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${location.pathname === '/politika-piskotkov' ? 'bg-white text-black' : 'bg-white/5 text-neutral-400 hover:bg-white/10 hover:text-white border border-white/10'}`}>
+              Politika piškotkov
+            </Link>
+          </nav>
         </div>
       </header>
 
       <main className="pt-32 pb-24 px-6 lg:px-8">
         <div className="mx-auto max-w-3xl">
-          <div className="flex flex-wrap gap-3 mb-8">
-            <Link to="/pogoji-uporabe" className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${location.pathname === '/pogoji-uporabe' ? 'bg-white text-black' : 'bg-white/5 text-neutral-400 hover:bg-white/10 hover:text-white border border-white/10'}`}>
-              Pogoji uporabe
-            </Link>
-            <Link to="/politika-zasebnosti" className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${location.pathname === '/politika-zasebnosti' ? 'bg-white text-black' : 'bg-white/5 text-neutral-400 hover:bg-white/10 hover:text-white border border-white/10'}`}>
-              Politika zasebnosti
-            </Link>
-            <Link to="/politika-piskotkov" className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${location.pathname === '/politika-piskotkov' ? 'bg-white text-black' : 'bg-white/5 text-neutral-400 hover:bg-white/10 hover:text-white border border-white/10'}`}>
-              Politika piškotkov
-            </Link>
-          </div>
           <h1 className="text-4xl md:text-5xl font-serif text-white mb-6">Politika piškotkov</h1>
           <div className="text-sm text-neutral-500 mb-12 space-y-1">
             <p>Velja od: 18. 02. 2026</p>
