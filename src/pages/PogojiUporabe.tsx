@@ -280,7 +280,7 @@ const PogojiUporabe: React.FC = () => {
 
             <section id="priloga-2">
               <h2 className="text-2xl font-serif text-white mt-12 mb-4">Priloga 2: Cenik</h2>
-              <p className="mb-4 font-semibold">Tabela A – Naročniški paketi in cene (vstavite dejanske podatke)</p>
+              <p className="mb-4 font-semibold">Naročniški paketi in cene</p>
               <div className="overflow-x-auto mb-8">
                 <table className="w-full text-left border-collapse">
                   <thead>
@@ -289,7 +289,6 @@ const PogojiUporabe: React.FC = () => {
                       <th className="py-3 px-4">Cena</th>
                       <th className="py-3 px-4">Št. uporabnikov</th>
                       <th className="py-3 px-4">Limiti</th>
-                      <th className="py-3 px-4">Vključena SLA raven</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -298,14 +297,12 @@ const PogojiUporabe: React.FC = () => {
                       <td className="py-3 px-4">199 EUR</td>
                       <td className="py-3 px-4">En uporabnik na licenco</td>
                       <td className="py-3 px-4">Ni omejitev uporabe</td>
-                      <td className="py-3 px-4">Kot določeno v tabeli B</td>
                     </tr>
                     <tr className="border-b border-white/5">
                       <td className="py-3 px-4">Lexora - letna naročnina</td>
                       <td className="py-3 px-4">1999 EUR</td>
                       <td className="py-3 px-4">En uporabnik na licenco</td>
                       <td className="py-3 px-4">Ni omejitev uporabe</td>
-                      <td className="py-3 px-4">Kot določeno v tabeli B</td>
                     </tr>
                   </tbody>
                 </table>

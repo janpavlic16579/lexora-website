@@ -101,7 +101,11 @@ const ONas: React.FC = () => {
               {/* Anej Žaler */}
               <div className="bg-neutral-900/50 border border-white/5 rounded-3xl p-6 flex flex-col items-center text-center hover:bg-neutral-900 transition-colors">
                 <div className="w-32 h-32 rounded-full bg-neutral-800 border-4 border-neutral-950 mb-6 flex items-center justify-center overflow-hidden">
-                  <span className="text-neutral-500 text-sm">Anej</span>
+                  <img src="/anej.png" alt="Anej Žaler" className="w-full h-full object-cover" referrerPolicy="no-referrer" onError={(e) => {
+                    (e.target as HTMLImageElement).style.display = 'none';
+                    (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
+                  }} />
+                  <span className="text-neutral-500 text-sm hidden">Anej</span>
                 </div>
                 <h3 className="text-xl font-bold text-white mb-1">Anej Žaler</h3>
                 <p className="text-blue-400 text-sm font-medium mb-4">Programski razvijalec</p>
