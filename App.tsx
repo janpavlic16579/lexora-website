@@ -1,6 +1,6 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
 import { Menu, X, CheckCircle, Search, FileText, Globe, MessageSquare, GitMerge, Database, Star, ArrowRight, Sparkles, Zap, Shield, Cpu, Check, Minus, Lock, File, Briefcase, Folder, History, Settings, MoreHorizontal, ChevronDown, ChevronUp, PanelLeft, ArrowDown, Paperclip, Mic, ArrowUp, Calendar, AlertCircle, Scale, Copy, ThumbsUp, ThumbsDown } from 'lucide-react';
 
@@ -8,6 +8,16 @@ import PogojiUporabe from './src/pages/PogojiUporabe';
 import PolitikaPiskotkov from './src/pages/PolitikaPiskotkov';
 import PolitikaZasebnosti from './src/pages/PolitikaZasebnosti';
 import ONas from './src/pages/ONas';
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
 
 const StepAnimation = ({ step }: { step: any }) => {
   switch (step.id) {
@@ -292,33 +302,6 @@ const LandingPage: React.FC = () => {
   const [activeWorkspaceTab, setActiveWorkspaceTab] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const demoSectionRef = useRef<HTMLElement>(null);
-  const [hasScrolledToDefault, setHasScrolledToDefault] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && !hasScrolledToDefault) {
-          // Scroll to the default selected video (Civilno pravo) when the section comes into view
-          const timer = setTimeout(() => {
-            scrollToVideo(0);
-            setHasScrolledToDefault(true);
-          }, 100);
-          return () => clearTimeout(timer);
-        }
-      },
-      { threshold: 0.1 } // Trigger when 10% of the section is visible
-    );
-
-    if (demoSectionRef.current) {
-      observer.observe(demoSectionRef.current);
-    }
-
-    return () => {
-      if (demoSectionRef.current) {
-        observer.unobserve(demoSectionRef.current);
-      }
-    };
-  }, [hasScrolledToDefault]);
 
   const processSteps = [
     {
@@ -1616,13 +1599,16 @@ const LandingPage: React.FC = () => {
 
 const App: React.FC = () => {
   return (
-    <Routes>
-      <Route path="/" element={<LandingPage />} />
-      <Route path="/pogoji-uporabe" element={<PogojiUporabe />} />
-      <Route path="/politika-piskotkov" element={<PolitikaPiskotkov />} />
-      <Route path="/politika-zasebnosti" element={<PolitikaZasebnosti />} />
-      <Route path="/o-nas" element={<ONas />} />
-    </Routes>
+    <>
+      <ScrollToTop />
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/pogoji-uporabe" element={<PogojiUporabe />} />
+        <Route path="/politika-piskotkov" element={<PolitikaPiskotkov />} />
+        <Route path="/politika-zasebnosti" element={<PolitikaZasebnosti />} />
+        <Route path="/o-nas" element={<ONas />} />
+      </Routes>
+    </>
   );
 };
 
