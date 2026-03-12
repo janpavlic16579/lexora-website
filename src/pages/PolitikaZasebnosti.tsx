@@ -36,7 +36,7 @@ const PolitikaZasebnosti: React.FC = () => {
 
           <div className="space-y-8 text-base leading-relaxed">
             <section>
-              <h2 className="text-2xl font-serif text-white mb-4">VSEBINA</h2>
+              <h2 className="text-2xl font-serif text-white mb-4">Vsebina</h2>
               <ul className="list-none space-y-2 text-blue-400">
                 <li className="flex justify-between"><a href="#upravljavec" className="hover:underline">1. Upravljavec osebnih podatkov in kontakt</a><span className="text-neutral-500">2</span></li>
                 <li className="flex justify-between"><a href="#vloge" className="hover:underline">2. Vloge po GDPR: kdaj je Lexora upravljavec in kdaj obdelovalec</a><span className="text-neutral-500">2</span></li>
