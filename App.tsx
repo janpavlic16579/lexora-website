@@ -463,9 +463,6 @@ const LandingPage: React.FC = () => {
         
         {/* Dynamic Background */}
         <div className="absolute inset-0 pointer-events-none">
-          {/* Grid Pattern */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
-          
           {/* Main Spotlight */}
           <div className="absolute top-[-20%] left-1/2 -translate-x-1/2 w-[60vw] h-[60vh] bg-blue-600/20 rounded-full blur-[120px] opacity-50 mix-blend-screen animate-pulse-slow"></div>
           

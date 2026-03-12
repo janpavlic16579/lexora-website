@@ -1,8 +1,9 @@
 import React from 'react';
 import { ArrowLeft } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const PolitikaPiskotkov: React.FC = () => {
+  const location = useLocation();
   return (
     <div className="min-h-screen bg-neutral-950 text-neutral-300 font-sans selection:bg-blue-500/30">
       <header className="fixed top-0 inset-x-0 z-50 bg-neutral-950/80 backdrop-blur-md border-b border-white/10">
@@ -16,10 +17,21 @@ const PolitikaPiskotkov: React.FC = () => {
 
       <main className="pt-32 pb-24 px-6 lg:px-8">
         <div className="mx-auto max-w-3xl">
-          <h1 className="text-4xl md:text-5xl font-serif text-white mb-6">POLITIKA PIŠKOTKOV</h1>
+          <div className="flex flex-wrap gap-3 mb-8">
+            <Link to="/pogoji-uporabe" className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${location.pathname === '/pogoji-uporabe' ? 'bg-white text-black' : 'bg-white/5 text-neutral-400 hover:bg-white/10 hover:text-white border border-white/10'}`}>
+              Pogoji uporabe
+            </Link>
+            <Link to="/politika-zasebnosti" className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${location.pathname === '/politika-zasebnosti' ? 'bg-white text-black' : 'bg-white/5 text-neutral-400 hover:bg-white/10 hover:text-white border border-white/10'}`}>
+              Politika zasebnosti
+            </Link>
+            <Link to="/politika-piskotkov" className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${location.pathname === '/politika-piskotkov' ? 'bg-white text-black' : 'bg-white/5 text-neutral-400 hover:bg-white/10 hover:text-white border border-white/10'}`}>
+              Politika piškotkov
+            </Link>
+          </div>
+          <h1 className="text-4xl md:text-5xl font-serif text-white mb-6">Politika piškotkov</h1>
           <div className="text-sm text-neutral-500 mb-12 space-y-1">
-            <p>Datum veljavnosti: 18. 02. 2026</p>
-            <p>Zadnja posodobitev: 9.3. 2026</p>
+            <p>Velja od: 18. 02. 2026</p>
+            <p>Zadnja posodobitev: 9. 3. 2026</p>
           </div>
 
           <div className="space-y-8 text-base leading-relaxed">
