@@ -419,26 +419,30 @@ const LandingPage: React.FC = () => {
       {/* HEADER */}
       <header className="fixed top-0 inset-x-0 z-50 bg-neutral-950/80 backdrop-blur-md border-b border-white/10">
         <div className="mx-auto max-w-5xl px-6 lg:px-8 h-16 flex items-center justify-between">
-          <a className="font-serif text-2xl tracking-tight text-white hover:text-blue-100 transition" href="#">Lexora</a>
+          <div className="flex-1 flex justify-start">
+            <a className="font-serif text-2xl tracking-tight text-white hover:text-blue-100 transition" href="#">Lexora</a>
+          </div>
 
-          <nav className="hidden md:flex items-center gap-8 text-sm text-neutral-300">
+          <nav className="hidden md:flex items-center justify-center gap-8 text-sm text-neutral-300">
             <a className="hover:text-white transition-colors" href="#demo">Predogled</a>
             <a className="hover:text-white transition-colors" href="https://onboarding.lexora.si/" target="_blank" rel="noopener noreferrer">Kako začeti</a>
             <a className="hover:text-white transition-colors" href="#security">Varnost</a>
             <Link className="hover:text-white transition-colors" to="/o-nas">O nas</Link>
           </nav>
 
-          <a href="https://app.lexora.si/" className="btn-demo hidden md:inline-flex items-center h-9 px-4 rounded-lg shadow-[0_0_20px_rgba(37,99,235,0.3)] text-white transition hover:-translate-y-0.5 text-sm font-semibold">
-            Preizkusi Lexoro brezplačno
-          </a>
+          <div className="flex-1 flex justify-end">
+            <a href="https://app.lexora.si/" className="btn-demo hidden md:inline-flex items-center h-9 px-4 rounded-lg shadow-[0_0_20px_rgba(37,99,235,0.3)] text-white transition hover:-translate-y-0.5 text-sm font-semibold">
+              Preizkusi Lexoro brezplačno
+            </a>
 
-          <button 
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden inline-flex h-10 w-10 items-center justify-center rounded hover:bg-white/5" 
-            aria-label="Menu"
-          >
-            {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
-          </button>
+            <button 
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="md:hidden inline-flex h-10 w-10 items-center justify-center rounded hover:bg-white/5" 
+              aria-label="Menu"
+            >
+              {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Menu */}
