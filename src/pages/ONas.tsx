@@ -2,6 +2,8 @@ import React from 'react';
 import { ArrowLeft, Users, Target, Building } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import janImg from '../assets/jan.png';
+import lovroImg from '../assets/lovro.png';
 
 const ONas: React.FC = () => {
   return (
@@ -69,7 +71,7 @@ const ONas: React.FC = () => {
               {/* Jan Pavlič */}
               <div className="bg-neutral-900/50 border border-white/5 rounded-3xl p-6 flex flex-col items-center text-center hover:bg-neutral-900 transition-colors">
                 <div className="w-32 h-32 rounded-full bg-neutral-800 border-4 border-neutral-950 mb-6 flex items-center justify-center overflow-hidden">
-                  <img src="/jan.png" alt="Jan Pavlič" className="w-full h-full object-cover" referrerPolicy="no-referrer" onError={(e) => {
+                  <img src={janImg} alt="Jan Pavlič" className="w-full h-full object-cover" referrerPolicy="no-referrer" onError={(e) => {
                     (e.target as HTMLImageElement).style.display = 'none';
                     (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
                   }} />
@@ -85,7 +87,7 @@ const ONas: React.FC = () => {
               {/* Lovro Gril */}
               <div className="bg-neutral-900/50 border border-white/5 rounded-3xl p-6 flex flex-col items-center text-center hover:bg-neutral-900 transition-colors">
                 <div className="w-32 h-32 rounded-full bg-neutral-800 border-4 border-neutral-950 mb-6 flex items-center justify-center overflow-hidden">
-                  <img src="/lovro.png" alt="Lovro Gril" className="w-full h-full object-cover" referrerPolicy="no-referrer" onError={(e) => {
+                  <img src={lovroImg} alt="Lovro Gril" className="w-full h-full object-cover" referrerPolicy="no-referrer" onError={(e) => {
                     (e.target as HTMLImageElement).style.display = 'none';
                     (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
                   }} />
