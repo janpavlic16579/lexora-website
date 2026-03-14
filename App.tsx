@@ -415,7 +415,7 @@ const LandingPage: React.FC = () => {
 
           <div className="flex-1 flex justify-end">
             <a href="https://app.lexora.si/" className="btn-demo hidden md:inline-flex items-center h-9 px-4 rounded-lg shadow-[0_0_20px_rgba(37,99,235,0.3)] text-white transition hover:-translate-y-0.5 text-sm font-semibold">
-              Preizkusi Lexoro brezplačno
+              Preizkusi Lexoro
             </a>
 
             <button 
@@ -518,7 +518,7 @@ const LandingPage: React.FC = () => {
             className="flex flex-col sm:flex-row items-center justify-center gap-5 mb-24 w-full sm:w-auto"
           >
             <a href="https://app.lexora.si/" className="group relative w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 font-semibold text-white transition-all duration-500 bg-blue-600 rounded-full hover:bg-blue-500 hover:scale-105 focus:outline-none shadow-lg shadow-blue-900/20 ring-1 ring-white/10 overflow-hidden text-base">
-              <span className="relative z-10">Preizkusi Lexoro brezplačno</span>
+              <span className="relative z-10">Preizkusi Lexoro</span>
               <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1 relative z-10" />
               <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-blue-400 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-[length:200%_100%] animate-shimmer"></div>
             </a>
