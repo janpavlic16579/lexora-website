@@ -66,19 +66,19 @@ const ONas: React.FC = () => {
             <h2 className="text-3xl font-serif text-white mb-12">Naša ekipa</h2>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-              {/* Lovro Gril */}
+              {/* Jan Pavlič */}
               <div className="bg-neutral-900/50 border border-white/5 rounded-3xl p-6 flex flex-col items-center text-center hover:bg-neutral-900 transition-colors">
                 <div className="w-32 h-32 rounded-full bg-neutral-800 border-4 border-neutral-950 mb-6 flex items-center justify-center overflow-hidden">
-                  <img src="/lovro.png" alt="Lovro Gril" className="w-full h-full object-cover" referrerPolicy="no-referrer" onError={(e) => {
+                  <img src="/jan.png" alt="Jan Pavlič" className="w-full h-full object-cover" referrerPolicy="no-referrer" onError={(e) => {
                     (e.target as HTMLImageElement).style.display = 'none';
                     (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
                   }} />
-                  <span className="text-neutral-500 text-sm hidden">Lovro</span>
+                  <span className="text-neutral-500 text-sm hidden">Jan</span>
                 </div>
-                <h3 className="text-xl font-bold text-white mb-1">Lovro Gril</h3>
-                <p className="text-blue-400 text-sm font-medium mb-4">Programski razvijalec</p>
+                <h3 className="text-xl font-bold text-white mb-1">Jan Pavlič</h3>
+                <p className="text-blue-400 text-sm font-medium mb-4">Vodja prodaje in komunikacije s strankami</p>
                 <p className="text-neutral-400 text-sm leading-relaxed">
-                  Lovro sodeluje pri razvoju platforme Lexora in implementaciji naprednih funkcionalnosti umetne inteligence. Njegovo delo je usmerjeno v razvoj orodij, ki pravnikom omogočajo hitrejšo analizo dokumentov in učinkovitejšo pripravo pravnih besedil.
+                  Jan skrbi za odnose z uporabniki in razvoj sodelovanj z odvetniškimi pisarnami. Njegova naloga je razumeti potrebe pravnikov in poskrbeti, da Lexora rešuje konkretne izzive pri vsakodnevnem pravnem delu.
                 </p>
               </div>
 
@@ -98,19 +98,41 @@ const ONas: React.FC = () => {
                 </p>
               </div>
 
-              {/* Jan Pavlič */}
+              {/* Lovro Gril */}
               <div className="bg-neutral-900/50 border border-white/5 rounded-3xl p-6 flex flex-col items-center text-center hover:bg-neutral-900 transition-colors">
                 <div className="w-32 h-32 rounded-full bg-neutral-800 border-4 border-neutral-950 mb-6 flex items-center justify-center overflow-hidden">
-                  <img src="/jan.png" alt="Jan Pavlič" className="w-full h-full object-cover" referrerPolicy="no-referrer" onError={(e) => {
+                  <img src="/lovro.png" alt="Lovro Gril" className="w-full h-full object-cover" referrerPolicy="no-referrer" onError={(e) => {
                     (e.target as HTMLImageElement).style.display = 'none';
                     (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
                   }} />
-                  <span className="text-neutral-500 text-sm hidden">Jan</span>
+                  <span className="text-neutral-500 text-sm hidden">Lovro</span>
                 </div>
-                <h3 className="text-xl font-bold text-white mb-1">Jan Pavlič</h3>
-                <p className="text-blue-400 text-sm font-medium mb-4">Vodja prodaje in komunikacije s strankami</p>
+                <h3 className="text-xl font-bold text-white mb-1">Lovro Gril</h3>
+                <p className="text-blue-400 text-sm font-medium mb-4">Programski razvijalec</p>
                 <p className="text-neutral-400 text-sm leading-relaxed">
-                  Jan skrbi za odnose z uporabniki in razvoj sodelovanj z odvetniškimi pisarnami. Njegova naloga je razumeti potrebe pravnikov in poskrbeti, da Lexora rešuje konkretne izzive pri vsakodnevnem pravnem delu.
+                  Lovro sodeluje pri razvoju platforme Lexora in implementaciji naprednih funkcionalnosti umetne inteligence. Njegovo delo je usmerjeno v razvoj orodij, ki pravnikom omogočajo hitrejšo analizo dokumentov in učinkovitejšo pripravo pravnih besedil.
+                </p>
+              </div>
+            </div>
+
+            {/* Mitja Jelenič Novak - Full Width */}
+            <div className="mb-12">
+              <div className="bg-neutral-900/50 border border-white/5 rounded-3xl p-8 flex flex-col items-center text-center hover:bg-neutral-900 transition-colors">
+                <div className="w-32 h-32 rounded-full bg-neutral-800 border-4 border-neutral-950 mb-6 flex items-center justify-center overflow-hidden">
+                  <img src="/mitja.jpg" alt="Mitja Jelenič Novak" className="w-full h-full object-cover" referrerPolicy="no-referrer" onError={(e) => {
+                    (e.target as HTMLImageElement).style.display = 'none';
+                    (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
+                  }} />
+                  <span className="text-neutral-500 text-sm hidden">Mitja</span>
+                </div>
+                <h3 className="text-xl font-bold text-white mb-1">mag. Mitja Jelenič Novak</h3>
+                <p className="text-blue-400 text-sm font-medium mb-4">odvetnik</p>
+                <p className="text-neutral-400 text-sm leading-relaxed max-w-2xl">
+                  Pred dobrim letom se mi je ponudila priložnost sodelovati z izjemno skupino mladih razvijalcev pri nastajanju orodja umetne inteligence za pravniško delo. Naš cilj je bil jasen: razviti program, ki bi pravnikom, tudi odvetnikom v kazenskih zadevah, lahko služil kot zanesljiv in uporaben pravni pomočnik. Veseli me, da je ta projekt v obliki Lexore ugledal luč sveta, zato bi začetek njegove komercialne poti rad pospremil z nekaj besedami.<br/><br/>
+                  Pri tem projektu sem sodeloval, ker verjamem, da tehnološkega napredka ni mogoče ustaviti, ampak ga je treba razumeti in smiselno uporabiti. Povezovanje pravne stroke z naprednimi informacijskimi rešitvami odpira nove možnosti tudi za odvetniški poklic. Če se uporablja preudarno in strokovno, Lexora pomeni koristno nadgradnjo tradicionalnega načina pravniškega dela.<br/><br/>
+                  Njena vrednost je predvsem v tem, da lahko bistveno skrajša čas za rutinska in tehnično zahtevna in zamudna opravila pri preučevanju zadev. Pomaga lahko pri pregledovanju obsežnih spisov, iskanju med številnimi listinami, njihovem razvrščanju ter pripravi povzetkov. S tem pravniku omogoča, da več časa nameni tistemu delu, ki je bistvo našega poklica: pravni presoji, argumentaciji in strategiji, skratka, kreativnemu delu.<br/><br/>
+                  Ob tem pa želim poudariti, da je Lexora še vedno zgolj orodje. Lahko je zelo koristen pripomoček, ne more pa nadomestiti pravnikovega znanja, izkušenj in presoje. Tako kot pri drugih sistemih umetne inteligence je tudi njena uporabna vrednost v veliki meri odvisna od usposobljenosti uporabnika, od njegovega strokovnega pravnega znanja in od tega, kako natančno jo zna usmerjati do želenih rezultatov.<br/><br/>
+                  Lexora torej ne more nadomestiti vaših možganov, lahko pa vam občutno prihrani čas pri preučevanju obsežnih dokaznih gradiv.
                 </p>
               </div>
             </div>
