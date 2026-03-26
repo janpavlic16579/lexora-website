@@ -1313,7 +1313,7 @@ const LandingPage: React.FC = () => {
                 {[
                   { title: "Brez učenja modelov", desc: "Vaši dokumenti in poizvedbe se nikoli ne uporabljajo za učenje ali izboljševanje AI modelov." },
                   { title: "Enkripcija podatkov", desc: "Vsi podatki so šifrirani med prenosom (TLS 1.3) in v mirovanju (AES-256)." },
-                  { title: "Skladnost z GDPR", desc: "Infrastruktura je v celoti skladna z evropsko zakonodajo o varstvu osebnih podatkov." }
+                  { title: "Skladnost z GDPR", desc: "Lexora je zasnovana skladno z GDPR in uporablja sodobne pravne, tehnične in organizacijske ukrepe za varstvo osebnih podatkov." }
                 ].map((item, i) => (
                   <motion.li 
                     key={i}
