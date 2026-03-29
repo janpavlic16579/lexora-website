@@ -19,14 +19,23 @@
         extend: {
           colors: {
             neutral: {
-              850: '#1f1f1f',
+              50: '#f9f9f9',
+              100: '#f3f4f6',
+              200: '#e5e7eb',
               900: '#171717',
               950: '#0a0a0a',
             },
             blue: {
-              400: '#60a5fa',
-              500: '#3b82f6',
-              600: '#2563eb',
+              400: '#3b82f6',
+              500: '#2563eb',
+              600: '#1d4ed8',
+              700: '#1e40af',
+            },
+            emerald: {
+              400: '#34d399',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
             }
           },
           fontFamily: {
@@ -63,19 +72,19 @@
     /* Global Styles */
     html { scroll-behavior: smooth; }
     body { 
-      background-color: #0a0a0a; 
-      color: white; 
+      background-color: #ffffff; 
+      color: #171717; 
       overflow-x: hidden;
     }
     
     /* Custom Scrollbar */
     ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: #0a0a0a; }
+    ::-webkit-scrollbar-track { background: #f9f9f9; }
     ::-webkit-scrollbar-thumb { 
-      background: #262626; 
+      background: #d1d5db; 
       border-radius: 10px;
     }
-    ::-webkit-scrollbar-thumb:hover { background: #404040; }
+    ::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
 
     /* Typography Refinements */
     .font-serif {
@@ -235,7 +244,7 @@
 </script>
 <link rel="stylesheet" href="/index.css">
 </head>
-<body class="bg-neutral-950 text-white antialiased selection:bg-blue-500/30 selection:text-white">
+<body class="bg-white text-neutral-900 antialiased selection:bg-blue-500/30 selection:text-neutral-900">
   <div id="root"></div>
 <script type="module" src="/index.tsx"></script>
 </body>

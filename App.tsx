@@ -9,6 +9,122 @@ import PolitikaPiskotkov from './src/pages/PolitikaPiskotkov';
 import PolitikaZasebnosti from './src/pages/PolitikaZasebnosti';
 import ONas from './src/pages/ONas';
 
+const MegaMenu = ({ title, href, children, align = 'center' }: { title: string, href?: string, children: React.ReactNode, align?: 'left' | 'center' | 'right' }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const alignmentClass = align === 'left' ? 'left-0' : align === 'right' ? 'right-0' : 'left-1/2 -translate-x-1/2';
+
+  return (
+    <div 
+      className="relative" 
+      onMouseEnter={() => setIsOpen(true)} 
+      onMouseLeave={() => setIsOpen(false)}
+    >
+      {href ? (
+        <a href={href} className="flex items-center gap-1 hover:text-blue-600 transition-colors font-medium">
+          {title} <ChevronDown size={14} className="opacity-50" />
+        </a>
+      ) : (
+        <button className="flex items-center gap-1 hover:text-blue-600 transition-colors font-medium">
+          {title} <ChevronDown size={14} className="opacity-50" />
+        </button>
+      )}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            className={`absolute top-full ${alignmentClass} mt-4 w-[min(600px,calc(100vw-2rem))] bg-white border border-neutral-100 rounded-3xl shadow-xl p-8 z-50`}
+          >
+            {children}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+
+const Typewriter = ({ text, delay = 0, speed = 50 }: { text: string; delay?: number; speed?: number }) => {
+  const [displayText, setDisplayText] = useState("");
+  const [started, setStarted] = useState(false);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => setStarted(true), delay * 1000);
+    return () => clearTimeout(timeout);
+  }, [delay]);
+
+  useEffect(() => {
+    if (!started) return;
+    if (displayText.length < text.length) {
+      const timeout = setTimeout(() => {
+        setDisplayText(text.slice(0, displayText.length + 1));
+      }, speed);
+      return () => clearTimeout(timeout);
+    }
+  }, [displayText, text, speed, started]);
+
+  return (
+    <span className="relative">
+      {displayText}
+      {started && displayText.length < text.length && (
+        <motion.span
+          animate={{ opacity: [0, 1, 0] }}
+          transition={{ duration: 0.8, repeat: Infinity }}
+          className="inline-block w-[2px] h-[0.8em] bg-blue-500 ml-1 align-middle"
+        />
+      )}
+    </span>
+  );
+};
+
+const InteractiveHeroBackground = () => {
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePos({ x: e.clientX, y: e.clientY });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  return (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+      {/* Primary Blue Glow */}
+      <motion.div 
+        animate={{ 
+          left: mousePos.x,
+          top: mousePos.y,
+        }}
+        transition={{ type: "spring", damping: 30, stiffness: 200, mass: 0.5 }}
+        className="absolute w-[800px] h-[800px] rounded-full opacity-20"
+        style={{
+          transform: 'translate(-50%, -50%)',
+          background: 'radial-gradient(circle, rgba(59, 130, 246, 0.6) 0%, transparent 70%)',
+          filter: 'blur(100px)',
+        }}
+      />
+      
+      {/* Secondary Emerald Glow - slightly offset for depth */}
+      <motion.div 
+        animate={{ 
+          left: mousePos.x,
+          top: mousePos.y,
+        }}
+        transition={{ type: "spring", damping: 40, stiffness: 150, mass: 0.8 }}
+        className="absolute w-[600px] h-[600px] rounded-full opacity-15"
+        style={{
+          transform: 'translate(-40%, -40%)',
+          background: 'radial-gradient(circle, rgba(16, 185, 129, 0.5) 0%, transparent 70%)',
+          filter: 'blur(120px)',
+        }}
+      />
+    </div>
+  );
+};
+
 function ScrollToTop() {
   const { pathname } = useLocation();
 
@@ -25,7 +141,7 @@ const StepAnimation = ({ step }: { step: any }) => {
       return (
         <div className="relative w-full h-full flex items-center justify-center">
            {/* Document */}
-           <div className="relative bg-neutral-900 border border-neutral-700 p-6 rounded-xl shadow-2xl w-48 h-64 flex flex-col gap-4 overflow-hidden">
+           <div className="relative bg-white border border-neutral-200 p-6 rounded-xl shadow-lg w-48 h-64 flex flex-col gap-4 overflow-hidden">
               <div className="flex items-center justify-between mb-2">
                 <FileText size={24} className="text-blue-400" />
                 <div className="w-2 h-2 rounded-full bg-blue-500" />
@@ -83,7 +199,7 @@ const StepAnimation = ({ step }: { step: any }) => {
            <motion.div 
              animate={{ scale: [1, 1.1, 1] }}
              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-             className="relative z-10 bg-neutral-900 p-6 rounded-full border border-emerald-500/30 shadow-[0_0_40px_rgba(16,185,129,0.15)]"
+             className="relative z-10 bg-white p-6 rounded-full border border-emerald-200 shadow-lg"
            >
              <Search size={48} className="text-emerald-400" />
            </motion.div>
@@ -121,7 +237,7 @@ const StepAnimation = ({ step }: { step: any }) => {
            <motion.div 
              animate={{ boxShadow: ["0 0 0px rgba(168,85,247,0)", "0 0 40px rgba(168,85,247,0.2)", "0 0 0px rgba(168,85,247,0)"] }}
              transition={{ duration: 2, repeat: Infinity }}
-             className="bg-neutral-900 p-6 rounded-2xl border border-purple-500/30 relative z-10"
+             className="bg-white p-6 rounded-2xl border border-purple-200 relative z-10"
            >
              <Cpu size={48} className="text-purple-400" />
            </motion.div>
@@ -157,7 +273,7 @@ const StepAnimation = ({ step }: { step: any }) => {
              />
              
              {/* Main doc */}
-             <div className="relative bg-neutral-900 border border-orange-500/30 p-6 rounded-xl shadow-2xl w-56 h-72 flex flex-col gap-4">
+             <div className="relative bg-white border border-orange-200 p-6 rounded-xl shadow-lg w-56 h-72 flex flex-col gap-4">
                <div className="flex items-center gap-3 mb-2 border-b border-white/5 pb-4">
                  <div className="w-10 h-10 rounded-lg bg-orange-500/20 flex items-center justify-center">
                    <GitMerge size={20} className="text-orange-400" />
@@ -212,7 +328,7 @@ const StepAnimation = ({ step }: { step: any }) => {
 
            {/* Step 1: Your Process (Rules) */}
            <motion.div 
-             className="absolute left-[15%] bg-neutral-900 p-4 rounded-xl border border-neutral-700 shadow-xl flex flex-col gap-2 z-10"
+             className="absolute left-[15%] bg-white p-4 rounded-xl border border-neutral-200 shadow-lg flex flex-col gap-2 z-10"
              animate={{ y: [0, -5, 0] }}
              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
            >
@@ -238,7 +354,7 @@ const StepAnimation = ({ step }: { step: any }) => {
              <motion.div 
                animate={{ scale: [1, 1.1, 1], boxShadow: ["0 0 0px rgba(236,72,153,0)", "0 0 30px rgba(236,72,153,0.4)", "0 0 0px rgba(236,72,153,0)"] }}
                transition={{ duration: 2, repeat: Infinity }}
-               className="bg-neutral-900 p-5 rounded-2xl border border-pink-500 shadow-2xl"
+               className="bg-white p-5 rounded-2xl border border-pink-200 shadow-lg"
              >
                <Sparkles size={32} className="text-pink-400" />
              </motion.div>
@@ -252,7 +368,7 @@ const StepAnimation = ({ step }: { step: any }) => {
 
            {/* Step 3: Result (Execution) */}
            <motion.div 
-             className="absolute right-[15%] bg-neutral-900 p-4 rounded-xl border border-neutral-700 shadow-xl flex flex-col gap-2 z-10"
+             className="absolute right-[15%] bg-white p-4 rounded-xl border border-neutral-200 shadow-lg flex flex-col gap-2 z-10"
              animate={{ y: [0, 5, 0] }}
              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
            >
@@ -398,29 +514,113 @@ const LandingPage: React.FC = () => {
   };
   
   return (
-    <div className="min-h-screen font-sans bg-neutral-950 text-white selection:bg-blue-500/30">
+    <div className="min-h-screen font-sans bg-white text-neutral-900 selection:bg-blue-500/30">
       {/* HEADER */}
-      <header className="fixed top-0 inset-x-0 z-50 bg-neutral-950/80 backdrop-blur-md border-b border-white/10">
+      <header className="fixed top-0 inset-x-0 z-50 bg-white/80 backdrop-blur-md border-b border-neutral-200">
         <div className="mx-auto max-w-5xl px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex-1 flex justify-start">
-            <a className="font-serif text-2xl tracking-tight text-white hover:text-blue-100 transition" href="#">Lexora</a>
+            <a className="font-serif text-2xl tracking-tight text-neutral-900 hover:text-blue-900 transition" href="#">Lexora</a>
           </div>
 
-          <nav className="hidden md:flex items-center justify-center gap-8 text-sm text-neutral-300">
-            <a className="hover:text-white transition-colors" href="#demo">Predogled</a>
-            <a className="hover:text-white transition-colors" href="https://onboarding.lexora.si/" target="_blank" rel="noopener noreferrer">Kako začeti</a>
-            <a className="hover:text-white transition-colors" href="#security">Varnost</a>
-            <Link className="hover:text-white transition-colors" to="/o-nas">O nas</Link>
+          <nav className="hidden md:flex items-center justify-center gap-8 text-sm text-neutral-600">
+            <MegaMenu title="Predogled" href="#demo" align="left">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="flex flex-col gap-4">
+                  <a href="#step-01" onClick={(e) => { e.preventDefault(); document.getElementById('step-01')?.scrollIntoView({ behavior: 'smooth' }); }} className="group block p-3 rounded-xl hover:bg-blue-50 transition-colors">
+                    <h4 className="font-semibold text-neutral-900 group-hover:text-blue-700">Pregled dokumentacije</h4>
+                    <p className="text-sm text-neutral-600">AI pregled tveganj in klavzul.</p>
+                  </a>
+                  <a href="#step-02" onClick={(e) => { e.preventDefault(); document.getElementById('step-02')?.scrollIntoView({ behavior: 'smooth' }); }} className="group block p-3 rounded-xl hover:bg-blue-50 transition-colors">
+                    <h4 className="font-semibold text-neutral-900 group-hover:text-blue-700">Raziskava zakonodaje</h4>
+                    <p className="text-sm text-neutral-600">Hitro iskanje v zanesljivih pravnih virih.</p>
+                  </a>
+                  <a href="#step-03" onClick={(e) => { e.preventDefault(); document.getElementById('step-03')?.scrollIntoView({ behavior: 'smooth' }); }} className="group block p-3 rounded-xl hover:bg-blue-50 transition-colors">
+                    <h4 className="font-semibold text-neutral-900 group-hover:text-blue-700">Iskanje sodne prakse</h4>
+                    <p className="text-sm text-neutral-600">Hitri povzetki dolgih pravnih besedil.</p>
+                  </a>
+                </div>
+                <div className="flex flex-col gap-4">
+                  <a href="#step-04" onClick={(e) => { e.preventDefault(); document.getElementById('step-04')?.scrollIntoView({ behavior: 'smooth' }); }} className="group block p-3 rounded-xl hover:bg-blue-50 transition-colors">
+                    <h4 className="font-semibold text-neutral-900 group-hover:text-blue-700">Priprava osnutkov</h4>
+                    <p className="text-sm text-neutral-600">Avtomatizirana priprava pravnih dokumentov.</p>
+                  </a>
+                  <a href="#step-05" onClick={(e) => { e.preventDefault(); document.getElementById('step-05')?.scrollIntoView({ behavior: 'smooth' }); }} className="group block p-3 rounded-xl hover:bg-blue-50 transition-colors">
+                    <h4 className="font-semibold text-neutral-900 group-hover:text-blue-700">Personalizirani agenti</h4>
+                    <p className="text-sm text-neutral-600">Agenti prilagojeni vašim potrebam.</p>
+                  </a>
+                </div>
+              </div>
+            </MegaMenu>
+            <MegaMenu title="Kako začeti" href="https://onboarding.lexora.si/" align="center">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="flex flex-col gap-4">
+                  <a href="https://onboarding.lexora.si/" target="_blank" rel="noopener noreferrer" className="group block p-3 rounded-xl hover:bg-blue-50 transition-colors">
+                    <h4 className="font-semibold text-neutral-900 group-hover:text-blue-700">Vodnik za začetnike</h4>
+                    <p className="text-sm text-neutral-600">Prvi koraki z Lexoro.</p>
+                  </a>
+                  <a href="https://onboarding.lexora.si/" target="_blank" rel="noopener noreferrer" className="group block p-3 rounded-xl hover:bg-blue-50 transition-colors">
+                    <h4 className="font-semibold text-neutral-900 group-hover:text-blue-700">Video vodiči</h4>
+                    <p className="text-sm text-neutral-600">Naučite se uporabljati Lexoro.</p>
+                  </a>
+                </div>
+                <div className="flex flex-col gap-4">
+                  <a href="https://onboarding.lexora.si/" target="_blank" rel="noopener noreferrer" className="group block p-3 rounded-xl hover:bg-blue-50 transition-colors">
+                    <h4 className="font-semibold text-neutral-900 group-hover:text-blue-700">Pogosta vprašanja (FAQ)</h4>
+                    <p className="text-sm text-neutral-600">Odgovori na najpogostejša vprašanja.</p>
+                  </a>
+                </div>
+              </div>
+            </MegaMenu>
+            <MegaMenu title="Varnost" href="#security" align="right">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="flex flex-col gap-4">
+                  <a href="#security" className="group block p-3 rounded-xl hover:bg-blue-50 transition-colors">
+                    <h4 className="font-semibold text-neutral-900 group-hover:text-blue-700">Varnost podatkov</h4>
+                    <p className="text-sm text-neutral-600">Kako varujemo vaše zaupne podatke.</p>
+                  </a>
+                  <a href="#security" className="group block p-3 rounded-xl hover:bg-blue-50 transition-colors">
+                    <h4 className="font-semibold text-neutral-900 group-hover:text-blue-700">Skladnost</h4>
+                    <p className="text-sm text-neutral-600">Naša zaveza k varnosti in skladnosti.</p>
+                  </a>
+                </div>
+                <div className="flex flex-col gap-4">
+                  <a href="#security" className="group block p-3 rounded-xl hover:bg-blue-50 transition-colors">
+                    <h4 className="font-semibold text-neutral-900 group-hover:text-blue-700">Zasebnost</h4>
+                    <p className="text-sm text-neutral-600">Naši pravilniki o zasebnosti.</p>
+                  </a>
+                </div>
+              </div>
+            </MegaMenu>
+            <MegaMenu title="O nas" href="/o-nas" align="right">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="flex flex-col gap-4">
+                  <Link to="/o-nas" className="group block p-3 rounded-xl hover:bg-blue-50 transition-colors">
+                    <h4 className="font-semibold text-neutral-900 group-hover:text-blue-700">Naša vizija</h4>
+                    <p className="text-sm text-neutral-600">Zakaj smo ustvarili Lexoro.</p>
+                  </Link>
+                  <Link to="/o-nas" className="group block p-3 rounded-xl hover:bg-blue-50 transition-colors">
+                    <h4 className="font-semibold text-neutral-900 group-hover:text-blue-700">Ekipa</h4>
+                    <p className="text-sm text-neutral-600">Spoznajte ljudi za Lexoro.</p>
+                  </Link>
+                </div>
+                <div className="flex flex-col gap-4">
+                  <Link to="/o-nas" className="group block p-3 rounded-xl hover:bg-blue-50 transition-colors">
+                    <h4 className="font-semibold text-neutral-900 group-hover:text-blue-700">Kontakt</h4>
+                    <p className="text-sm text-neutral-600">Stopite v stik z nami.</p>
+                  </Link>
+                </div>
+              </div>
+            </MegaMenu>
           </nav>
 
           <div className="flex-1 flex justify-end">
-            <a href="https://app.lexora.si/" className="btn-demo hidden md:inline-flex items-center h-9 px-4 rounded-lg shadow-[0_0_20px_rgba(37,99,235,0.3)] text-white transition hover:-translate-y-0.5 text-sm font-semibold">
+            <a href="https://app.lexora.si/" className="hidden md:inline-flex items-center h-10 px-6 rounded-full bg-neutral-900 hover:bg-neutral-800 text-white transition-all hover:-translate-y-0.5 text-sm font-semibold shadow-sm">
               Preizkusi Lexoro
             </a>
 
             <button 
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden inline-flex h-10 w-10 items-center justify-center rounded hover:bg-white/5" 
+              className="md:hidden inline-flex h-10 w-10 items-center justify-center rounded hover:bg-neutral-100" 
               aria-label="Menu"
             >
               {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
@@ -430,8 +630,8 @@ const LandingPage: React.FC = () => {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="border-t border-white/10 bg-neutral-950/90 backdrop-blur md:hidden">
-            <nav className="mx-auto max-w-5xl px-6 py-4 flex flex-col gap-4 text-base text-neutral-200">
+          <div className="border-t border-neutral-200 bg-white/90 backdrop-blur md:hidden">
+            <nav className="mx-auto max-w-5xl px-6 py-4 flex flex-col gap-4 text-base text-neutral-700">
               <a href="#demo" onClick={() => setIsMenuOpen(false)}>Predogled</a>
               <a href="https://onboarding.lexora.si/" target="_blank" rel="noopener noreferrer" onClick={() => setIsMenuOpen(false)}>Kako začeti</a>
               <a href="#security" onClick={() => setIsMenuOpen(false)}>Varnost</a>
@@ -442,135 +642,107 @@ const LandingPage: React.FC = () => {
       </header>
 
       {/* HERO SECTION - REDESIGNED */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#030303] pt-32 pb-32 selection:bg-blue-500/30">
+      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-neutral-50 pt-32 pb-32 selection:bg-blue-500/20">
         
-        {/* Dynamic Background */}
-        <div className="absolute inset-0 pointer-events-none">
-          {/* Grid Pattern */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
+        <InteractiveHeroBackground />
+        
+        {/* Animated Background Blobs */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <motion.div 
+            animate={{ 
+              x: [0, 50, 0], 
+              y: [0, 30, 0],
+              scale: [1, 1.1, 1]
+            }}
+            transition={{ 
+              duration: 20, 
+              repeat: Infinity, 
+              ease: "linear" 
+            }}
+            className="absolute top-[-10%] right-[-10%] w-[60vw] h-[60vh] bg-blue-100/50 rounded-full blur-[120px]"
+          />
+          <motion.div 
+            animate={{ 
+              x: [0, -40, 0], 
+              y: [0, 50, 0],
+              scale: [1, 1.2, 1]
+            }}
+            transition={{ 
+              duration: 25, 
+              repeat: Infinity, 
+              ease: "linear" 
+            }}
+            className="absolute bottom-[-10%] left-[-10%] w-[50vw] h-[50vh] bg-emerald-100/50 rounded-full blur-[120px]"
+          />
           
-          {/* Main Spotlight */}
-          <div className="absolute top-[-20%] left-1/2 -translate-x-1/2 w-[60vw] h-[60vh] bg-blue-600/20 rounded-full blur-[120px] opacity-50 mix-blend-screen animate-pulse-slow"></div>
-          
-          {/* Secondary Glows */}
-          <div className="absolute top-[20%] left-[10%] w-[30vw] h-[30vh] bg-purple-500/10 rounded-full blur-[100px] opacity-30"></div>
-          <div className="absolute bottom-[10%] right-[10%] w-[30vw] h-[30vh] bg-emerald-500/10 rounded-full blur-[100px] opacity-20"></div>
-          
-          {/* Noise Texture */}
-          <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 mix-blend-overlay"></div>
+          {/* Subtle Grid Pattern */}
+          <div className="absolute inset-0 opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
         </div>
 
         <div className="relative z-10 max-w-5xl mx-auto px-6 text-center flex flex-col items-center">
           
           {/* Badge */}
           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-xl mb-8 hover:bg-white/10 transition-all cursor-default ring-1 ring-white/5 group hover:scale-105 hover:shadow-[0_0_20px_rgba(59,130,246,0.3)]"
+            transition={{ duration: 0.6 }}
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-neutral-200 shadow-sm mb-8"
           >
-            <span className="flex h-2 w-2 relative">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
-            </span>
-            <span className="text-xs font-medium text-blue-100/90 tracking-wide uppercase">AI, ki razume slovensko in evropsko pravo</span>
+            <span className="text-[10px] font-bold text-blue-600 tracking-widest uppercase">AI, ki razume slovensko in evropsko pravo</span>
           </motion.div>
 
           {/* Headline */}
-          <motion.h1 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
-            className="font-serif text-5xl sm:text-6xl md:text-7xl tracking-tight mb-8 text-white leading-[1.1] relative z-10"
-          >
-            Vaša nova <br/>
-            <span className="relative inline-block mt-2">
-              <span className="absolute -inset-1 bg-blue-500/20 blur-2xl rounded-full opacity-30"></span>
-              <span className="relative text-transparent bg-clip-text bg-gradient-to-r from-white via-blue-200 to-blue-400">
-                pravna supermoč.
+          <div className="mb-8 min-h-[110px] sm:min-h-[160px] md:min-h-[200px] flex flex-col justify-center">
+            <motion.h1 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+              className="font-serif text-5xl sm:text-6xl md:text-7xl tracking-tight text-neutral-950 leading-[1.05]"
+            >
+              <Typewriter text="Pravna odličnost," delay={0.5} speed={70} /> <br/>
+              <span className="text-neutral-500 italic font-light">
+                <Typewriter text="podprta z umetno inteligenco." delay={2} speed={50} />
               </span>
-              {/* Decorative Sparkle */}
-              <motion.div 
-                animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
-                transition={{ duration: 3, repeat: Infinity }}
-                className="absolute -top-4 -right-8 text-blue-400"
-              >
-                <Sparkles size={32} strokeWidth={1.5} />
-              </motion.div>
-            </span>
-          </motion.h1>
+            </motion.h1>
+          </div>
 
           {/* Subtext */}
           <motion.p 
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-            className="font-sans text-lg md:text-xl text-neutral-400 max-w-2xl mx-auto mb-12 leading-relaxed"
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
+            className="font-sans text-lg md:text-xl text-neutral-600 max-w-xl mx-auto mb-12 leading-relaxed"
           >
-            Lexora pomaga pri analizi dokumentov, pravni raziskavi in pripravi osnutkov, da se lahko osredotočite na <span className="text-white font-medium border-b border-blue-500/30 pb-0.5 hover:border-blue-400 transition-colors">pravno presojo in strategijo</span>.
+            Lexora avtomatizira rutinska opravila, da se lahko vi osredotočite na tisto, kar resnično šteje: <span className="text-neutral-900 font-medium">vašo pravno strategijo in stranke.</span>
           </motion.p>
 
           {/* Buttons */}
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-5 mb-24 w-full sm:w-auto"
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto"
           >
-            <a href="https://app.lexora.si/" className="group relative w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 font-semibold text-white transition-all duration-500 bg-blue-600 rounded-full hover:bg-blue-500 hover:scale-105 focus:outline-none shadow-lg shadow-blue-900/20 ring-1 ring-white/10 overflow-hidden text-base">
+            <a href="https://app.lexora.si/" className="group relative w-full sm:w-auto inline-flex items-center justify-center px-10 py-4 font-semibold text-white bg-neutral-900 rounded-full hover:bg-neutral-800 transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 overflow-hidden">
               <span className="relative z-10">Preizkusi Lexoro</span>
-              <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1 relative z-10" />
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-blue-400 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-[length:200%_100%] animate-shimmer"></div>
+              <motion.div 
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
+                animate={{ x: ['-100%', '200%'] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", repeatDelay: 3 }}
+              />
             </a>
             
-            <a href="https://calendly.com/jan-lexora/30min" target="_blank" rel="noopener noreferrer" className="group relative w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 font-semibold text-white transition-all duration-300 bg-white/5 rounded-full hover:bg-white/10 hover:scale-105 focus:outline-none ring-1 ring-white/10 backdrop-blur-sm text-base hover:ring-white/20">
-              <Calendar className="w-5 h-5 text-neutral-400 group-hover:text-white transition-colors" />
-              <span>Rezerviraj sestanek</span>
+            <a href="https://calendly.com/jan-lexora/30min" target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto inline-flex items-center justify-center px-10 py-4 font-semibold text-neutral-900 bg-white border border-neutral-200 rounded-full hover:bg-neutral-50 transition-all hover:border-neutral-300">
+              Rezerviraj sestanek
             </a>
           </motion.div>
 
-          {/* Social Proof */}
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.5 }}
-            className="flex flex-col items-center gap-4"
-          >
-            <p className="text-[10px] font-bold text-neutral-500 uppercase tracking-[0.2em]">Zaupajo nam slovenski pravniki</p>
-            <div className="flex -space-x-3 grayscale hover:grayscale-0 transition-all duration-500 cursor-default p-2">
-                 {['MJ', 'AK', 'TR', 'BP'].map((initials, i) => (
-                   <div key={i} className="w-10 h-10 rounded-full bg-neutral-900 border border-neutral-800 flex items-center justify-center text-xs text-neutral-400 font-medium relative z-0 hover:z-10 hover:scale-110 transition-transform bg-gradient-to-br from-neutral-800 to-neutral-900 shadow-sm">
-                     {initials}
-                   </div>
-                 ))}
-            </div>
-          </motion.div>
         </div>
 
-        {/* Scroll Indicator */}
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5, duration: 1 }}
-          className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 cursor-pointer group z-20"
-          onClick={() => {
-            const el = document.getElementById('how-it-helps');
-            if (el) el.scrollIntoView({ behavior: 'smooth' });
-          }}
-        >
-          <span className="text-[10px] font-bold text-neutral-500 uppercase tracking-[0.2em] group-hover:text-blue-400 transition-colors">Razišči</span>
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-            className="w-10 h-10 rounded-full border border-neutral-800 bg-neutral-900/80 backdrop-blur-sm flex items-center justify-center group-hover:border-blue-500/50 group-hover:bg-blue-500/10 transition-all shadow-[0_0_20px_rgba(0,0,0,0.5)] group-hover:shadow-[0_0_20px_rgba(59,130,246,0.3)]"
-          >
-            <ChevronDown className="w-5 h-5 text-neutral-400 group-hover:text-blue-400 transition-colors" />
-          </motion.div>
-        </motion.div>
       </section>
 
       {/* HOW LEXORA HELPS SECTION */}
-      <section id="how-it-helps" className="relative bg-neutral-950 pt-24 pb-24 overflow-hidden">
+      <section id="how-it-helps" className="relative bg-white pt-24 pb-24 overflow-hidden">
         <div className="mx-auto max-w-5xl px-6 lg:px-8">
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
@@ -578,9 +750,9 @@ const LandingPage: React.FC = () => {
             viewport={{ once: true }}
             className="text-center mb-8"
           >
-            <h2 className="font-serif text-4xl md:text-5xl text-white mb-4">Kako Lexora pospeši pravno delo</h2>
-            <p className="text-lg text-neutral-400 max-w-2xl mx-auto leading-relaxed">
-              Lexora pomaga pri analizi spisa, pravni raziskavi in pripravi osnutkov, da lahko pravnik hitreje razume zadevo in se osredotoči na <span className="text-white font-medium">pravno strategijo</span>.
+            <h2 className="font-serif text-5xl md:text-6xl text-neutral-950 mb-4">Kako Lexora pospeši pravno delo</h2>
+            <p className="text-xl text-neutral-800 max-w-2xl mx-auto leading-relaxed">
+              Lexora pomaga pri analizi spisa, pravni raziskavi in pripravi osnutkov, da lahko pravnik hitreje razume zadevo in se osredotoči na <span className="text-neutral-900 font-medium">pravno strategijo</span>.
             </p>
           </motion.div>
 
@@ -892,11 +1064,11 @@ const LandingPage: React.FC = () => {
 
           <div className="grid md:grid-cols-3 lg:grid-cols-5 gap-4 mb-24 max-w-5xl mx-auto">
             {[
-              { title: "Pregled dokumentacije", icon: <FileText className="text-blue-400" />, delay: 0, targetId: "step-01" },
-              { title: "Raziskava zakonodaje", icon: <Search className="text-emerald-400" />, delay: 0.1, targetId: "step-02" },
-              { title: "Iskanje sodne prakse", icon: <Globe className="text-purple-400" />, delay: 0.2, targetId: "step-03" },
-              { title: "Priprava osnutkov", icon: <MessageSquare className="text-orange-400" />, delay: 0.3, targetId: "step-04" },
-              { title: "Personalizirani agenti", icon: <Sparkles className="text-pink-400" />, delay: 0.4, targetId: "step-05" }
+              { title: "Pregled dokumentacije", icon: <FileText className="text-blue-600" />, delay: 0, targetId: "step-01" },
+              { title: "Raziskava zakonodaje", icon: <Search className="text-emerald-600" />, delay: 0.1, targetId: "step-02" },
+              { title: "Iskanje sodne prakse", icon: <Globe className="text-purple-600" />, delay: 0.2, targetId: "step-03" },
+              { title: "Priprava osnutkov", icon: <MessageSquare className="text-orange-600" />, delay: 0.3, targetId: "step-04" },
+              { title: "Personalizirani agenti", icon: <Sparkles className="text-pink-600" />, delay: 0.4, targetId: "step-05" }
             ].map((item, i) => (
               <motion.div 
                 key={i}
@@ -913,13 +1085,13 @@ const LandingPage: React.FC = () => {
                     window.scrollTo({ top: y, behavior: 'smooth' });
                   }
                 }}
-                className="p-5 rounded-2xl bg-neutral-900/40 border border-white/5 flex flex-col items-center text-center group hover:border-blue-500/30 hover:bg-blue-500/5 transition-all duration-500 cursor-pointer"
+                className="p-5 rounded-2xl bg-white border border-neutral-200 flex flex-col items-center text-center group hover:border-blue-300 hover:bg-blue-50 transition-all duration-500 cursor-pointer shadow-sm"
               >
-                <div className="w-12 h-12 rounded-xl bg-neutral-950 border border-white/10 flex items-center justify-center mb-4 group-hover:shadow-[0_0_20px_rgba(37,99,235,0.2)] transition-all">
+                <div className="w-12 h-12 rounded-xl bg-neutral-50 border border-neutral-200 flex items-center justify-center mb-4 group-hover:shadow-[0_0_20px_rgba(37,99,235,0.1)] transition-all">
                   {React.cloneElement(item.icon as React.ReactElement, { size: 20 })}
                 </div>
-                <h3 className="text-sm font-bold text-white mb-2">{item.title}</h3>
-                <div className="w-8 h-1 bg-blue-600/20 rounded-full mt-2 group-hover:w-16 group-hover:bg-blue-600 transition-all duration-500" />
+                <h3 className="text-base font-bold text-neutral-950 mb-2">{item.title}</h3>
+                <div className="w-8 h-1 bg-blue-200 rounded-full mt-2 group-hover:w-16 group-hover:bg-blue-600 transition-all duration-500" />
               </motion.div>
             ))}
           </div>
@@ -938,25 +1110,25 @@ const LandingPage: React.FC = () => {
               >
                 <div className={i % 2 === 1 ? 'lg:order-2' : ''}>
                   <div className="flex items-center gap-6 mb-6">
-                    <div className="w-14 h-14 rounded-2xl bg-neutral-900/50 border border-white/10 flex items-center justify-center shadow-xl shrink-0">
+                    <div className="w-14 h-14 rounded-2xl bg-neutral-50 border border-neutral-200 flex items-center justify-center shadow-sm shrink-0">
                       <span className={`font-mono text-xl font-bold text-transparent bg-clip-text bg-gradient-to-br ${step.color}`}>
                         {step.id}
                       </span>
                     </div>
                     <div>
-                      <h3 className="font-serif text-3xl text-white leading-tight">
+                      <h3 className="font-serif text-4xl text-neutral-950 leading-tight">
                         {step.title}
                       </h3>
                       {/* @ts-ignore */}
                       {step.badge && (
-                        <span className="inline-block mt-2 px-2 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-300 text-[10px] font-bold uppercase tracking-wider">
+                        <span className="inline-block mt-2 px-2 py-0.5 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-[10px] font-bold uppercase tracking-wider">
                           {/* @ts-ignore */}
                           {step.badge}
                         </span>
                       )}
                     </div>
                   </div>
-                  <p className="text-lg text-neutral-400 mb-8 leading-relaxed">
+                  <p className="text-xl text-neutral-800 mb-8 leading-relaxed">
                     {step.description}
                   </p>
                   <ul className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -964,7 +1136,7 @@ const LandingPage: React.FC = () => {
                       <motion.li 
                         key={j} 
                         whileHover={{ x: 5 }}
-                        className="flex items-center gap-4 text-base text-neutral-300"
+                        className="flex items-center gap-4 text-lg text-neutral-800 font-medium"
                       >
                         {/* @ts-ignore */}
                         <div className={`w-6 h-6 rounded-full ${step.checkBg} flex items-center justify-center shrink-0`}>
@@ -977,7 +1149,7 @@ const LandingPage: React.FC = () => {
                   </ul>
                 </div>
                 
-                <div className={`relative aspect-[4/3] rounded-[2.5rem] bg-neutral-900/40 border border-white/5 overflow-hidden flex items-center justify-center group ${i % 2 === 1 ? 'lg:order-1' : ''}`}>
+                <div className={`relative aspect-[4/3] rounded-[2.5rem] bg-neutral-50 border border-neutral-200 overflow-hidden flex items-center justify-center group ${i % 2 === 1 ? 'lg:order-1' : ''}`}>
                    <div className={`absolute inset-0 bg-gradient-to-br ${step.color} opacity-5 blur-[100px]`} />
                    <StepAnimation step={step} />
                 </div>
@@ -988,7 +1160,7 @@ const LandingPage: React.FC = () => {
       </section>
 
       {/* WORKSPACE SECTION */}
-      <section className="bg-neutral-900/50 py-24 border-y border-white/5 relative overflow-hidden">
+      <section className="bg-neutral-50 py-24 border-y border-neutral-200 relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,rgba(37,99,235,0.05)_0%,transparent_50%)]" />
         <div className="mx-auto max-w-5xl px-6 lg:px-8 relative z-10">
           <motion.div 
@@ -997,8 +1169,8 @@ const LandingPage: React.FC = () => {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="font-serif text-4xl md:text-5xl text-white mb-6">Vse za delo na zadevi na enem mestu</h2>
-            <p className="text-lg text-neutral-400 max-w-2xl mx-auto leading-relaxed">
+            <h2 className="font-serif text-4xl md:text-5xl text-neutral-900 mb-6">Vse za delo na zadevi na enem mestu</h2>
+            <p className="text-lg text-neutral-600 max-w-2xl mx-auto leading-relaxed">
               Za vsako zadevo v Lexori ustvarite personalizirano AI delovno okolje. Tako imate celoten kontekst primera na enem mestu, brez potrebe po stalnem preklapljanju med različnimi sistemi.
             </p>
           </motion.div>
@@ -1022,21 +1194,21 @@ const LandingPage: React.FC = () => {
                     onClick={() => setActiveWorkspaceTab(i)}
                     className={`text-left p-5 rounded-2xl border transition-all duration-300 flex items-start gap-4 ${
                       activeWorkspaceTab === i 
-                        ? 'bg-blue-600/10 border-blue-500/30 shadow-[0_0_30px_rgba(37,99,235,0.1)]' 
-                        : 'bg-neutral-950/50 border-white/5 hover:border-white/10 hover:bg-neutral-900'
+                        ? 'bg-blue-50 border-blue-200 shadow-[0_0_30px_rgba(37,99,235,0.05)]' 
+                        : 'bg-white border-neutral-100 hover:border-neutral-200 hover:bg-neutral-50'
                     }`}
                   >
                     <div className={`mt-1 w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-colors ${
-                      activeWorkspaceTab === i ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20' : 'bg-neutral-900 text-neutral-500'
+                      activeWorkspaceTab === i ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20' : 'bg-neutral-50 text-neutral-500 border border-neutral-200'
                     }`}>
                       {item.icon}
                     </div>
                     <div>
                       <span className={`block text-lg font-bold mb-1 transition-colors ${
-                        activeWorkspaceTab === i ? 'text-white' : 'text-neutral-300'
+                        activeWorkspaceTab === i ? 'text-blue-950' : 'text-neutral-900'
                       }`}>{item.label}</span>
                       <span className={`block text-sm transition-colors ${
-                        activeWorkspaceTab === i ? 'text-blue-200/70' : 'text-neutral-500'
+                        activeWorkspaceTab === i ? 'text-blue-800' : 'text-neutral-600'
                       }`}>{item.desc}</span>
                     </div>
                   </button>
@@ -1053,7 +1225,7 @@ const LandingPage: React.FC = () => {
                <div className="absolute inset-0 bg-blue-500/10 blur-[100px] rounded-full animate-pulse-soft" />
                <div className="relative bg-[#0A0A0A] rounded-2xl border border-white/10 shadow-2xl overflow-hidden flex flex-col h-[500px]">
                   {/* Window Header */}
-                  <div className="h-12 border-b border-white/10 bg-neutral-900/50 flex items-center px-4 gap-2 shrink-0">
+                  <div className="h-12 border-b border-neutral-200 bg-neutral-50 flex items-center px-4 gap-2 shrink-0">
                     <div className="flex gap-1.5">
                       <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
                       <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
@@ -1117,7 +1289,7 @@ const LandingPage: React.FC = () => {
                         >
                           <div className="relative mb-6">
                             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500" size={18} />
-                            <input type="text" disabled value="Odpoved pogodbe iz poslovnega razloga" className="w-full bg-neutral-900 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-sm text-white focus:outline-none" />
+                            <input type="text" disabled value="Odpoved pogodbe iz poslovnega razloga" className="w-full bg-white border border-neutral-200 rounded-xl py-3 pl-10 pr-4 text-sm text-neutral-900 focus:outline-none" />
                           </div>
                           <div className="flex-1 space-y-4">
                             <div className="text-xs font-semibold text-neutral-500 uppercase tracking-wider mb-2">Zakonodaja (ZDR-1)</div>
@@ -1158,13 +1330,13 @@ const LandingPage: React.FC = () => {
                               <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center shrink-0 mt-1">
                                 <Sparkles size={14} className="text-blue-400" />
                               </div>
-                              <div className="bg-neutral-900 border border-white/10 text-neutral-200 p-4 rounded-2xl rounded-tl-sm text-sm leading-relaxed">
+                              <div className="bg-white border border-neutral-200 text-neutral-700 p-4 rounded-2xl rounded-tl-sm text-sm leading-relaxed">
                                 Glede na <span className="text-blue-400 cursor-pointer hover:underline">Pogodba_o_zaposlitvi_Janez_Novak.docx (člen 12)</span> in dejstvo, da je zaposlen 8 let, znaša njegov odpovedni rok v primeru redne odpovedi iz poslovnega razloga <strong className="text-white">45 dni</strong> v skladu s 94. členom ZDR-1.
                               </div>
                             </div>
                           </div>
                           <div className="mt-auto relative">
-                            <input type="text" disabled placeholder="Vprašaj Lexoro..." className="w-full bg-neutral-900 border border-white/10 rounded-xl py-3 pl-4 pr-12 text-sm text-white focus:outline-none" />
+                            <input type="text" disabled placeholder="Vprašaj Lexoro..." className="w-full bg-white border border-neutral-200 rounded-xl py-3 pl-4 pr-12 text-sm text-neutral-900 focus:outline-none" />
                             <div className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white">
                               <ArrowRight size={16} />
                             </div>
@@ -1211,7 +1383,7 @@ const LandingPage: React.FC = () => {
       </section>
 
       {/* COMPARISON SECTION */}
-      <section className="bg-neutral-900/50 py-24 border-t border-white/5 relative overflow-hidden">
+      <section className="bg-white py-24 border-t border-neutral-200 relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(37,99,235,0.05)_0%,transparent_50%)]" />
         <div className="mx-auto max-w-5xl px-6 lg:px-8 relative z-10">
           <motion.div
@@ -1220,14 +1392,14 @@ const LandingPage: React.FC = () => {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 mb-6 rounded-full border border-blue-500/30 bg-blue-900/10 backdrop-blur-sm">
-              <span className="font-sans text-xs font-semibold text-blue-300 tracking-wide uppercase">Primerjava</span>
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 mb-6 rounded-full border border-blue-200 bg-blue-50 backdrop-blur-sm">
+              <span className="font-sans text-xs font-semibold text-blue-700 tracking-wide uppercase">Primerjava</span>
             </div>
-            <h2 className="font-serif text-4xl md:text-5xl text-white mb-8">Specializirano za pravno delo</h2>
-            <div className="text-lg text-neutral-400 max-w-3xl mx-auto leading-relaxed space-y-4">
-              <p>Splošni AI modeli, kot so ChatGPT, Gemini ali Claude, so zasnovani za širok spekter nalog in nimajo jasnega ter celovitega dostopa do pravnih virov. <span className="text-white font-medium">Lexora pa je zasnovana posebej za delo pravnikov.</span></p>
+            <h2 className="font-serif text-5xl md:text-6xl text-neutral-950 mb-8">Specializirano za pravno delo</h2>
+            <div className="text-xl text-neutral-800 max-w-3xl mx-auto leading-relaxed space-y-4">
+              <p>Splošni AI modeli, kot so ChatGPT, Gemini ali Claude, so zasnovani za širok spekter nalog in nimajo jasnega ter celovitega dostopa do pravnih virov. <span className="text-neutral-900 font-medium">Lexora pa je zasnovana posebej za delo pravnikov.</span></p>
               <p>Omogoča delo v kontekstu konkretne pravne zadeve — z dokumenti, zakonodajo in sodno prakso na enem mestu.</p>
-              <p>Splošni AI modeli pomagajo pri posameznih vprašanjih. <span className="text-white font-medium">Lexora pa omogoča delo na celotni pravni zadevi</span>, zato lahko pravnik hitreje razume primer in pripravi pravno stališče.</p>
+              <p>Splošni AI modeli pomagajo pri posameznih vprašanjih. <span className="text-neutral-900 font-medium">Lexora pa omogoča delo na celotni pravni zadevi</span>, zato lahko pravnik hitreje razume primer in pripravi pravno stališče.</p>
             </div>
           </motion.div>
 
@@ -1237,17 +1409,17 @@ const LandingPage: React.FC = () => {
             viewport={{ once: true }}
             className="mb-16"
           >
-            <div className="bg-neutral-950 rounded-3xl border border-white/10 overflow-hidden shadow-2xl">
+            <div className="bg-white rounded-3xl border border-neutral-200 overflow-hidden shadow-lg">
               <div className="overflow-x-auto">
                 <table className="w-full text-left border-collapse">
                   <thead>
-                    <tr className="border-b border-white/10 bg-neutral-900/50">
-                      <th className="p-6 text-sm font-medium text-neutral-400 uppercase tracking-wider w-1/2">Funkcionalnost</th>
-                      <th className="p-6 text-center text-lg font-serif font-normal text-white bg-blue-600/10 border-x border-blue-500/20 w-1/4">Lexora</th>
-                      <th className="p-6 text-center text-sm font-medium text-neutral-400 uppercase tracking-wider w-1/4">Splošni AI modeli</th>
+                    <tr className="border-b border-neutral-200 bg-neutral-50">
+                      <th className="p-6 text-sm font-medium text-neutral-500 uppercase tracking-wider w-1/2">Funkcionalnost</th>
+                      <th className="p-6 text-center text-lg font-serif font-normal text-neutral-900 bg-blue-50 border-x border-blue-100 w-1/4">Lexora</th>
+                      <th className="p-6 text-center text-sm font-medium text-neutral-500 uppercase tracking-wider w-1/4">Splošni AI modeli</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-white/5">
+                  <tbody className="divide-y divide-neutral-100">
                     {[
                       { feature: "Hiter pregled celotnega spisa (pogodbe, sodbe, dopisi)", lexora: true, general: false },
                       { feature: "Delo v kontekstu celotne zadeve", lexora: true, general: false },
@@ -1258,24 +1430,24 @@ const LandingPage: React.FC = () => {
                       { feature: "Delo z dokumenti, zakonodajo in sodno prakso na enem mestu", lexora: true, general: false },
                       { feature: "Odgovori na splošna pravna vprašanja", lexora: true, general: true },
                     ].map((row, i) => (
-                      <tr key={i} className="hover:bg-white/[0.02] transition-colors">
-                        <td className="p-6 text-neutral-300 font-medium">{row.feature}</td>
-                        <td className="p-6 text-center bg-blue-600/5 border-x border-blue-500/10">
+                      <tr key={i} className="hover:bg-neutral-50 transition-colors">
+                        <td className="p-6 text-neutral-700 font-medium">{row.feature}</td>
+                        <td className="p-6 text-center bg-blue-50/50 border-x border-blue-100">
                           {row.lexora ? (
-                            <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-emerald-500/10 text-emerald-400">
+                            <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-emerald-100 text-emerald-700">
                               <Check size={18} strokeWidth={3} />
                             </div>
                           ) : (
-                            <Minus size={18} className="mx-auto text-neutral-600" />
+                            <Minus size={18} className="mx-auto text-neutral-400" />
                           )}
                         </td>
                         <td className="p-6 text-center">
                           {row.general ? (
-                            <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-emerald-500/10 text-emerald-400">
+                            <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-emerald-100 text-emerald-700">
                               <Check size={18} strokeWidth={3} />
                             </div>
                           ) : (
-                            <Minus size={18} className="mx-auto text-neutral-600" />
+                            <Minus size={18} className="mx-auto text-neutral-400" />
                           )}
                         </td>
                       </tr>
@@ -1291,7 +1463,7 @@ const LandingPage: React.FC = () => {
       </section>
 
       {/* SECURITY SECTION */}
-      <section id="security" className="bg-neutral-950 py-24 border-t border-white/5 relative overflow-hidden">
+      <section id="security" className="bg-white py-24 border-t border-neutral-200 relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(16,185,129,0.05)_0%,transparent_50%)]" />
         <div className="mx-auto max-w-5xl px-6 lg:px-8 relative z-10">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -1300,12 +1472,12 @@ const LandingPage: React.FC = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 mb-6 rounded-full border border-emerald-500/30 bg-emerald-900/10 backdrop-blur-sm">
-                <Lock size={14} className="text-emerald-400" />
-                <span className="font-sans text-xs font-semibold text-emerald-300 tracking-wide uppercase">Varnost in zasebnost</span>
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 mb-6 rounded-full border border-emerald-200 bg-emerald-50 backdrop-blur-sm">
+                <Lock size={14} className="text-emerald-700" />
+                <span className="font-sans text-xs font-semibold text-emerald-800 tracking-wide uppercase">Varnost in zasebnost</span>
               </div>
-              <h2 className="font-serif text-4xl md:text-5xl text-white mb-8">Vaši podatki ostanejo vaši.</h2>
-              <p className="text-lg text-neutral-400 mb-10 leading-relaxed">
+              <h2 className="font-serif text-5xl md:text-6xl text-neutral-950 mb-8">Vaši podatki ostanejo vaši.</h2>
+              <p className="text-xl text-neutral-800 mb-10 leading-relaxed">
                 Zavedamo se, da je zaupnost v pravnem poklicu na prvem mestu. Lexora je zasnovana z najvišjimi varnostnimi standardi, ki zagotavljajo, da so vaši dokumenti in podatki strank popolnoma varni.
               </p>
               
@@ -1320,12 +1492,12 @@ const LandingPage: React.FC = () => {
                     whileHover={{ x: 5 }}
                     className="flex gap-4"
                   >
-                    <div className="w-8 h-8 rounded-full bg-emerald-500/10 flex items-center justify-center shrink-0 mt-1">
-                      <CheckCircle size={16} className="text-emerald-500" />
+                    <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center shrink-0 mt-1">
+                      <CheckCircle size={16} className="text-emerald-700" />
                     </div>
                     <div>
-                      <h4 className="text-white font-medium mb-1">{item.title}</h4>
-                      <p className="text-sm text-neutral-400 leading-relaxed">{item.desc}</p>
+                      <h4 className="text-neutral-950 font-bold mb-1">{item.title}</h4>
+                      <p className="text-sm text-neutral-600 leading-relaxed">{item.desc}</p>
                     </div>
                   </motion.li>
                 ))}
@@ -1338,34 +1510,34 @@ const LandingPage: React.FC = () => {
               viewport={{ once: true }}
               className="relative"
             >
-               <div className="absolute inset-0 bg-emerald-500/10 blur-[100px] rounded-full animate-pulse-soft" />
-               <div className="relative bg-neutral-900 rounded-[3rem] border border-white/10 p-10 shadow-2xl overflow-hidden group">
-                  <div className="absolute inset-0 bg-gradient-to-br from-emerald-600/5 to-transparent" />
+               <div className="absolute inset-0 bg-emerald-100 blur-[100px] rounded-full animate-pulse-soft" />
+               <div className="relative bg-white rounded-[3rem] border border-neutral-200 p-10 shadow-lg overflow-hidden group">
+                  <div className="absolute inset-0 bg-gradient-to-br from-emerald-50 to-transparent" />
                   
                   <div className="relative z-10 flex flex-col items-center text-center">
-                    <div className="w-24 h-24 rounded-full bg-neutral-950 border border-emerald-500/20 flex items-center justify-center mb-8 shadow-[0_0_40px_rgba(16,185,129,0.1)] group-hover:shadow-[0_0_60px_rgba(16,185,129,0.2)] transition-shadow duration-500">
-                      <Shield size={40} className="text-emerald-400" />
+                    <div className="w-24 h-24 rounded-full bg-neutral-50 border border-emerald-200 flex items-center justify-center mb-8 shadow-[0_0_40px_rgba(16,185,129,0.05)] group-hover:shadow-[0_0_60px_rgba(16,185,129,0.1)] transition-shadow duration-500">
+                      <Shield size={40} className="text-emerald-700" />
                     </div>
                     
                     <div className="space-y-4 w-full">
-                      <div className="bg-neutral-950/50 border border-white/5 rounded-2xl p-4 flex items-center justify-between">
-                        <span className="text-sm text-neutral-400">Podatkovni centri</span>
-                        <span className="text-sm font-medium text-white flex items-center gap-2">
-                          <Globe size={14} className="text-emerald-500" />
+                      <div className="bg-neutral-50 border border-neutral-200 rounded-2xl p-4 flex items-center justify-between">
+                        <span className="text-sm text-neutral-600">Podatkovni centri</span>
+                        <span className="text-sm font-medium text-neutral-900 flex items-center gap-2">
+                          <Globe size={14} className="text-emerald-700" />
                           EU (Frankfurt)
                         </span>
                       </div>
-                      <div className="bg-neutral-950/50 border border-white/5 rounded-2xl p-4 flex items-center justify-between">
-                        <span className="text-sm text-neutral-400">Zadrževanje podatkov</span>
-                        <span className="text-sm font-medium text-white flex items-center gap-2">
-                          <Database size={14} className="text-emerald-500" />
+                      <div className="bg-neutral-50 border border-neutral-200 rounded-2xl p-4 flex items-center justify-between">
+                        <span className="text-sm text-neutral-600">Zadrževanje podatkov</span>
+                        <span className="text-sm font-medium text-neutral-900 flex items-center gap-2">
+                          <Database size={14} className="text-emerald-700" />
                           Popoln nadzor
                         </span>
                       </div>
-                      <div className="bg-neutral-950/50 border border-white/5 rounded-2xl p-4 flex items-center justify-between">
-                        <span className="text-sm text-neutral-400">Dostop do podatkov</span>
-                        <span className="text-sm font-medium text-white flex items-center gap-2">
-                          <Lock size={14} className="text-emerald-500" />
+                      <div className="bg-neutral-50 border border-neutral-200 rounded-2xl p-4 flex items-center justify-between">
+                        <span className="text-sm text-neutral-600">Dostop do podatkov</span>
+                        <span className="text-sm font-medium text-neutral-900 flex items-center gap-2">
+                          <Lock size={14} className="text-emerald-700" />
                           Samo vi
                         </span>
                       </div>
@@ -1378,11 +1550,11 @@ const LandingPage: React.FC = () => {
       </section>
 
       {/* DEMO VIDEO SLIDESHOW */}
-      <section id="demo" ref={demoSectionRef} className="bg-neutral-900 py-20 border-t border-white/5 overflow-hidden">
+      <section id="demo" ref={demoSectionRef} className="bg-white py-20 border-t border-neutral-200 overflow-hidden">
         <div className="mx-auto max-w-5xl px-6 lg:px-8 mb-12">
           <div className="mx-auto max-w-2xl text-center mb-10">
-            <h2 className="font-serif text-3xl md:text-4xl text-white">Predogled Platforme</h2>
-            <p className="mt-3 text-neutral-400">Izberite področje in si oglejte Lexoro v akciji.</p>
+            <h2 className="font-serif text-5xl md:text-6xl text-neutral-950">Predogled Platforme</h2>
+            <p className="mt-3 text-neutral-600">Izberite področje in si oglejte Lexoro v akciji.</p>
           </div>
 
           {/* Navigation Tabs (Above Slideshow) */}
@@ -1393,8 +1565,8 @@ const LandingPage: React.FC = () => {
                 onClick={() => scrollToVideo(index)}
                 className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 border ${
                   activeVideo.key === video.key 
-                    ? 'bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-600/20' 
-                    : 'bg-neutral-800 border-white/5 text-neutral-400 hover:text-white hover:border-white/20'
+                    ? 'bg-neutral-900 border-neutral-900 text-white shadow-lg' 
+                    : 'bg-neutral-100 border-neutral-200 text-neutral-600 hover:text-neutral-900 hover:border-neutral-300'
                 }`}
               >
                 {video.title}
@@ -1464,8 +1636,8 @@ const LandingPage: React.FC = () => {
         <div className="mx-auto max-w-6xl px-6 mt-12">
           {/* Active Video Info */}
           <div className="text-center animate-fade-in">
-            <h3 className="text-2xl font-serif text-white mb-2">{activeVideo.title}</h3>
-            <p className="text-sm text-neutral-500 font-mono uppercase tracking-widest">Predstavitev uporabe • {activeVideo.duration}</p>
+            <h3 className="text-3xl font-serif text-neutral-950 mb-2">{activeVideo.title}</h3>
+            <p className="text-sm text-neutral-600 font-mono uppercase tracking-widest">Predstavitev uporabe • {activeVideo.duration}</p>
           </div>
         </div>
       </section>
@@ -1508,7 +1680,7 @@ const LandingPage: React.FC = () => {
             viewport={{ once: true }}
             className="text-center flex flex-col items-center"
           >
-            <h2 className="font-serif text-3xl md:text-4xl text-white mb-8">Prihodnost prava</h2>
+            <h2 className="font-serif text-5xl md:text-6xl text-white mb-8">Prihodnost prava</h2>
             <div className="space-y-6 text-base md:text-lg text-neutral-400 leading-relaxed mb-12 font-light">
               <p>
                 Lexora pravnika ne nadomešča. Deluje kot <span className="text-white font-medium">digitalni pravni asistent</span>, ki vam omogoča, da več časa namenite pravni presoji, argumentaciji in strategiji.
