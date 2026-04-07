@@ -147,13 +147,13 @@ const StepAnimation = ({ step }: { step: any }) => {
                 <div className="w-2 h-2 rounded-full bg-blue-500" />
               </div>
               {/* Text lines */}
-              <div className="flex flex-col gap-3 opacity-50">
-                <div className="h-2 bg-neutral-600 rounded w-3/4" />
-                <div className="h-2 bg-neutral-600 rounded w-full" />
-                <div className="h-2 bg-neutral-600 rounded w-5/6" />
-                <div className="h-2 bg-neutral-600 rounded w-full" />
-                <div className="h-2 bg-neutral-600 rounded w-2/3" />
-                <div className="h-2 bg-neutral-600 rounded w-4/5" />
+              <div className="flex flex-col gap-3 opacity-70">
+                <div className="h-2 bg-neutral-400 rounded w-3/4" />
+                <div className="h-2 bg-neutral-400 rounded w-full" />
+                <div className="h-2 bg-neutral-400 rounded w-5/6" />
+                <div className="h-2 bg-neutral-400 rounded w-full" />
+                <div className="h-2 bg-neutral-400 rounded w-2/3" />
+                <div className="h-2 bg-neutral-400 rounded w-4/5" />
               </div>
               
               {/* Scanner Line */}
@@ -332,19 +332,19 @@ const StepAnimation = ({ step }: { step: any }) => {
              animate={{ y: [0, -5, 0] }}
              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
            >
-             <div className="flex items-center gap-2 border-b border-white/5 pb-2 mb-1">
-               <Settings size={14} className="text-neutral-400" />
-               <span className="text-[10px] font-bold text-neutral-500 uppercase tracking-wider">Vaš proces</span>
+             <div className="flex items-center gap-2 border-b border-neutral-200 pb-2 mb-1">
+               <Settings size={14} className="text-neutral-500" />
+               <span className="text-[10px] font-bold text-neutral-900 uppercase tracking-wider">Vaš proces</span>
              </div>
              {[1, 2, 3].map((i) => (
                <div key={i} className="flex items-center gap-2">
                  <motion.div 
-                   initial={{ backgroundColor: "#262626" }}
-                   animate={{ backgroundColor: ["#262626", "#ec4899", "#262626"] }}
+                   initial={{ backgroundColor: "#e5e5e5" }}
+                   animate={{ backgroundColor: ["#e5e5e5", "#ec4899", "#e5e5e5"] }}
                    transition={{ duration: 2, delay: i * 0.5, repeat: Infinity, repeatDelay: 2 }}
                    className="w-2 h-2 rounded-full"
                  />
-                 <div className="h-1.5 bg-neutral-700 rounded w-12" />
+                 <div className="h-1.5 bg-neutral-300 rounded w-12" />
                </div>
              ))}
            </motion.div>
@@ -372,14 +372,14 @@ const StepAnimation = ({ step }: { step: any }) => {
              animate={{ y: [0, 5, 0] }}
              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
            >
-             <div className="flex items-center gap-2 border-b border-white/5 pb-2 mb-1">
-               <FileText size={14} className="text-neutral-400" />
-               <span className="text-[10px] font-bold text-neutral-500 uppercase tracking-wider">Rezultat</span>
+             <div className="flex items-center gap-2 border-b border-neutral-200 pb-2 mb-1">
+               <FileText size={14} className="text-neutral-500" />
+               <span className="text-[10px] font-bold text-neutral-900 uppercase tracking-wider">Rezultat</span>
              </div>
              <div className="space-y-2">
-               <div className="h-1.5 bg-neutral-600 rounded w-16" />
-               <div className="h-1.5 bg-neutral-700 rounded w-12" />
-               <div className="h-1.5 bg-neutral-700 rounded w-14" />
+               <div className="h-1.5 bg-neutral-400 rounded w-16" />
+               <div className="h-1.5 bg-neutral-300 rounded w-12" />
+               <div className="h-1.5 bg-neutral-300 rounded w-14" />
              </div>
              <motion.div 
                initial={{ scale: 0 }}
@@ -528,25 +528,25 @@ const LandingPage: React.FC = () => {
                 <div className="flex flex-col gap-4">
                   <a href="#step-01" onClick={(e) => { e.preventDefault(); document.getElementById('step-01')?.scrollIntoView({ behavior: 'smooth' }); }} className="group block p-3 rounded-xl hover:bg-blue-50 transition-colors">
                     <h4 className="font-semibold text-neutral-900 group-hover:text-blue-700">Pregled dokumentacije</h4>
-                    <p className="text-sm text-neutral-600">AI pregled tveganj in klavzul.</p>
+                    <p className="text-sm text-neutral-800">AI pregled tveganj in klavzul.</p>
                   </a>
                   <a href="#step-02" onClick={(e) => { e.preventDefault(); document.getElementById('step-02')?.scrollIntoView({ behavior: 'smooth' }); }} className="group block p-3 rounded-xl hover:bg-blue-50 transition-colors">
                     <h4 className="font-semibold text-neutral-900 group-hover:text-blue-700">Raziskava zakonodaje</h4>
-                    <p className="text-sm text-neutral-600">Hitro iskanje v zanesljivih pravnih virih.</p>
+                    <p className="text-sm text-neutral-800">Hitro iskanje v zanesljivih pravnih virih.</p>
                   </a>
                   <a href="#step-03" onClick={(e) => { e.preventDefault(); document.getElementById('step-03')?.scrollIntoView({ behavior: 'smooth' }); }} className="group block p-3 rounded-xl hover:bg-blue-50 transition-colors">
                     <h4 className="font-semibold text-neutral-900 group-hover:text-blue-700">Iskanje sodne prakse</h4>
-                    <p className="text-sm text-neutral-600">Hitri povzetki dolgih pravnih besedil.</p>
+                    <p className="text-sm text-neutral-800">Hitri povzetki dolgih pravnih besedil.</p>
                   </a>
                 </div>
                 <div className="flex flex-col gap-4">
                   <a href="#step-04" onClick={(e) => { e.preventDefault(); document.getElementById('step-04')?.scrollIntoView({ behavior: 'smooth' }); }} className="group block p-3 rounded-xl hover:bg-blue-50 transition-colors">
                     <h4 className="font-semibold text-neutral-900 group-hover:text-blue-700">Priprava osnutkov</h4>
-                    <p className="text-sm text-neutral-600">Avtomatizirana priprava pravnih dokumentov.</p>
+                    <p className="text-sm text-neutral-800">Avtomatizirana priprava pravnih dokumentov.</p>
                   </a>
                   <a href="#step-05" onClick={(e) => { e.preventDefault(); document.getElementById('step-05')?.scrollIntoView({ behavior: 'smooth' }); }} className="group block p-3 rounded-xl hover:bg-blue-50 transition-colors">
                     <h4 className="font-semibold text-neutral-900 group-hover:text-blue-700">Personalizirani agenti</h4>
-                    <p className="text-sm text-neutral-600">Agenti prilagojeni vašim potrebam.</p>
+                    <p className="text-sm text-neutral-800">Agenti prilagojeni vašim potrebam.</p>
                   </a>
                 </div>
               </div>
@@ -556,17 +556,17 @@ const LandingPage: React.FC = () => {
                 <div className="flex flex-col gap-4">
                   <a href="https://onboarding.lexora.si/" target="_blank" rel="noopener noreferrer" className="group block p-3 rounded-xl hover:bg-blue-50 transition-colors">
                     <h4 className="font-semibold text-neutral-900 group-hover:text-blue-700">Vodnik za začetnike</h4>
-                    <p className="text-sm text-neutral-600">Prvi koraki z Lexoro.</p>
+                    <p className="text-sm text-neutral-900">Prvi koraki z Lexoro.</p>
                   </a>
                   <a href="https://onboarding.lexora.si/" target="_blank" rel="noopener noreferrer" className="group block p-3 rounded-xl hover:bg-blue-50 transition-colors">
                     <h4 className="font-semibold text-neutral-900 group-hover:text-blue-700">Video vodiči</h4>
-                    <p className="text-sm text-neutral-600">Naučite se uporabljati Lexoro.</p>
+                    <p className="text-sm text-neutral-900">Naučite se uporabljati Lexoro.</p>
                   </a>
                 </div>
                 <div className="flex flex-col gap-4">
                   <a href="https://onboarding.lexora.si/" target="_blank" rel="noopener noreferrer" className="group block p-3 rounded-xl hover:bg-blue-50 transition-colors">
                     <h4 className="font-semibold text-neutral-900 group-hover:text-blue-700">Pogosta vprašanja (FAQ)</h4>
-                    <p className="text-sm text-neutral-600">Odgovori na najpogostejša vprašanja.</p>
+                    <p className="text-sm text-neutral-900">Odgovori na najpogostejša vprašanja.</p>
                   </a>
                 </div>
               </div>
@@ -576,17 +576,17 @@ const LandingPage: React.FC = () => {
                 <div className="flex flex-col gap-4">
                   <a href="#security" className="group block p-3 rounded-xl hover:bg-blue-50 transition-colors">
                     <h4 className="font-semibold text-neutral-900 group-hover:text-blue-700">Varnost podatkov</h4>
-                    <p className="text-sm text-neutral-600">Kako varujemo vaše zaupne podatke.</p>
+                    <p className="text-sm text-neutral-900">Kako varujemo vaše zaupne podatke.</p>
                   </a>
                   <a href="#security" className="group block p-3 rounded-xl hover:bg-blue-50 transition-colors">
                     <h4 className="font-semibold text-neutral-900 group-hover:text-blue-700">Skladnost</h4>
-                    <p className="text-sm text-neutral-600">Naša zaveza k varnosti in skladnosti.</p>
+                    <p className="text-sm text-neutral-900">Naša zaveza k varnosti in skladnosti.</p>
                   </a>
                 </div>
                 <div className="flex flex-col gap-4">
                   <a href="#security" className="group block p-3 rounded-xl hover:bg-blue-50 transition-colors">
                     <h4 className="font-semibold text-neutral-900 group-hover:text-blue-700">Zasebnost</h4>
-                    <p className="text-sm text-neutral-600">Naši pravilniki o zasebnosti.</p>
+                    <p className="text-sm text-neutral-900">Naši pravilniki o zasebnosti.</p>
                   </a>
                 </div>
               </div>
@@ -596,17 +596,17 @@ const LandingPage: React.FC = () => {
                 <div className="flex flex-col gap-4">
                   <Link to="/o-nas" className="group block p-3 rounded-xl hover:bg-blue-50 transition-colors">
                     <h4 className="font-semibold text-neutral-900 group-hover:text-blue-700">Naša vizija</h4>
-                    <p className="text-sm text-neutral-600">Zakaj smo ustvarili Lexoro.</p>
+                    <p className="text-sm text-neutral-900">Zakaj smo ustvarili Lexoro.</p>
                   </Link>
                   <Link to="/o-nas" className="group block p-3 rounded-xl hover:bg-blue-50 transition-colors">
                     <h4 className="font-semibold text-neutral-900 group-hover:text-blue-700">Ekipa</h4>
-                    <p className="text-sm text-neutral-600">Spoznajte ljudi za Lexoro.</p>
+                    <p className="text-sm text-neutral-900">Spoznajte ljudi za Lexoro.</p>
                   </Link>
                 </div>
                 <div className="flex flex-col gap-4">
                   <Link to="/o-nas" className="group block p-3 rounded-xl hover:bg-blue-50 transition-colors">
                     <h4 className="font-semibold text-neutral-900 group-hover:text-blue-700">Kontakt</h4>
-                    <p className="text-sm text-neutral-600">Stopite v stik z nami.</p>
+                    <p className="text-sm text-neutral-900">Stopite v stik z nami.</p>
                   </Link>
                 </div>
               </div>
@@ -675,8 +675,7 @@ const LandingPage: React.FC = () => {
             className="absolute bottom-[-10%] left-[-10%] w-[50vw] h-[50vh] bg-emerald-100/50 rounded-full blur-[120px]"
           />
           
-          {/* Subtle Grid Pattern */}
-          <div className="absolute inset-0 opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+          <div className="absolute inset-0 opacity-[0.03]"></div>
         </div>
 
         <div className="relative z-10 max-w-5xl mx-auto px-6 text-center flex flex-col items-center">
@@ -711,7 +710,7 @@ const LandingPage: React.FC = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
-            className="font-sans text-lg md:text-xl text-neutral-600 max-w-xl mx-auto mb-12 leading-relaxed"
+            className="font-sans text-lg md:text-xl text-neutral-900 max-w-xl mx-auto mb-12 leading-relaxed"
           >
             Lexora avtomatizira rutinska opravila, da se lahko vi osredotočite na tisto, kar resnično šteje: <span className="text-neutral-900 font-medium">vašo pravno strategijo in stranke.</span>
           </motion.p>
@@ -751,8 +750,8 @@ const LandingPage: React.FC = () => {
             className="text-center mb-8"
           >
             <h2 className="font-serif text-5xl md:text-6xl text-neutral-950 mb-4">Kako Lexora pospeši pravno delo</h2>
-            <p className="text-xl text-neutral-800 max-w-2xl mx-auto leading-relaxed">
-              Lexora pomaga pri analizi spisa, pravni raziskavi in pripravi osnutkov, da lahko pravnik hitreje razume zadevo in se osredotoči na <span className="text-neutral-900 font-medium">pravno strategijo</span>.
+            <p className="text-xl text-neutral-900 max-w-2xl mx-auto leading-relaxed">
+              Lexora pomaga pri analizi spisa, pravni raziskavi in pripravi osnutkov, da lahko pravnik hitreje razume zadevo in se osredotoči na <span className="text-neutral-950 font-medium underline decoration-blue-500/30">pravno strategijo</span>.
             </p>
           </motion.div>
 
@@ -767,10 +766,10 @@ const LandingPage: React.FC = () => {
                   transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
                   className="flex flex-col items-center gap-3"
                 >
-                  <p className="text-white/50 text-xs font-medium tracking-widest uppercase" style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>
+                  <p className="text-neutral-900/50 text-xs font-medium tracking-widest uppercase" style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>
                     Podrsajte za celoten odgovor
                   </p>
-                  <ArrowDown className="text-white/50" size={24} />
+                  <ArrowDown className="text-neutral-900/50" size={24} />
                 </motion.div>
               </div>
 
@@ -813,63 +812,63 @@ const LandingPage: React.FC = () => {
                             <span className="font-serif text-xl text-neutral-900">Lexora</span>
                             <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-white text-neutral-900 border border-neutral-200 tracking-wider">PRO</span>
                           </div>
-                          <div className="w-8 h-8 rounded-lg bg-white border border-neutral-200 flex items-center justify-center text-neutral-500 hover:text-neutral-900 cursor-pointer transition-colors">
+                          <div className="w-8 h-8 rounded-lg bg-white border border-neutral-300 flex items-center justify-center text-neutral-600 hover:text-neutral-950 cursor-pointer transition-colors">
                             <PanelLeft size={16} />
                           </div>
                         </div>
 
                         {/* Workspace Selector */}
                         <div className="px-4 py-3 shrink-0">
-                          <div className="bg-[#f3f4f6] rounded-xl p-3 flex items-center gap-3 border border-transparent hover:border-neutral-200 cursor-pointer transition-colors group">
-                            <div className="w-10 h-10 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center shrink-0">
+                          <div className="bg-[#f3f4f6] rounded-xl p-3 flex items-center gap-3 border border-neutral-200 hover:border-neutral-300 cursor-pointer transition-colors group">
+                            <div className="w-10 h-10 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center shrink-0">
                               <Briefcase size={20} />
                             </div>
                             <div className="flex-1 overflow-hidden text-left">
-                              <div className="text-xs font-bold text-neutral-900 truncate uppercase tracking-wide">ZADEVA LUKA KRANJC</div>
-                              <div className="text-[10px] text-neutral-500 font-medium">10 dokumentov</div>
+                              <div className="text-xs font-bold text-neutral-950 truncate uppercase tracking-wide">ZADEVA LUKA KRANJC</div>
+                              <div className="text-[10px] text-neutral-800 font-bold">10 dokumentov</div>
                             </div>
-                            <ChevronDown size={14} className="text-neutral-400 group-hover:text-neutral-900 transition-colors" />
+                            <ChevronDown size={14} className="text-neutral-700 group-hover:text-neutral-950 transition-colors" />
                           </div>
                         </div>
 
                         {/* Navigation */}
                         <div className="px-4 py-2 space-y-1 shrink-0">
-                          <div className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider px-3 mb-2 mt-2 text-left">ZADEVA LUKA KRANJC</div>
-                          <div className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-neutral-700 hover:bg-neutral-200 cursor-pointer transition-colors text-sm font-medium">
-                            <Folder size={18} className="text-neutral-500" /> Dokumenti
+                          <div className="text-[10px] font-bold text-neutral-700 uppercase tracking-wider px-3 mb-2 mt-2 text-left">ZADEVA LUKA KRANJC</div>
+                          <div className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-neutral-900 hover:bg-neutral-200 cursor-pointer transition-colors text-sm font-bold">
+                            <Folder size={18} className="text-neutral-800" /> Dokumenti
                           </div>
-                          <div className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-neutral-700 hover:bg-neutral-200 cursor-pointer transition-colors text-sm font-medium">
-                            <History size={18} className="text-neutral-500" /> Zgodovina
+                          <div className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-neutral-900 hover:bg-neutral-200 cursor-pointer transition-colors text-sm font-bold">
+                            <History size={18} className="text-neutral-800" /> Zgodovina
                           </div>
-                          <div className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-neutral-700 hover:bg-neutral-200 cursor-pointer transition-colors text-sm font-medium">
-                            <Settings size={18} className="text-neutral-500" /> Nastavitve
+                          <div className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-neutral-900 hover:bg-neutral-200 cursor-pointer transition-colors text-sm font-bold">
+                            <Settings size={18} className="text-neutral-800" /> Nastavitve
                           </div>
                         </div>
 
                         {/* New Chat Button */}
                         <div className="px-4 mt-4 shrink-0">
-                          <button className="w-full flex items-center justify-start gap-3 px-4 py-3 rounded-xl bg-white hover:bg-neutral-50 border border-neutral-200 text-sm font-semibold text-neutral-900 transition-colors shadow-sm group">
-                            <span className="text-lg leading-none text-neutral-400 group-hover:text-neutral-600 transition-colors">+</span> Nov klepet
+                          <button className="w-full flex items-center justify-start gap-3 px-4 py-3 rounded-xl bg-white hover:bg-neutral-50 border border-neutral-300 text-sm font-semibold text-neutral-950 transition-colors shadow-sm group">
+                            <span className="text-lg leading-none text-neutral-600 group-hover:text-neutral-900 transition-colors">+</span> Nov klepet
                           </button>
                         </div>
 
                         {/* Chat History */}
                         <div className="px-4 py-4 flex-1 overflow-hidden flex flex-col mt-2">
-                          <div className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider px-3 mb-2 shrink-0 text-left">Klepeti</div>
+                          <div className="text-[10px] font-bold text-neutral-500 uppercase tracking-wider px-3 mb-2 shrink-0 text-left">Klepeti</div>
                           <div className="flex-1 overflow-y-auto custom-scrollbar space-y-1 pr-1">
-                            <div className="flex items-center justify-between px-3 py-2.5 rounded-lg bg-neutral-200/50 text-neutral-900 text-sm font-medium cursor-pointer border border-transparent hover:border-neutral-200 transition-all">
+                            <div className="flex items-center justify-between px-3 py-2.5 rounded-lg bg-neutral-200/50 text-neutral-950 text-sm font-medium cursor-pointer border border-transparent hover:border-neutral-300 transition-all">
                               <span className="truncate text-left">Pravni spisovni povzetek</span>
-                              <MoreHorizontal size={14} className="text-neutral-500 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
+                              <MoreHorizontal size={14} className="text-neutral-600 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
                             </div>
                           </div>
                         </div>
 
                         {/* User Profile */}
                         <div className="p-4 shrink-0 border-t border-neutral-200/50">
-                          <div className="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-white border border-neutral-200 hover:bg-neutral-50 cursor-pointer transition-colors shadow-sm">
+                          <div className="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-white border border-neutral-300 hover:bg-neutral-50 cursor-pointer transition-colors shadow-sm">
                             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-400 to-blue-500 shadow-inner"></div>
-                            <div className="text-xs font-semibold text-neutral-700 truncate flex-1 text-left">odvetnik@gmail.com</div>
-                            <ChevronUp size={14} className="text-neutral-400" />
+                            <div className="text-xs font-semibold text-neutral-800 truncate flex-1 text-left">odvetnik@gmail.com</div>
+                            <ChevronUp size={14} className="text-neutral-500" />
                           </div>
                         </div>
                       </div>
@@ -932,40 +931,40 @@ const LandingPage: React.FC = () => {
                             </div>
 
                           {/* AI Response */}
-                          <div className="text-neutral-800 text-sm leading-relaxed space-y-5 max-w-3xl text-left">
+                          <div className="text-neutral-950 text-sm leading-relaxed space-y-5 max-w-3xl text-left font-medium">
                             <p>Analiza izpolnjevanja znakov kaznivega dejanja po 240. členu KZ-1 (Zloraba položaja ali zaupanja pri gospodarski dejavnosti) in vprašanje dokazanosti direktnega naklepa v obtožnici razkrivata naslednje:</p>
                             
-                            <h3 className="text-lg font-bold text-neutral-900 mt-6 mb-3">1. Pravna kvalifikacija in zakonski znaki (240. člen KZ-1)</h3>
+                            <h3 className="text-lg font-bold text-neutral-950 mt-6 mb-3">1. Pravna kvalifikacija in zakonski znaki (240. člen KZ-1)</h3>
                             
-                            <p>Dejanje se obdolžencu očita po <strong className="text-neutral-900 font-semibold">drugem odstavku 240. člena KZ-1</strong>, ki predstavlja kvalificirano obliko tega dejanja <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-neutral-100 text-[10px] font-semibold text-neutral-600 border border-neutral-200 ml-1 align-middle"><FileText size={10}/> obtožnica</span>. Ključni elementi so:</p>
+                            <p>Dejanje se obdolžencu očita po <strong className="text-neutral-950 font-bold">drugem odstavku 240. člena KZ-1</strong>, ki predstavlja kvalificirano obliko tega dejanja <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-neutral-200 text-[10px] font-bold text-neutral-800 border border-neutral-300 ml-1 align-middle"><FileText size={10}/> obtožnica</span>. Ključni elementi so:</p>
 
                             <ul className="space-y-3 list-none pl-0">
-                              <li className="flex items-start gap-2"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-neutral-900 shrink-0"></div><span><strong className="text-neutral-900 font-semibold">Velika premoženjska škoda/korist:</strong> Meja za "veliko" škodo je v KZ-1 določena nad <strong className="text-neutral-900 font-semibold">50.000 EUR</strong> <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-neutral-100 text-[10px] font-semibold text-neutral-600 border border-neutral-200 ml-1 align-middle"><Globe size={10}/> zakonodaja.com</span>. Znesek 84.750 EUR ta prag presega.</span></li>
-                              <li className="flex items-start gap-2"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-neutral-900 shrink-0"></div><span><strong className="text-neutral-900 font-semibold">Direktni naklep ("hotel"):</strong> Za kvalificirano obliko po drugem odstavku ni dovolj le eventualni naklep (privolitev v posledico), temveč zakon izrecno zahteva, da je storilec <strong className="text-neutral-900 font-semibold">hotel</strong> sebi ali komu drugemu pridobiti takšno korist ali drugemu povzročiti takšno škodo <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-neutral-100 text-[10px] font-semibold text-neutral-600 border border-neutral-200 ml-1 align-middle"><File size={10}/> pisrs.si</span>. To se v pravni teoriji in sodni praksi imenuje <strong className="text-neutral-900 font-semibold">obarvani naklep</strong> (<em className="text-neutral-900">dolus coloratus</em>) <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-neutral-100 text-[10px] font-semibold text-neutral-600 border border-neutral-200 ml-1 align-middle"><Scale size={10}/> sodnapraksa.si</span>.</span></li>
+                              <li className="flex items-start gap-2"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-neutral-950 shrink-0"></div><span><strong className="text-neutral-950 font-bold">Velika premoženjska škoda/korist:</strong> Meja za "veliko" škodo je v KZ-1 določena nad <strong className="text-neutral-950 font-bold">50.000 EUR</strong> <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-neutral-200 text-[10px] font-bold text-neutral-800 border border-neutral-300 ml-1 align-middle"><Globe size={10}/> zakonodaja.com</span>. Znesek 84.750 EUR ta prag presega.</span></li>
+                              <li className="flex items-start gap-2"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-neutral-950 shrink-0"></div><span><strong className="text-neutral-950 font-bold">Direktni naklep ("hotel"):</strong> Za kvalificirano obliko po drugem odstavku ni dovolj le eventualni naklep (privolitev v posledico), temveč zakon izrecno zahteva, da je storilec <strong className="text-neutral-950 font-bold">hotel</strong> sebi ali komu drugemu pridobiti takšno korist ali drugemu povzročiti takšno škodo <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-neutral-200 text-[10px] font-bold text-neutral-800 border border-neutral-300 ml-1 align-middle"><File size={10}/> pisrs.si</span>. To se v pravni teoriji in sodni praksi imenuje <strong className="text-neutral-950 font-bold">obarvani naklep</strong> (<em className="text-neutral-950 font-bold">dolus coloratus</em>) <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-neutral-200 text-[10px] font-bold text-neutral-800 border border-neutral-300 ml-1 align-middle"><Scale size={10}/> sodnapraksa.si</span>.</span></li>
                             </ul>
 
-                            <h3 className="text-lg font-bold text-neutral-900 mt-6 mb-3">2. Analiza dokazov za naklep v obtožnici</h3>
+                            <h3 className="text-lg font-bold text-neutral-950 mt-6 mb-3">2. Analiza dokazov za naklep v obtožnici</h3>
                             
-                            <p>Tožilstvo v obtožnici navaja, da je obdolženec odobril naročila, <em className="text-neutral-900">"čeprav je vedel ali bi moral vedeti, da navedena podjetja dejansko ne bodo dobavila naročenega blaga"</em> <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-neutral-100 text-[10px] font-semibold text-neutral-600 border border-neutral-200 ml-1 align-middle"><FileText size={10}/> obtožnica</span>.</p>
+                            <p>Tožilstvo v obtožnici navaja, da je obdolženec odobril naročila, <em className="text-neutral-950 font-bold">"čeprav je vedel ali bi moral vedeti, da navedena podjetja dejansko ne bodo dobavila naročenega blaga"</em> <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-neutral-200 text-[10px] font-bold text-neutral-800 border border-neutral-300 ml-1 align-middle"><FileText size={10}/> obtožnica</span>.</p>
 
-                            <p><strong className="text-neutral-900 font-semibold">Ali obstajajo neposredni dokazi za direktni naklep?</strong> Pregled spisa kaže, da tožilstvo <strong className="text-neutral-900 font-semibold">ne ponuja neposrednih dokazov</strong> (npr. priznanja, dokazanega prejema podkupnine ali neposredne komunikacije o namernem oškodovanju), temveč na direktni naklep <strong className="text-neutral-900 font-semibold">sklepa posredno</strong> na podlagi naslednjih okoliščin:</p>
+                            <p><strong className="text-neutral-950 font-bold">Ali obstajajo neposredni dokazi za direktni naklep?</strong> Pregled spisa kaže, da tožilstvo <strong className="text-neutral-950 font-bold">ne ponuja neposrednih dokazov</strong> (npr. priznanja, dokazanega prejema podkupnine ali neposredne komunikacije o namernem oškodovanju), temveč na direktni naklep <strong className="text-neutral-950 font-bold">sklepa posredno</strong> na podlagi naslednjih okoliščin:</p>
 
                             <ol className="space-y-3 list-decimal pl-4">
-                              <li><strong className="text-neutral-900 font-semibold">Funkcija obdolženca:</strong> Kot vodja nabave je imel pooblastila in dolžnost nadzora, ki jih je po mnenju tožilstva opustil <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-neutral-100 text-[10px] font-semibold text-neutral-600 border border-neutral-200 ml-1 align-middle"><FileText size={10}/> Zaključna beseda državnega tožilca</span>.</li>
-                              <li><strong className="text-neutral-900 font-semibold">Narava dobaviteljev:</strong> Podjetja so bila registrirana kratek čas, z njimi se prej ni poslovalo, komunikacija pa je bila le prek e-pošte.</li>
-                              <li><strong className="text-neutral-900 font-semibold">Višina škode:</strong> Tožilstvo uporablja višino škode (84.750 EUR) kot indikator resnosti in namernosti dejanja, vendar sodna praksa poudarja, da zgolj višina škode ne more avtomatično nadomestiti dokazovanja voljnega elementa naklepa <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-neutral-100 text-[10px] font-semibold text-neutral-600 border border-neutral-200 ml-1 align-middle"><Scale size={10}/> sodnapraksa.si</span>.</li>
+                              <li><strong className="text-neutral-950 font-bold">Funkcija obdolženca:</strong> Kot vodja nabave je imel pooblastila in dolžnost nadzora, ki jih je po mnenju tožilstva opustil <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-neutral-200 text-[10px] font-bold text-neutral-800 border border-neutral-300 ml-1 align-middle"><FileText size={10}/> Zaključna beseda državnega tožilca</span>.</li>
+                              <li><strong className="text-neutral-950 font-bold">Narava dobaviteljev:</strong> Podjetja so bila registrirana kratek čas, z njimi se prej ni poslovalo, komunikacija pa je bila le prek e-pošte.</li>
+                              <li><strong className="text-neutral-950 font-bold">Višina škode:</strong> Tožilstvo uporablja višino škode (84.750 EUR) kot indikator resnosti in namernosti dejanja, vendar sodna praksa poudarja, da zgolj višina škode ne more avtomatično nadomestiti dokazovanja voljnega elementa naklepa <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-neutral-200 text-[10px] font-bold text-neutral-800 border border-neutral-300 ml-1 align-middle"><Scale size={10}/> sodnapraksa.si</span>.</li>
                             </ol>
 
-                            <h3 className="text-lg font-bold text-neutral-900 mt-6 mb-3">3. Težave v argumentaciji tožilstva</h3>
+                            <h3 className="text-lg font-bold text-neutral-950 mt-6 mb-3">3. Težave v argumentaciji tožilstva</h3>
 
-                            <p>Tožilstvo uporablja formulacijo <strong className="text-neutral-900 font-semibold">"vedel ali bi moral vedeti"</strong> <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-neutral-100 text-[10px] font-semibold text-neutral-600 border border-neutral-200 ml-1 align-middle"><FileText size={10}/> obtožnica</span>, kar je procesno tvegano:</p>
+                            <p>Tožilstvo uporablja formulacijo <strong className="text-neutral-950 font-bold">"vedel ali bi moral vedeti"</strong> <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-neutral-200 text-[10px] font-bold text-neutral-800 border border-neutral-300 ml-1 align-middle"><FileText size={10}/> obtožnica</span>, kr je procesno tvegano:</p>
 
                             <ul className="space-y-3 list-none pl-0">
-                              <li className="flex items-start gap-2"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-neutral-900 shrink-0"></div><span>Standard <strong className="text-neutral-900 font-semibold">"bi moral vedeti"</strong> se nanaša na malomarnost, ne na direktni naklep.</span></li>
-                              <li className="flex items-start gap-2"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-neutral-900 shrink-0"></div><span>Za obsodbo po drugem odstavku 240. člena KZ-1 mora sodišče ugotoviti, da je obdolženec <strong className="text-neutral-900 font-semibold">hotel</strong> povzročiti škodo. Če obramba dokaže, da je šlo le za površnost ali sistemsko napako skladišča (kar obdolženec trdi v zagovoru <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-neutral-100 text-[10px] font-semibold text-neutral-600 border border-neutral-200 ml-1 align-middle"><FileText size={10}/> ZAPISNIK o zaslišanju</span>), direktni naklep ne bo podan.</span></li>
+                              <li className="flex items-start gap-2"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-neutral-950 shrink-0"></div><span>Standard <strong className="text-neutral-950 font-bold">"bi moral vedeti"</strong> se nanaša na malomarnost, ne na direktni naklep.</span></li>
+                              <li className="flex items-start gap-2"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-neutral-950 shrink-0"></div><span>Za obsodbo po drugem odstavku 240. člena KZ-1 mora sodišče ugotoviti, da je obdolženec <strong className="text-neutral-950 font-bold">hotel</strong> povzročiti škodo. Če obramba dokaže, da je šlo le za površnost ali sistemsko napako skladišča (kar obdolženec trdi v zagovoru <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-neutral-200 text-[10px] font-bold text-neutral-800 border border-neutral-300 ml-1 align-middle"><FileText size={10}/> ZAPISNIK o zaslišanju</span>), direktni naklep ne bo podan.</span></li>
                             </ul>
 
-                            <p><strong className="text-neutral-900 font-semibold">Povzetek:</strong> Tožilstvo v obtožnici dejansko <strong className="text-neutral-900 font-semibold">sklepa na naklep</strong> iz okoliščin dejanja in višine škode. Neposrednih dokazov o tem, da je obdolženec zavestno zasledoval cilj oškodovanja podjetja (motiva ali neposredne koristi zanj), v spisu trenutno ni videti. Obramba ima močan argument v tem, da tožilstvo ni izkazalo povezave med obdolžencem in dobavitelji, kar je le na ravni "suma".</p>
+                            <p><strong className="text-neutral-950 font-bold">Povzetek:</strong> Tožilstvo v obtožnici dejansko <strong className="text-neutral-950 font-bold">sklepa na naklep</strong> iz okoliščin dejanja in višine škode. Neposrednih dokazov o tem, da je obdolženec zavestno zasledoval cilj oškodovanja podjetja (motiva ali neposredne koristi zanj), v spisu trenutno ni videti. Obramba ima močan argument v tem, da tožilstvo ni izkazalo povezave med obdolžencem in dobavitelji, kar je le na ravni "suma".</p>
 
                             <div className="flex gap-4 mt-8 px-2 justify-start opacity-70">
                               <div className="flex items-center gap-2 text-xs text-neutral-500 hover:text-neutral-800 cursor-pointer transition-colors">
@@ -1057,7 +1056,7 @@ const LandingPage: React.FC = () => {
           </div>
           
           <div className="text-center mb-12 relative z-20">
-            <p className="text-sm text-neutral-500 italic">
+            <p className="text-sm text-neutral-700 italic">
               * Vsi podatki, uporabljeni na spletni strani za prikaz delovanja aplikacije, so izmišljeni.
             </p>
           </div>
@@ -1128,7 +1127,7 @@ const LandingPage: React.FC = () => {
                       )}
                     </div>
                   </div>
-                  <p className="text-xl text-neutral-800 mb-8 leading-relaxed">
+                  <p className="text-xl text-neutral-950 mb-8 leading-relaxed">
                     {step.description}
                   </p>
                   <ul className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -1136,7 +1135,7 @@ const LandingPage: React.FC = () => {
                       <motion.li 
                         key={j} 
                         whileHover={{ x: 5 }}
-                        className="flex items-center gap-4 text-lg text-neutral-800 font-medium"
+                        className="flex items-center gap-4 text-lg text-neutral-950 font-medium"
                       >
                         {/* @ts-ignore */}
                         <div className={`w-6 h-6 rounded-full ${step.checkBg} flex items-center justify-center shrink-0`}>
@@ -1169,8 +1168,8 @@ const LandingPage: React.FC = () => {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="font-serif text-4xl md:text-5xl text-neutral-900 mb-6">Vse za delo na zadevi na enem mestu</h2>
-            <p className="text-lg text-neutral-600 max-w-2xl mx-auto leading-relaxed">
+            <h2 className="font-serif text-4xl md:text-5xl text-neutral-950 mb-6">Vse za delo na zadevi na enem mestu</h2>
+            <p className="text-lg text-neutral-900 max-w-2xl mx-auto leading-relaxed">
               Za vsako zadevo v Lexori ustvarite personalizirano AI delovno okolje. Tako imate celoten kontekst primera na enem mestu, brez potrebe po stalnem preklapljanju med različnimi sistemi.
             </p>
           </motion.div>
@@ -1208,7 +1207,7 @@ const LandingPage: React.FC = () => {
                         activeWorkspaceTab === i ? 'text-blue-950' : 'text-neutral-900'
                       }`}>{item.label}</span>
                       <span className={`block text-sm transition-colors ${
-                        activeWorkspaceTab === i ? 'text-blue-800' : 'text-neutral-600'
+                        activeWorkspaceTab === i ? 'text-blue-900' : 'text-neutral-900'
                       }`}>{item.desc}</span>
                     </div>
                   </button>
@@ -1239,7 +1238,7 @@ const LandingPage: React.FC = () => {
                   </div>
 
                   {/* Window Content */}
-                  <div className="flex-1 relative overflow-hidden bg-neutral-950">
+                  <div className="flex-1 relative overflow-hidden bg-white">
                     <AnimatePresence mode="wait">
                       {activeWorkspaceTab === 0 && (
                         <motion.div 
@@ -1251,7 +1250,7 @@ const LandingPage: React.FC = () => {
                           className="absolute inset-0 p-6 flex flex-col gap-4"
                         >
                           <div className="flex items-center justify-between mb-2">
-                            <h3 className="text-white font-medium">Dokumenti zadeve</h3>
+                            <h3 className="text-neutral-950 font-bold">Dokumenti zadeve</h3>
                             <button className="text-xs bg-blue-600 text-white px-3 py-1.5 rounded-lg flex items-center gap-1">
                               <span className="text-lg leading-none">+</span> Naloži
                             </button>
@@ -1262,17 +1261,17 @@ const LandingPage: React.FC = () => {
                             { name: "Sklep_sodišča_priloga.pdf", size: "4.8 MB", date: "12. maj 2026" },
                             { name: "Korespondenca_stranka.eml", size: "156 KB", date: "10. maj 2026" }
                           ].map((file, i) => (
-                            <div key={i} className="flex items-center justify-between p-3 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] transition-colors cursor-pointer group">
+                            <div key={i} className="flex items-center justify-between p-3 rounded-xl border border-neutral-200 bg-neutral-50 hover:bg-neutral-100 transition-colors cursor-pointer group">
                               <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 rounded-lg bg-blue-500/10 text-blue-400 flex items-center justify-center group-hover:bg-blue-500 group-hover:text-white transition-colors">
+                                <div className="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors">
                                   <FileText size={18} />
                                 </div>
                                 <div>
-                                  <div className="text-sm text-neutral-200 font-medium">{file.name}</div>
-                                  <div className="text-xs text-neutral-500">{file.size}</div>
+                                  <div className="text-sm text-neutral-950 font-bold">{file.name}</div>
+                                  <div className="text-xs text-neutral-600">{file.size}</div>
                                 </div>
                               </div>
-                              <div className="text-xs text-neutral-500">{file.date}</div>
+                              <div className="text-xs text-neutral-600">{file.date}</div>
                             </div>
                           ))}
                         </motion.div>
@@ -1289,21 +1288,21 @@ const LandingPage: React.FC = () => {
                         >
                           <div className="relative mb-6">
                             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500" size={18} />
-                            <input type="text" disabled value="Odpoved pogodbe iz poslovnega razloga" className="w-full bg-white border border-neutral-200 rounded-xl py-3 pl-10 pr-4 text-sm text-neutral-900 focus:outline-none" />
+                            <input type="text" disabled value="Odpoved pogodbe iz poslovnega razloga" className="w-full bg-neutral-50 border border-neutral-200 rounded-xl py-3 pl-10 pr-4 text-sm text-neutral-950 focus:outline-none font-bold" />
                           </div>
                           <div className="flex-1 space-y-4">
-                            <div className="text-xs font-semibold text-neutral-500 uppercase tracking-wider mb-2">Zakonodaja (ZDR-1)</div>
-                            <div className="p-4 rounded-xl border border-emerald-500/20 bg-emerald-500/5">
-                              <div className="text-emerald-400 text-sm font-bold mb-1">89. člen (razlogi za redno odpoved)</div>
-                              <div className="text-xs text-neutral-300 leading-relaxed">
+                            <div className="text-xs font-bold text-neutral-600 uppercase tracking-wider mb-2">Zakonodaja (ZDR-1)</div>
+                            <div className="p-4 rounded-xl border border-emerald-200 bg-emerald-50">
+                              <div className="text-emerald-900 text-sm font-bold mb-1">89. člen (razlogi za redno odpoved)</div>
+                              <div className="text-xs text-neutral-950 leading-relaxed font-medium">
                                 (1) Razlogi za redno odpoved pogodbe o zaposlitvi delavcu s strani delodajalca so:
                                 <br/>- prenehanje potreb po opravljanju določenega dela pod pogoji iz pogodbe o zaposlitvi, zaradi ekonomskih, organizacijskih, tehnoloških, strukturnih ali podobnih razlogov na strani delodajalca (poslovni razlog)...
                               </div>
                             </div>
-                            <div className="text-xs font-semibold text-neutral-500 uppercase tracking-wider mt-6 mb-2">Sodna praksa</div>
-                            <div className="p-4 rounded-xl border border-white/5 bg-white/[0.02]">
-                              <div className="text-blue-400 text-sm font-bold mb-1">VDSS sodba Pdp 123/2023</div>
-                              <div className="text-xs text-neutral-400 leading-relaxed">
+                            <div className="text-xs font-bold text-neutral-600 uppercase tracking-wider mt-6 mb-2">Sodna praksa</div>
+                            <div className="p-4 rounded-xl border border-neutral-200 bg-neutral-50">
+                              <div className="text-blue-900 text-sm font-bold mb-1">VDSS sodba Pdp 123/2023</div>
+                              <div className="text-xs text-neutral-950 leading-relaxed font-medium">
                                 Sodišče je odločilo, da mora delodajalec pri odpovedi iz poslovnega razloga dokazati dejansko prenehanje potreb po delu in ne le formalne ukinitve delovnega mesta...
                               </div>
                             </div>
@@ -1330,8 +1329,8 @@ const LandingPage: React.FC = () => {
                               <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center shrink-0 mt-1">
                                 <Sparkles size={14} className="text-blue-400" />
                               </div>
-                              <div className="bg-white border border-neutral-200 text-neutral-700 p-4 rounded-2xl rounded-tl-sm text-sm leading-relaxed">
-                                Glede na <span className="text-blue-400 cursor-pointer hover:underline">Pogodba_o_zaposlitvi_Janez_Novak.docx (člen 12)</span> in dejstvo, da je zaposlen 8 let, znaša njegov odpovedni rok v primeru redne odpovedi iz poslovnega razloga <strong className="text-white">45 dni</strong> v skladu s 94. členom ZDR-1.
+                              <div className="bg-white border border-neutral-300 text-neutral-950 p-4 rounded-2xl rounded-tl-sm text-sm leading-relaxed font-medium shadow-sm">
+                                Glede na <span className="text-blue-600 cursor-pointer hover:underline font-bold">Pogodba_o_zaposlitvi_Janez_Novak.docx (člen 12)</span> in dejstvo, da je zaposlen 8 let, znaša njegov odpovedni rok v primeru redne odpovedi iz poslovnega razloga <strong className="text-blue-700 font-bold">45 dni</strong> v skladu s 94. členom ZDR-1.
                               </div>
                             </div>
                           </div>
@@ -1354,17 +1353,17 @@ const LandingPage: React.FC = () => {
                           className="absolute inset-0 p-6 flex flex-col"
                         >
                           <div className="flex items-center justify-between mb-4">
-                            <h3 className="text-white font-medium">Osnutek: Odpoved pogodbe</h3>
+                            <h3 className="text-neutral-950 font-bold">Osnutek: Odpoved pogodbe</h3>
                             <div className="flex gap-2">
-                              <button className="text-xs bg-neutral-800 text-neutral-300 px-3 py-1.5 rounded-lg hover:bg-neutral-700 transition">Kopiraj</button>
-                              <button className="text-xs bg-blue-600 text-white px-3 py-1.5 rounded-lg hover:bg-blue-500 transition">Izvozi v Word</button>
+                              <button className="text-xs bg-neutral-100 text-neutral-700 border border-neutral-200 px-3 py-1.5 rounded-lg hover:bg-neutral-200 transition font-bold">Kopiraj</button>
+                              <button className="text-xs bg-blue-600 text-white px-3 py-1.5 rounded-lg hover:bg-blue-500 transition font-bold">Izvozi v Word</button>
                             </div>
                           </div>
-                          <div className="flex-1 bg-white rounded-xl p-6 overflow-hidden relative">
+                          <div className="flex-1 bg-white border border-neutral-200 rounded-xl p-6 overflow-hidden relative">
                             <div className="absolute top-0 left-0 w-full h-8 bg-gradient-to-b from-white to-transparent z-10"></div>
                             <div className="absolute bottom-0 left-0 w-full h-12 bg-gradient-to-t from-white to-transparent z-10"></div>
-                            <div className="text-black font-serif text-sm leading-relaxed space-y-4 opacity-90">
-                              <p className="text-right font-sans text-xs text-gray-500">Ljubljana, 15. maj 2026</p>
+                            <div className="text-neutral-950 font-serif text-sm leading-relaxed space-y-4">
+                              <p className="text-right font-sans text-xs text-neutral-500">Ljubljana, 15. maj 2026</p>
                               <p className="font-bold text-center text-base uppercase mt-4">Redna odpoved pogodbe o zaposlitvi iz poslovnega razloga</p>
                               <p>Spoštovani g. Janez Novak,</p>
                               <p>Na podlagi 1. alineje prvega odstavka 89. člena Zakona o delovnih razmerjih (ZDR-1) vam podajamo redno odpoved pogodbe o zaposlitvi, sklenjene dne 12. 4. 2018, za delovno mesto "Vodja prodaje".</p>
@@ -1396,8 +1395,8 @@ const LandingPage: React.FC = () => {
               <span className="font-sans text-xs font-semibold text-blue-700 tracking-wide uppercase">Primerjava</span>
             </div>
             <h2 className="font-serif text-5xl md:text-6xl text-neutral-950 mb-8">Specializirano za pravno delo</h2>
-            <div className="text-xl text-neutral-800 max-w-3xl mx-auto leading-relaxed space-y-4">
-              <p>Splošni AI modeli, kot so ChatGPT, Gemini ali Claude, so zasnovani za širok spekter nalog in nimajo jasnega ter celovitega dostopa do pravnih virov. <span className="text-neutral-900 font-medium">Lexora pa je zasnovana posebej za delo pravnikov.</span></p>
+            <div className="text-xl text-neutral-950 max-w-3xl mx-auto leading-relaxed space-y-4">
+              <p>Splošni AI modeli, kot so ChatGPT, Gemini ali Claude, so zasnovani za širok spekter nalog in nimajo jasnega ter celovitega dostopa do pravnih virov. <span className="text-neutral-950 font-bold">Lexora pa je zasnovana posebej za delo pravnikov.</span></p>
               <p>Omogoča delo v kontekstu konkretne pravne zadeve — z dokumenti, zakonodajo in sodno prakso na enem mestu.</p>
               <p>Splošni AI modeli pomagajo pri posameznih vprašanjih. <span className="text-neutral-900 font-medium">Lexora pa omogoča delo na celotni pravni zadevi</span>, zato lahko pravnik hitreje razume primer in pripravi pravno stališče.</p>
             </div>

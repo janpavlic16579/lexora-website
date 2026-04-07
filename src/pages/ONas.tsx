@@ -73,7 +73,7 @@ const ONas: React.FC = () => {
                     (e.target as HTMLImageElement).style.display = 'none';
                     (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
                   }} />
-                  <span className="text-neutral-500 text-sm hidden">Jan</span>
+                  <span className="text-neutral-500 text-sm">Jan</span>
                 </div>
                 <h3 className="text-xl font-bold text-neutral-900 mb-1">Jan Pavlič</h3>
                 <p className="text-blue-600 text-sm font-medium mb-4">Vodja prodaje in komunikacije s strankami</p>
@@ -89,7 +89,7 @@ const ONas: React.FC = () => {
                     (e.target as HTMLImageElement).style.display = 'none';
                     (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
                   }} />
-                  <span className="text-neutral-500 text-sm hidden">Anej</span>
+                  <span className="text-neutral-500 text-sm">Anej</span>
                 </div>
                 <h3 className="text-xl font-bold text-neutral-900 mb-1">Anej Žaler</h3>
                 <p className="text-blue-600 text-sm font-medium mb-4">Glavni programski razvijalec</p>
@@ -105,7 +105,7 @@ const ONas: React.FC = () => {
                     (e.target as HTMLImageElement).style.display = 'none';
                     (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
                   }} />
-                  <span className="text-neutral-500 text-sm hidden">Lovro</span>
+                  <span className="text-neutral-500 text-sm">Lovro</span>
                 </div>
                 <h3 className="text-xl font-bold text-neutral-900 mb-1">Lovro Gril</h3>
                 <p className="text-blue-600 text-sm font-medium mb-4">Programski razvijalec</p>
@@ -123,7 +123,7 @@ const ONas: React.FC = () => {
                     (e.target as HTMLImageElement).style.display = 'none';
                     (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
                   }} />
-                  <span className="text-neutral-500 text-sm hidden">Mitja</span>
+                  <span className="text-neutral-500 text-sm">Mitja</span>
                 </div>
                 <h3 className="text-xl font-bold text-neutral-900 mb-1">mag. Mitja Jelenič Novak</h3>
                 <p className="text-blue-600 text-sm font-medium mb-4">odvetnik</p>
