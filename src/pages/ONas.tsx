@@ -1,7 +1,47 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ArrowLeft, Users, Target, Building } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+
+const TeamMemberImage = ({ src, alt, fallbackText }: { src: string, alt: string, fallbackText: string }) => {
+  const [error, setError] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+
+  return (
+    <div className="w-32 h-32 rounded-full bg-neutral-200 border-4 border-white mb-6 flex items-center justify-center overflow-hidden relative">
+      {!error ? (
+        <>
+          <img 
+            src={`${src}?v=3`} 
+            alt={alt} 
+            className={`w-full h-full object-cover transition-opacity duration-300 ${loaded ? 'opacity-100' : 'opacity-0'}`}
+            referrerPolicy="no-referrer" 
+            onLoad={() => setLoaded(true)}
+            onError={() => setError(true)} 
+          />
+          {!loaded && (
+            <div className="absolute inset-0 flex items-center justify-center bg-neutral-100 animate-pulse">
+              <span className="text-neutral-400 text-xs">Nalaganje...</span>
+            </div>
+          )}
+        </>
+      ) : (
+        <span className="text-neutral-500 text-sm font-medium">{fallbackText}</span>
+      )}
+    </div>
+  );
+};
+
+const TeamMember = ({ name, role, description, imageSrc, fallbackText }: { name: string, role: string, description: string, imageSrc: string, fallbackText: string }) => (
+  <div className="bg-neutral-50 border border-neutral-200 rounded-3xl p-6 flex flex-col items-center text-center hover:bg-neutral-100 transition-colors">
+    <TeamMemberImage src={imageSrc} alt={name} fallbackText={fallbackText} />
+    <h3 className="text-xl font-bold text-neutral-900 mb-1">{name}</h3>
+    <p className="text-blue-600 text-sm font-medium mb-4">{role}</p>
+    <p className="text-neutral-600 text-sm leading-relaxed">
+      {description}
+    </p>
+  </div>
+);
 
 const ONas: React.FC = () => {
   return (
@@ -66,65 +106,37 @@ const ONas: React.FC = () => {
             <h2 className="text-3xl font-serif text-neutral-900 mb-12">Naša ekipa</h2>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-              {/* Jan Pavlič */}
-              <div className="bg-neutral-50 border border-neutral-200 rounded-3xl p-6 flex flex-col items-center text-center hover:bg-neutral-100 transition-colors">
-                <div className="w-32 h-32 rounded-full bg-neutral-200 border-4 border-white mb-6 flex items-center justify-center overflow-hidden relative">
-                  <img src="/jan%20(2).png" alt="Jan Pavlič" className="w-full h-full object-cover" referrerPolicy="no-referrer" onError={(e) => {
-                    (e.target as HTMLImageElement).style.display = 'none';
-                    (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
-                  }} />
-                  <span className="text-neutral-500 text-sm hidden">Jan</span>
-                </div>
-                <h3 className="text-xl font-bold text-neutral-900 mb-1">Jan Pavlič</h3>
-                <p className="text-blue-600 text-sm font-medium mb-4">Vodja prodaje in komunikacije s strankami</p>
-                <p className="text-neutral-600 text-sm leading-relaxed">
-                  Jan skrbi za odnose z uporabniki in razvoj sodelovanj z odvetniškimi pisarnami. Njegova naloga je razumeti potrebe pravnikov in poskrbeti, da Lexora rešuje konkretne izzive pri vsakodnevnem pravnem delu.
-                </p>
-              </div>
-
-              {/* Anej Žaler */}
-              <div className="bg-neutral-50 border border-neutral-200 rounded-3xl p-6 flex flex-col items-center text-center hover:bg-neutral-100 transition-colors">
-                <div className="w-32 h-32 rounded-full bg-neutral-200 border-4 border-white mb-6 flex items-center justify-center overflow-hidden relative">
-                  <img src="/anej.png" alt="Anej Žaler" className="w-full h-full object-cover" referrerPolicy="no-referrer" onError={(e) => {
-                    (e.target as HTMLImageElement).style.display = 'none';
-                    (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
-                  }} />
-                  <span className="text-neutral-500 text-sm hidden">Anej</span>
-                </div>
-                <h3 className="text-xl font-bold text-neutral-900 mb-1">Anej Žaler</h3>
-                <p className="text-blue-600 text-sm font-medium mb-4">Glavni programski razvijalec</p>
-                <p className="text-neutral-600 text-sm leading-relaxed">
-                  Anej je odgovoren za razvoj in tehnično arhitekturo sistema Lexora. Osredotoča se na gradnjo zanesljive infrastrukture in razvoj funkcionalnosti, ki omogočajo učinkovito uporabo umetne inteligence pri pravnem delu.
-                </p>
-              </div>
-
-              {/* Lovro Gril */}
-              <div className="bg-neutral-50 border border-neutral-200 rounded-3xl p-6 flex flex-col items-center text-center hover:bg-neutral-100 transition-colors">
-                <div className="w-32 h-32 rounded-full bg-neutral-200 border-4 border-white mb-6 flex items-center justify-center overflow-hidden relative">
-                  <img src="/lovro%20copy.png" alt="Lovro Gril" className="w-full h-full object-cover" referrerPolicy="no-referrer" onError={(e) => {
-                    (e.target as HTMLImageElement).style.display = 'none';
-                    (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
-                  }} />
-                  <span className="text-neutral-500 text-sm hidden">Lovro</span>
-                </div>
-                <h3 className="text-xl font-bold text-neutral-900 mb-1">Lovro Gril</h3>
-                <p className="text-blue-600 text-sm font-medium mb-4">Programski razvijalec</p>
-                <p className="text-neutral-600 text-sm leading-relaxed">
-                  Lovro sodeluje pri razvoju platforme Lexora in implementaciji naprednih funkcionalnosti umetne inteligence. Njegovo delo je usmerjeno v razvoj orodij, ki pravnikom omogočajo hitrejšo analizo dokumentov in učinkovitejšo pripravo pravnih besedil.
-                </p>
-              </div>
+              <TeamMember 
+                name="Jan Pavlič"
+                role="Vodja prodaje in komunikacije s strankami"
+                description="Jan skrbi za odnose z uporabniki in razvoj sodelovanj z odvetniškimi pisarnami. Njegova naloga je razumeti potrebe pravnikov in poskrbeti, da Lexora rešuje konkretne izzive pri vsakodnevnem pravnem delu."
+                imageSrc="/team_jan.png"
+                fallbackText="Jan"
+              />
+              <TeamMember 
+                name="Anej Žaler"
+                role="Glavni programski razvijalec"
+                description="Anej je odgovoren za razvoj in tehnično arhitekturo sistema Lexora. Osredotoča se na gradnjo zanesljive infrastrukture in razvoj funkcionalnosti, ki omogočajo učinkovito uporabo umetne inteligence pri pravnem delu."
+                imageSrc="/anej.png"
+                fallbackText="Anej"
+              />
+              <TeamMember 
+                name="Lovro Gril"
+                role="Programski razvijalec"
+                description="Lovro sodeluje pri razvoju platforme Lexora in implementaciji naprednih funkcionalnosti umetne inteligence. Njegovo delo je usmerjeno v razvoj orodij, ki pravnikom omogočajo hitrejšo analizo dokumentov in učinkovitejšo pripravo pravnih besedil."
+                imageSrc="/team_lovro.png"
+                fallbackText="Lovro"
+              />
             </div>
 
             {/* Mitja Jelenič Novak - Full Width */}
             <div className="mb-12">
               <div className="bg-neutral-50 border border-neutral-200 rounded-3xl p-8 flex flex-col items-center text-center hover:bg-neutral-100 transition-colors">
-                <div className="w-32 h-32 rounded-full bg-neutral-200 border-4 border-white mb-6 flex items-center justify-center overflow-hidden relative">
-                  <img src="/mitja%20copy.jpg" alt="mag. Mitja Jelenič Novak" className="w-full h-full object-cover" referrerPolicy="no-referrer" onError={(e) => {
-                    (e.target as HTMLImageElement).style.display = 'none';
-                    (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
-                  }} />
-                  <span className="text-neutral-500 text-sm hidden">Mitja</span>
-                </div>
+                <TeamMemberImage 
+                  src="/team_mitja.jpg"
+                  alt="mag. Mitja Jelenič Novak"
+                  fallbackText="Mitja"
+                />
                 <h3 className="text-xl font-bold text-neutral-900 mb-1">mag. Mitja Jelenič Novak</h3>
                 <p className="text-blue-600 text-sm font-medium mb-4">odvetnik</p>
                 <p className="text-neutral-600 text-sm leading-relaxed max-w-2xl">
