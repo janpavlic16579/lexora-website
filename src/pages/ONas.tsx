@@ -140,7 +140,7 @@ const ONas: React.FC = () => {
             <div className="mb-12">
               <div className="bg-neutral-50 border border-neutral-200 rounded-3xl p-8 flex flex-col items-center text-center hover:bg-neutral-100 transition-all duration-300 hover:shadow-md">
                 <TeamMemberImage 
-                  src="/mitja-copy.png"
+                  src="/mitja-copy.jpg"
                   alt="mag. Mitja Jelenič Novak"
                   fallbackText="Mitja"
                 />
