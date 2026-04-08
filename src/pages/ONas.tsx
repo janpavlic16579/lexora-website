@@ -6,16 +6,18 @@ import { motion } from 'framer-motion';
 const TeamMemberImage = ({ src, alt, fallbackText }: { src: string, alt: string, fallbackText: string }) => {
   const [error, setError] = useState(false);
   const [loaded, setLoaded] = useState(false);
+  const [version] = useState(() => Date.now());
 
   // Robust check for empty or invalid source
   const isValidSrc = src && src !== '' && src !== '/anej.png';
+  const finalSrc = isValidSrc ? `${src}?v=${version}` : null;
 
   return (
     <div className="w-32 h-32 rounded-full bg-neutral-200 border-4 border-white mb-6 flex items-center justify-center overflow-hidden relative shadow-sm">
-      {isValidSrc && !error ? (
+      {finalSrc && !error ? (
         <>
           <img 
-            src={src} 
+            src={finalSrc} 
             alt={alt} 
             className={`w-full h-full object-cover transition-opacity duration-500 ${loaded ? 'opacity-100' : 'opacity-0'}`}
             referrerPolicy="no-referrer" 
@@ -138,7 +140,7 @@ const ONas: React.FC = () => {
             <div className="mb-12">
               <div className="bg-neutral-50 border border-neutral-200 rounded-3xl p-8 flex flex-col items-center text-center hover:bg-neutral-100 transition-all duration-300 hover:shadow-md">
                 <TeamMemberImage 
-                  src="/mitja-copy.jpg"
+                  src="/mitja-copy.png"
                   alt="mag. Mitja Jelenič Novak"
                   fallbackText="Mitja"
                 />
