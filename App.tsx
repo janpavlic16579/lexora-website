@@ -8,6 +8,7 @@ import PogojiUporabe from './src/pages/PogojiUporabe';
 import PolitikaPiskotkov from './src/pages/PolitikaPiskotkov';
 import PolitikaZasebnosti from './src/pages/PolitikaZasebnosti';
 import ONas from './src/pages/ONas';
+import Varnost from './src/pages/Varnost';
 
 const MegaMenu = ({ title, href, children, align = 'center' }: { title: string, href?: string, children: React.ReactNode, align?: 'left' | 'center' | 'right' }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,9 +22,15 @@ const MegaMenu = ({ title, href, children, align = 'center' }: { title: string, 
       onMouseLeave={() => setIsOpen(false)}
     >
       {href ? (
-        <a href={href} className="flex items-center gap-1 hover:text-blue-600 transition-colors font-medium">
-          {title} <ChevronDown size={14} className="opacity-50" />
-        </a>
+        href.startsWith('http') ? (
+          <a href={href} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 hover:text-blue-600 transition-colors font-medium">
+            {title} <ChevronDown size={14} className="opacity-50" />
+          </a>
+        ) : (
+          <Link to={href} className="flex items-center gap-1 hover:text-blue-600 transition-colors font-medium">
+            {title} <ChevronDown size={14} className="opacity-50" />
+          </Link>
+        )
       ) : (
         <button className="flex items-center gap-1 hover:text-blue-600 transition-colors font-medium">
           {title} <ChevronDown size={14} className="opacity-50" />
@@ -571,23 +578,23 @@ const LandingPage: React.FC = () => {
                 </div>
               </div>
             </MegaMenu>
-            <MegaMenu title="Varnost" href="#security" align="right">
+            <MegaMenu title="Varnost" href="/varnost" align="right">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="flex flex-col gap-4">
-                  <a href="#security" className="group block p-3 rounded-xl hover:bg-blue-50 transition-colors">
-                    <h4 className="font-semibold text-neutral-900 group-hover:text-blue-700">Varnost podatkov</h4>
+                  <Link to="/varnost" className="group block p-3 rounded-xl hover:bg-emerald-50 transition-colors">
+                    <h4 className="font-semibold text-neutral-900 group-hover:text-emerald-700">Varnost podatkov</h4>
                     <p className="text-sm text-neutral-900">Kako varujemo vaše zaupne podatke.</p>
-                  </a>
-                  <a href="#security" className="group block p-3 rounded-xl hover:bg-blue-50 transition-colors">
-                    <h4 className="font-semibold text-neutral-900 group-hover:text-blue-700">Skladnost</h4>
+                  </Link>
+                  <Link to="/varnost#skladnost" className="group block p-3 rounded-xl hover:bg-emerald-50 transition-colors">
+                    <h4 className="font-semibold text-neutral-900 group-hover:text-emerald-700">Skladnost</h4>
                     <p className="text-sm text-neutral-900">Naša zaveza k varnosti in skladnosti.</p>
-                  </a>
+                  </Link>
                 </div>
                 <div className="flex flex-col gap-4">
-                  <a href="#security" className="group block p-3 rounded-xl hover:bg-blue-50 transition-colors">
-                    <h4 className="font-semibold text-neutral-900 group-hover:text-blue-700">Zasebnost</h4>
+                  <Link to="/varnost" className="group block p-3 rounded-xl hover:bg-emerald-50 transition-colors">
+                    <h4 className="font-semibold text-neutral-900 group-hover:text-emerald-700">Zasebnost</h4>
                     <p className="text-sm text-neutral-900">Naši pravilniki o zasebnosti.</p>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </MegaMenu>
@@ -634,7 +641,7 @@ const LandingPage: React.FC = () => {
             <nav className="mx-auto max-w-5xl px-6 py-4 flex flex-col gap-4 text-base text-neutral-700">
               <a href="#demo" onClick={() => setIsMenuOpen(false)}>Predogled</a>
               <a href="https://onboarding.lexora.si/" target="_blank" rel="noopener noreferrer" onClick={() => setIsMenuOpen(false)}>Kako začeti</a>
-              <a href="#security" onClick={() => setIsMenuOpen(false)}>Varnost</a>
+              <Link to="/varnost" onClick={() => setIsMenuOpen(false)}>Varnost</Link>
               <Link to="/o-nas" onClick={() => setIsMenuOpen(false)}>O nas</Link>
             </nav>
           </div>
@@ -712,7 +719,7 @@ const LandingPage: React.FC = () => {
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
             className="font-sans text-lg md:text-xl text-neutral-900 max-w-xl mx-auto mb-12 leading-relaxed"
           >
-            Lexora avtomatizira rutinska opravila, da se lahko vi osredotočite na tisto, kar resnično šteje: <span className="text-neutral-900 font-medium">vašo pravno strategijo in stranke.</span>
+            Umetna inteligenca, zasnovana za slovenski pravni prostor, ki vam pomaga delati hitreje in z večjo jasnostjo.
           </motion.p>
 
           {/* Buttons */}
@@ -1541,6 +1548,16 @@ const LandingPage: React.FC = () => {
                         </span>
                       </div>
                     </div>
+
+                    <div className="mt-8 w-full">
+                      <Link 
+                        to="/varnost"
+                        className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-emerald-600 text-white rounded-xl font-semibold hover:bg-emerald-700 transition-colors shadow-md hover:shadow-lg"
+                      >
+                        Več o varnosti
+                        <ArrowRight size={16} />
+                      </Link>
+                    </div>
                   </div>
                </div>
             </motion.div>
@@ -1721,7 +1738,7 @@ const LandingPage: React.FC = () => {
               <ul className="space-y-3 text-sm">
                 <li><a className="hover:text-white transition-colors" href="#demo">Predogled</a></li>
                 <li><a className="hover:text-white transition-colors" href="https://onboarding.lexora.si/" target="_blank" rel="noopener noreferrer">Kako začeti</a></li>
-                <li><a className="hover:text-white transition-colors" href="#security">Varnost</a></li>
+                <li><Link className="hover:text-white transition-colors" to="/varnost">Varnost</Link></li>
                 <li><Link className="hover:text-white transition-colors" to="/o-nas">O nas</Link></li>
                 <li><a className="hover:text-white transition-colors" href="https://blog.lexora.si/" target="_blank" rel="noopener noreferrer">Blog</a></li>
               </ul>
@@ -1778,6 +1795,7 @@ const App: React.FC = () => {
         <Route path="/politika-piskotkov" element={<PolitikaPiskotkov />} />
         <Route path="/politika-zasebnosti" element={<PolitikaZasebnosti />} />
         <Route path="/o-nas" element={<ONas />} />
+        <Route path="/varnost" element={<Varnost />} />
       </Routes>
     </>
   );

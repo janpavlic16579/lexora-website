@@ -68,12 +68,12 @@ const ONas: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
               {/* Jan Pavlič */}
               <div className="bg-neutral-50 border border-neutral-200 rounded-3xl p-6 flex flex-col items-center text-center hover:bg-neutral-100 transition-colors">
-                <div className="w-32 h-32 rounded-full bg-neutral-200 border-4 border-white mb-6 flex items-center justify-center overflow-hidden">
-                  <img src="/jan.png" alt="Jan Pavlič" className="w-full h-full object-cover" referrerPolicy="no-referrer" onError={(e) => {
+                <div className="w-32 h-32 rounded-full bg-neutral-200 border-4 border-white mb-6 flex items-center justify-center overflow-hidden relative">
+                  <img src="/jan (2).png" alt="Jan Pavlič" className="w-full h-full object-cover" referrerPolicy="no-referrer" onError={(e) => {
                     (e.target as HTMLImageElement).style.display = 'none';
                     (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
                   }} />
-                  <span className="text-neutral-500 text-sm">Jan</span>
+                  <span className="text-neutral-500 text-sm hidden">Jan</span>
                 </div>
                 <h3 className="text-xl font-bold text-neutral-900 mb-1">Jan Pavlič</h3>
                 <p className="text-blue-600 text-sm font-medium mb-4">Vodja prodaje in komunikacije s strankami</p>
@@ -84,12 +84,12 @@ const ONas: React.FC = () => {
 
               {/* Anej Žaler */}
               <div className="bg-neutral-50 border border-neutral-200 rounded-3xl p-6 flex flex-col items-center text-center hover:bg-neutral-100 transition-colors">
-                <div className="w-32 h-32 rounded-full bg-neutral-200 border-4 border-white mb-6 flex items-center justify-center overflow-hidden">
+                <div className="w-32 h-32 rounded-full bg-neutral-200 border-4 border-white mb-6 flex items-center justify-center overflow-hidden relative">
                   <img src="/anej.png" alt="Anej Žaler" className="w-full h-full object-cover" referrerPolicy="no-referrer" onError={(e) => {
                     (e.target as HTMLImageElement).style.display = 'none';
                     (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
                   }} />
-                  <span className="text-neutral-500 text-sm">Anej</span>
+                  <span className="text-neutral-500 text-sm hidden">Anej</span>
                 </div>
                 <h3 className="text-xl font-bold text-neutral-900 mb-1">Anej Žaler</h3>
                 <p className="text-blue-600 text-sm font-medium mb-4">Glavni programski razvijalec</p>
@@ -100,12 +100,12 @@ const ONas: React.FC = () => {
 
               {/* Lovro Gril */}
               <div className="bg-neutral-50 border border-neutral-200 rounded-3xl p-6 flex flex-col items-center text-center hover:bg-neutral-100 transition-colors">
-                <div className="w-32 h-32 rounded-full bg-neutral-200 border-4 border-white mb-6 flex items-center justify-center overflow-hidden">
-                  <img src="/lovro.png" alt="Lovro Gril" className="w-full h-full object-cover" referrerPolicy="no-referrer" onError={(e) => {
+                <div className="w-32 h-32 rounded-full bg-neutral-200 border-4 border-white mb-6 flex items-center justify-center overflow-hidden relative">
+                  <img src="/lovro copy.png" alt="Lovro Gril" className="w-full h-full object-cover" referrerPolicy="no-referrer" onError={(e) => {
                     (e.target as HTMLImageElement).style.display = 'none';
                     (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
                   }} />
-                  <span className="text-neutral-500 text-sm">Lovro</span>
+                  <span className="text-neutral-500 text-sm hidden">Lovro</span>
                 </div>
                 <h3 className="text-xl font-bold text-neutral-900 mb-1">Lovro Gril</h3>
                 <p className="text-blue-600 text-sm font-medium mb-4">Programski razvijalec</p>
@@ -118,12 +118,12 @@ const ONas: React.FC = () => {
             {/* Mitja Jelenič Novak - Full Width */}
             <div className="mb-12">
               <div className="bg-neutral-50 border border-neutral-200 rounded-3xl p-8 flex flex-col items-center text-center hover:bg-neutral-100 transition-colors">
-                <div className="w-32 h-32 rounded-full bg-neutral-200 border-4 border-white mb-6 flex items-center justify-center overflow-hidden">
-                  <img src="/mitja.jpg" alt="Mitja Jelenič Novak" className="w-full h-full object-cover" referrerPolicy="no-referrer" onError={(e) => {
+                <div className="w-32 h-32 rounded-full bg-neutral-200 border-4 border-white mb-6 flex items-center justify-center overflow-hidden relative">
+                  <img src="/mitja copy.jpg" alt="mag. Mitja Jelenič Novak" className="w-full h-full object-cover" referrerPolicy="no-referrer" onError={(e) => {
                     (e.target as HTMLImageElement).style.display = 'none';
                     (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
                   }} />
-                  <span className="text-neutral-500 text-sm">Mitja</span>
+                  <span className="text-neutral-500 text-sm hidden">Mitja</span>
                 </div>
                 <h3 className="text-xl font-bold text-neutral-900 mb-1">mag. Mitja Jelenič Novak</h3>
                 <p className="text-blue-600 text-sm font-medium mb-4">odvetnik</p>
