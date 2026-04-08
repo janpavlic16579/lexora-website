@@ -10,7 +10,7 @@ const TeamMemberImage = ({ src, alt, fallbackText }: { src: string, alt: string,
 
   // Robust check for empty or invalid source
   const isValidSrc = src && src !== '' && src !== '/anej.png';
-  const finalSrc = isValidSrc ? `${src}?v=${version}` : null;
+  const finalSrc = isValidSrc ? src : null;
 
   return (
     <div className="w-32 h-32 rounded-full bg-neutral-200 border-4 border-white mb-6 flex items-center justify-center overflow-hidden relative shadow-sm">
