@@ -7,33 +7,38 @@ const TeamMemberImage = ({ src, alt, fallbackText }: { src: string, alt: string,
   const [error, setError] = useState(false);
   const [loaded, setLoaded] = useState(false);
 
+  // Robust check for empty or invalid source
+  const isValidSrc = src && src !== '' && src !== '/anej.png';
+
   return (
-    <div className="w-32 h-32 rounded-full bg-neutral-200 border-4 border-white mb-6 flex items-center justify-center overflow-hidden relative">
-      {!error ? (
+    <div className="w-32 h-32 rounded-full bg-neutral-200 border-4 border-white mb-6 flex items-center justify-center overflow-hidden relative shadow-sm">
+      {isValidSrc && !error ? (
         <>
           <img 
-            src={`${src}?v=3`} 
+            src={src} 
             alt={alt} 
-            className={`w-full h-full object-cover transition-opacity duration-300 ${loaded ? 'opacity-100' : 'opacity-0'}`}
+            className={`w-full h-full object-cover transition-opacity duration-500 ${loaded ? 'opacity-100' : 'opacity-0'}`}
             referrerPolicy="no-referrer" 
             onLoad={() => setLoaded(true)}
             onError={() => setError(true)} 
           />
           {!loaded && (
-            <div className="absolute inset-0 flex items-center justify-center bg-neutral-100 animate-pulse">
-              <span className="text-neutral-400 text-xs">Nalaganje...</span>
+            <div className="absolute inset-0 flex items-center justify-center bg-neutral-100">
+              <div className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
             </div>
           )}
         </>
       ) : (
-        <span className="text-neutral-500 text-sm font-medium">{fallbackText}</span>
+        <div className="flex items-center justify-center w-full h-full bg-neutral-100">
+          <span className="text-neutral-500 text-xl font-serif font-medium">{fallbackText.charAt(0)}</span>
+        </div>
       )}
     </div>
   );
 };
 
 const TeamMember = ({ name, role, description, imageSrc, fallbackText }: { name: string, role: string, description: string, imageSrc: string, fallbackText: string }) => (
-  <div className="bg-neutral-50 border border-neutral-200 rounded-3xl p-6 flex flex-col items-center text-center hover:bg-neutral-100 transition-colors">
+  <div className="bg-neutral-50 border border-neutral-200 rounded-3xl p-6 flex flex-col items-center text-center hover:bg-neutral-100 transition-all duration-300 hover:shadow-md">
     <TeamMemberImage src={imageSrc} alt={name} fallbackText={fallbackText} />
     <h3 className="text-xl font-bold text-neutral-900 mb-1">{name}</h3>
     <p className="text-blue-600 text-sm font-medium mb-4">{role}</p>
@@ -110,7 +115,7 @@ const ONas: React.FC = () => {
                 name="Jan Pavlič"
                 role="Vodja prodaje in komunikacije s strankami"
                 description="Jan skrbi za odnose z uporabniki in razvoj sodelovanj z odvetniškimi pisarnami. Njegova naloga je razumeti potrebe pravnikov in poskrbeti, da Lexora rešuje konkretne izzive pri vsakodnevnem pravnem delu."
-                imageSrc="/team_jan.png"
+                imageSrc="/jan-2.png"
                 fallbackText="Jan"
               />
               <TeamMember 
@@ -124,16 +129,16 @@ const ONas: React.FC = () => {
                 name="Lovro Gril"
                 role="Programski razvijalec"
                 description="Lovro sodeluje pri razvoju platforme Lexora in implementaciji naprednih funkcionalnosti umetne inteligence. Njegovo delo je usmerjeno v razvoj orodij, ki pravnikom omogočajo hitrejšo analizo dokumentov in učinkovitejšo pripravo pravnih besedil."
-                imageSrc="/team_lovro.png"
+                imageSrc="/lovro-copy.png"
                 fallbackText="Lovro"
               />
             </div>
 
             {/* Mitja Jelenič Novak - Full Width */}
             <div className="mb-12">
-              <div className="bg-neutral-50 border border-neutral-200 rounded-3xl p-8 flex flex-col items-center text-center hover:bg-neutral-100 transition-colors">
+              <div className="bg-neutral-50 border border-neutral-200 rounded-3xl p-8 flex flex-col items-center text-center hover:bg-neutral-100 transition-all duration-300 hover:shadow-md">
                 <TeamMemberImage 
-                  src="/team_mitja.jpg"
+                  src="/mitja-copy.jpg"
                   alt="mag. Mitja Jelenič Novak"
                   fallbackText="Mitja"
                 />
