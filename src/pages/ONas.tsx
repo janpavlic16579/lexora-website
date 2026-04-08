@@ -69,7 +69,7 @@ const ONas: React.FC = () => {
               {/* Jan Pavlič */}
               <div className="bg-neutral-50 border border-neutral-200 rounded-3xl p-6 flex flex-col items-center text-center hover:bg-neutral-100 transition-colors">
                 <div className="w-32 h-32 rounded-full bg-neutral-200 border-4 border-white mb-6 flex items-center justify-center overflow-hidden relative">
-                  <img src="/jan (2).png" alt="Jan Pavlič" className="w-full h-full object-cover" referrerPolicy="no-referrer" onError={(e) => {
+                  <img src="/jan%20(2).png" alt="Jan Pavlič" className="w-full h-full object-cover" referrerPolicy="no-referrer" onError={(e) => {
                     (e.target as HTMLImageElement).style.display = 'none';
                     (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
                   }} />
@@ -101,7 +101,7 @@ const ONas: React.FC = () => {
               {/* Lovro Gril */}
               <div className="bg-neutral-50 border border-neutral-200 rounded-3xl p-6 flex flex-col items-center text-center hover:bg-neutral-100 transition-colors">
                 <div className="w-32 h-32 rounded-full bg-neutral-200 border-4 border-white mb-6 flex items-center justify-center overflow-hidden relative">
-                  <img src="/lovro copy.png" alt="Lovro Gril" className="w-full h-full object-cover" referrerPolicy="no-referrer" onError={(e) => {
+                  <img src="/lovro%20copy.png" alt="Lovro Gril" className="w-full h-full object-cover" referrerPolicy="no-referrer" onError={(e) => {
                     (e.target as HTMLImageElement).style.display = 'none';
                     (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
                   }} />
@@ -119,7 +119,7 @@ const ONas: React.FC = () => {
             <div className="mb-12">
               <div className="bg-neutral-50 border border-neutral-200 rounded-3xl p-8 flex flex-col items-center text-center hover:bg-neutral-100 transition-colors">
                 <div className="w-32 h-32 rounded-full bg-neutral-200 border-4 border-white mb-6 flex items-center justify-center overflow-hidden relative">
-                  <img src="/mitja copy.jpg" alt="mag. Mitja Jelenič Novak" className="w-full h-full object-cover" referrerPolicy="no-referrer" onError={(e) => {
+                  <img src="/mitja%20copy.jpg" alt="mag. Mitja Jelenič Novak" className="w-full h-full object-cover" referrerPolicy="no-referrer" onError={(e) => {
                     (e.target as HTMLImageElement).style.display = 'none';
                     (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
                   }} />
