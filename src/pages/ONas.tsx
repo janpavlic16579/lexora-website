@@ -3,13 +3,17 @@ import { ArrowLeft, Users, Target, Building } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
-const TeamMemberImage = ({ src, alt, fallbackText }: { src: string, alt: string, fallbackText: string }) => {
+import janImage from '../assets/team/jan.png';
+import lovroImage from '../assets/team/lovro.png';
+import mitjaImage from '../assets/team/mitja.jpg';
+
+const TeamMemberImage = ({ src, alt, fallbackText }: { src: string | null | undefined, alt: string, fallbackText: string }) => {
   const [error, setError] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [version] = useState(() => Date.now());
 
   // Robust check for empty or invalid source
-  const isValidSrc = src && src !== '' && src !== '/anej.png';
+  const isValidSrc = src && src !== '';
   const finalSrc = isValidSrc ? src : null;
 
   return (
@@ -39,7 +43,7 @@ const TeamMemberImage = ({ src, alt, fallbackText }: { src: string, alt: string,
   );
 };
 
-const TeamMember = ({ name, role, description, imageSrc, fallbackText }: { name: string, role: string, description: string, imageSrc: string, fallbackText: string }) => (
+const TeamMember = ({ name, role, description, imageSrc, fallbackText }: { name: string, role: string, description: string, imageSrc: string | null | undefined, fallbackText: string }) => (
   <div className="bg-neutral-50 border border-neutral-200 rounded-3xl p-6 flex flex-col items-center text-center hover:bg-neutral-100 transition-all duration-300 hover:shadow-md">
     <TeamMemberImage src={imageSrc} alt={name} fallbackText={fallbackText} />
     <h3 className="text-xl font-bold text-neutral-900 mb-1">{name}</h3>
@@ -117,21 +121,21 @@ const ONas: React.FC = () => {
                 name="Jan Pavlič"
                 role="Vodja prodaje in komunikacije s strankami"
                 description="Jan skrbi za odnose z uporabniki in razvoj sodelovanj z odvetniškimi pisarnami. Njegova naloga je razumeti potrebe pravnikov in poskrbeti, da Lexora rešuje konkretne izzive pri vsakodnevnem pravnem delu."
-                imageSrc="/jan-2.png"
+                imageSrc={janImage}
                 fallbackText="Jan"
               />
               <TeamMember 
                 name="Anej Žaler"
                 role="Glavni programski razvijalec"
                 description="Anej je odgovoren za razvoj in tehnično arhitekturo sistema Lexora. Osredotoča se na gradnjo zanesljive infrastrukture in razvoj funkcionalnosti, ki omogočajo učinkovito uporabo umetne inteligence pri pravnem delu."
-                imageSrc="/anej.png"
+                imageSrc={null}
                 fallbackText="Anej"
               />
               <TeamMember 
                 name="Lovro Gril"
                 role="Programski razvijalec"
                 description="Lovro sodeluje pri razvoju platforme Lexora in implementaciji naprednih funkcionalnosti umetne inteligence. Njegovo delo je usmerjeno v razvoj orodij, ki pravnikom omogočajo hitrejšo analizo dokumentov in učinkovitejšo pripravo pravnih besedil."
-                imageSrc="/lovro-copy.png"
+                imageSrc={lovroImage}
                 fallbackText="Lovro"
               />
             </div>
@@ -140,7 +144,7 @@ const ONas: React.FC = () => {
             <div className="mb-12">
               <div className="bg-neutral-50 border border-neutral-200 rounded-3xl p-8 flex flex-col items-center text-center hover:bg-neutral-100 transition-all duration-300 hover:shadow-md">
                 <TeamMemberImage 
-                  src="/mitja-copy.jpg"
+                  src={mitjaImage}
                   alt="mag. Mitja Jelenič Novak"
                   fallbackText="Mitja"
                 />
