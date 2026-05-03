@@ -802,212 +802,120 @@ const LandingPage: React.FC = () => {
       {/* HERO SECTION */}
       <section
         ref={heroRef}
-        className="relative min-h-screen flex items-center justify-center pt-32 pb-40"
-        onMouseMove={handleHeroMouseMove}
-        onMouseLeave={handleHeroMouseLeave}
+        className="relative min-h-screen flex items-center pt-32 pb-32"
       >
-        {/* === ATMOSPHERE LAYERS === */}
-
-        {/* Layer 1: Multi-blob gradient field */}
-        <div className="absolute inset-0 pointer-events-none">
-          <motion.div
-            aria-hidden
-            className="absolute rounded-full"
-            style={{
-              width: '70%',
-              height: '60%',
-              background: 'rgba(161,198,153,0.45)',
-              filter: 'blur(120px)',
-              left: mintBlobLeft,
-              top: mintBlobTop,
-              transform: 'translate(-50%, -50%)',
-            }}
-          />
-          <motion.div
-            aria-hidden
-            className="absolute rounded-full"
-            style={{
-              width: '60%',
-              height: '55%',
-              background: 'rgba(225,213,182,0.55)',
-              filter: 'blur(120px)',
-              left: lavBlobLeft,
-              top: lavBlobTop,
-              transform: 'translate(-50%, -50%)',
-            }}
-          />
-          {/* Tan accent — center-back */}
-          <div
-            aria-hidden
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full"
-            style={{
-              width: '50%',
-              height: '40%',
-              background: 'rgba(150,120,104,0.10)',
-              filter: 'blur(140px)',
-            }}
-          />
-        </div>
-
-        {/* Layer 2: Subtle grid texture */}
+        {/* Atmosphere — composed in two passes: a soft watercolor wash for organic depth,
+            then a deliberate sage anchor on the right and a warm diagonal counterpoint. */}
         <div
           aria-hidden
-          className="absolute inset-0 pointer-events-none opacity-[0.025]"
+          className="absolute inset-0 pointer-events-none overflow-hidden"
           style={{
-            backgroundImage: 'linear-gradient(to right, #181614 1px, transparent 1px), linear-gradient(to bottom, #181614 1px, transparent 1px)',
-            backgroundSize: '64px 64px',
-            maskImage: 'radial-gradient(ellipse 75% 60% at 50% 50%, black 30%, transparent 80%)',
-            WebkitMaskImage: 'radial-gradient(ellipse 75% 60% at 50% 50%, black 30%, transparent 80%)',
+            background:
+              'conic-gradient(from 220deg at 78% 50%, rgba(161,198,153,0.32) 0deg, rgba(214,178,140,0.18) 80deg, rgba(225,213,182,0.20) 170deg, rgba(254,254,252,0) 240deg, rgba(254,254,252,0) 320deg, rgba(161,198,153,0.32) 360deg)',
+            filter: 'blur(90px)',
           }}
         />
-
-        {/* Layer 3: Floating decorative monospace tags (desktop only) */}
-        <div className="absolute inset-0 hidden lg:block pointer-events-none">
-          {[
-            { label: 'ZDR-1', top: '18%', left: '8%', delay: 0 },
-            { label: 'GDPR', top: '24%', right: '10%', delay: 0.4 },
-            { label: 'OZ', bottom: '32%', left: '12%', delay: 0.8 },
-            { label: 'ZPP', bottom: '24%', right: '14%', delay: 1.2 },
-            { label: 'KZ-1', top: '52%', left: '4%', delay: 1.6 },
-            { label: 'ZGD-1', top: '60%', right: '5%', delay: 2 },
-          ].map((tag, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 + tag.delay * 0.15 }}
-              className="absolute"
-              style={{ top: tag.top, left: tag.left, right: tag.right, bottom: tag.bottom }}
-            >
-              <motion.div
-                animate={{ y: [0, -8, 0] }}
-                transition={{ duration: 5 + i * 0.4, repeat: Infinity, ease: 'easeInOut', delay: i * 0.3 }}
-                className="font-mono text-[10px] tracking-[0.2em] uppercase text-ink-400/70 px-2.5 py-1 bg-cream-100/40 backdrop-blur-sm border border-cream-300/40 rounded-full"
-              >
-                {tag.label}
-              </motion.div>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* === MAIN CONTENT === */}
-        <div className="relative z-10 max-w-5xl mx-auto px-6 text-center flex flex-col items-center">
-
-          {/* Live badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full mb-10 bg-cream-100/70 border border-cream-300/80 backdrop-blur-sm shadow-[0_1px_2px_rgba(24,22,20,0.04)]"
-          >
-            <span className="relative flex h-1.5 w-1.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sage-500 opacity-75" />
-              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-sage-500" />
-            </span>
-            <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-ink-600">
-              {t.hero.badge}
-            </span>
-          </motion.div>
-
-          {/* Display headline — dramatic mixed serif */}
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="font-serif tracking-[-0.025em] leading-[0.98] mb-10"
-          >
-            <span className="block text-[44px] sm:text-[60px] md:text-[76px] lg:text-[92px] text-ink-900 font-medium">
-              {t.hero.headline1}
-            </span>
-            <span className="block text-[40px] sm:text-[54px] md:text-[68px] lg:text-[82px] italic font-normal text-ink-500 mt-1">
-              {t.hero.headline2}
-            </span>
-          </motion.h1>
-
-          {/* Decorative ornament */}
-          <motion.div
-            initial={{ opacity: 0, scaleX: 0 }}
-            animate={{ opacity: 1, scaleX: 1 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="flex items-center gap-3 mb-9"
-          >
-            <span className="block w-12 h-px bg-ink-300" />
-            <span className="block w-1 h-1 rounded-full bg-ink-400" />
-            <span className="block w-12 h-px bg-ink-300" />
-          </motion.div>
-
-          {/* Subtext */}
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.5 }}
-            className="text-[17px] md:text-lg text-ink-500 max-w-[580px] mx-auto mb-12 leading-relaxed"
-          >
-            {t.hero.subtext1}{' '}
-            <span className="text-ink-800 font-medium">{t.hero.subtextBold}</span>
-            {t.hero.subtext2}
-          </motion.p>
-
-          {/* CTA buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.6 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-16"
-          >
-            <a
-              href="https://app.lexora.si/"
-              className="group relative w-full sm:w-auto inline-flex items-center justify-center gap-2 px-9 py-4 text-[15px] font-semibold text-cream bg-ink-900 rounded-full hover:bg-ink-800 transition-all duration-300 shadow-[0_4px_20px_-4px_rgba(24,22,20,0.4),0_2px_4px_-2px_rgba(24,22,20,0.2)] hover:shadow-[0_8px_28px_-4px_rgba(24,22,20,0.5),0_4px_8px_-2px_rgba(24,22,20,0.25)] hover:-translate-y-[1px]"
-            >
-              {t.hero.cta1}
-              <ArrowRight size={15} className="transition-transform group-hover:translate-x-0.5" />
-            </a>
-            <a
-              href="https://calendly.com/jan-lexora/30min"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full sm:w-auto inline-flex items-center justify-center px-9 py-4 text-[15px] font-medium text-ink-700 bg-cream-50/60 border border-cream-400/80 rounded-full hover:bg-cream-100 hover:border-cream-500 backdrop-blur-sm transition-all duration-200"
-            >
-              {t.hero.cta2}
-            </a>
-          </motion.div>
-
-          {/* Trust strip — small mono caption */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.9 }}
-            className="flex flex-col items-center gap-3"
-          >
-            <div className="flex items-center gap-3 text-ink-400">
-              <span className="block w-8 h-px bg-ink-300/60" />
-              <span className="font-mono text-[9px] tracking-[0.25em] uppercase">Zaupanja vredna AI · GDPR · EU AI Act</span>
-              <span className="block w-8 h-px bg-ink-300/60" />
-            </div>
-          </motion.div>
-
-        </div>
-
-        {/* Scroll cue — fixed to bottom of hero */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1.2 }}
-          className="absolute bottom-12 left-1/2 -translate-x-1/2 z-10 hidden md:flex flex-col items-center gap-2 pointer-events-none"
-        >
-          <span className="font-mono text-[8px] tracking-[0.3em] uppercase text-ink-400/70">Scroll</span>
-          <motion.div
-            animate={{ y: [0, 6, 0] }}
-            transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
-            className="w-px h-8 bg-gradient-to-b from-ink-400/40 to-transparent"
-          />
-        </motion.div>
-
-        {/* Bottom fade — blends blob edges into cream */}
+        {/* Sage anchor — adds a clear, deliberate focal point on the right */}
         <div
-          className="absolute bottom-0 left-0 right-0 h-56 pointer-events-none"
-          style={{ background: 'linear-gradient(to bottom, transparent, #fefefc)' }}
+          aria-hidden
+          className="absolute pointer-events-none rounded-full"
+          style={{
+            top: '40%',
+            right: '-8%',
+            width: '50%',
+            height: '70%',
+            transform: 'translateY(-50%)',
+            background: 'radial-gradient(ellipse, rgba(125,166,111,0.28) 0%, rgba(125,166,111,0.05) 50%, transparent 75%)',
+            filter: 'blur(50px)',
+          }}
         />
+        {/* Warm diagonal — counterpoint warmth in the upper-left, balances the sage */}
+        <div
+          aria-hidden
+          className="absolute pointer-events-none rounded-full"
+          style={{
+            top: '-10%',
+            left: '-5%',
+            width: '45%',
+            height: '60%',
+            background: 'radial-gradient(ellipse, rgba(214,178,140,0.22) 0%, rgba(214,178,140,0.04) 55%, transparent 80%)',
+            filter: 'blur(60px)',
+          }}
+        />
+        {/* Paper grain — fine tactile texture, multiplies into the wash for sophistication */}
+        <div
+          aria-hidden
+          className="absolute inset-0 pointer-events-none opacity-[0.45] mix-blend-multiply"
+          style={{
+            backgroundImage:
+              "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.094 0 0 0 0 0.086 0 0 0 0 0.078 0 0 0 0.035 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>\")",
+          }}
+        />
+        {/* Bottom fade — gentle bridge into the next section */}
+        <div
+          aria-hidden
+          className="absolute inset-x-0 bottom-0 h-32 pointer-events-none"
+          style={{ background: 'linear-gradient(to bottom, transparent, #fefefc 90%)' }}
+        />
+
+        <div className="relative z-10 mx-auto max-w-6xl px-6 lg:px-8 w-full">
+          <div className="max-w-3xl">
+
+            <motion.p
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="font-mono text-[10px] tracking-[0.22em] uppercase text-ink-500 mb-7"
+            >
+              {t.hero.badge}
+            </motion.p>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="font-serif text-4xl md:text-5xl lg:text-[64px] text-ink-900 leading-[1.05] tracking-[-0.02em]"
+            >
+              {t.hero.headline1}{' '}
+              <span className="italic font-normal text-ink-500">{t.hero.headline2}</span>
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.25 }}
+              className="text-lg text-ink-500 mt-6 leading-relaxed max-w-xl"
+            >
+              {t.hero.subtext1}{' '}
+              <span className="text-ink-900 font-semibold">{t.hero.subtextBold}</span>
+              {t.hero.subtext2}
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.4 }}
+              className="flex flex-col sm:flex-row items-start gap-3 mt-10"
+            >
+              <a
+                href="https://app.lexora.si/"
+                className="group inline-flex items-center justify-center gap-2 px-7 py-3 text-[14px] font-medium text-cream bg-ink-900 rounded-full hover:bg-ink-800 transition-colors"
+              >
+                {t.hero.cta1}
+                <ArrowRight size={13} className="transition-transform group-hover:translate-x-0.5" />
+              </a>
+              <a
+                href="https://calendly.com/jan-lexora/30min"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center px-7 py-3 text-[14px] font-medium text-ink-700 hover:text-ink-900 transition-colors"
+              >
+                {t.hero.cta2}
+              </a>
+            </motion.div>
+
+          </div>
+        </div>
 
       </section>
 
@@ -1487,39 +1395,6 @@ const LandingPage: React.FC = () => {
             >
               {t.cta.button}
               <ArrowRight size={16} />
-            </a>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* MISSION SECTION (Moved to Footer area) */}
-      <section className="bg-ink-900 py-32 relative">
-        <div className="mx-auto max-w-6xl px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="max-w-3xl"
-          >
-            <p className="font-mono text-[10px] tracking-[0.22em] uppercase text-cream/40 mb-7">{t.mission.label ?? 'Misija'}</p>
-            <h2 className="font-serif text-4xl md:text-5xl lg:text-[64px] text-cream leading-[1.05] tracking-[-0.02em] mb-10">{t.mission.heading}</h2>
-            <div className="space-y-5 text-lg text-cream/60 leading-relaxed mb-12">
-              <p>
-                {t.mission.p1} <span className="text-cream">{t.mission.p1Bold}</span>{t.mission.p1End}
-              </p>
-              <p>{t.mission.p2}</p>
-              <p>{t.mission.p3}</p>
-            </div>
-
-            <a
-              href="https://blog.lexora.si/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-cream/20 text-cream text-sm font-semibold hover:bg-cream hover:text-ink-900 transition-colors"
-            >
-              <span>{t.mission.blogButton}</span>
-              <ArrowRight size={14} />
             </a>
           </motion.div>
         </div>
