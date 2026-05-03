@@ -1,38 +1,41 @@
 import React from 'react';
 import { ArrowLeft, Shield, Lock, Globe, Database, Cpu, CheckCircle, AlertCircle, FileText, Users, Zap } from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useLang, LangToggle } from '../LanguageContext';
+
+const sectionIcons: Record<string, React.ReactNode> = {
+  uvod: <Shield size={16} />,
+  avtentikacija: <Lock size={16} />,
+  'zascita-podatkov': <Database size={16} />,
+  infrastruktura: <Globe size={16} />,
+  'operativna-varnost': <Zap size={16} />,
+  razvoj: <Cpu size={16} />,
+  tveganja: <AlertCircle size={16} />,
+  skladnost: <CheckCircle size={16} />,
+  osebje: <Users size={16} />,
+  politika: <FileText size={16} />,
+};
 
 const Varnost: React.FC = () => {
-  const location = useLocation();
-  
-  const sections = [
-    { id: 'uvod', title: 'Uvod', icon: <Shield size={20} /> },
-    { id: 'avtentikacija', title: 'Avtorizacija in avtentikacija', icon: <Lock size={20} /> },
-    { id: 'zascita-podatkov', title: 'Zaščita podatkov', icon: <Database size={20} /> },
-    { id: 'infrastruktura', title: 'Infrastruktura in redundanca', icon: <Globe size={20} /> },
-    { id: 'operativna-varnost', title: 'Operativna varnost', icon: <Zap size={20} /> },
-    { id: 'razvoj', title: 'Varnost pri razvoju', icon: <Cpu size={20} /> },
-    { id: 'tveganja', title: 'Upravljanje tveganj', icon: <AlertCircle size={20} /> },
-    { id: 'skladnost', title: 'Skladnost in certifikati', icon: <CheckCircle size={20} /> },
-    { id: 'osebje', title: 'Varnost osebja', icon: <Users size={20} /> },
-    { id: 'politika', title: 'Varnostna politika', icon: <FileText size={20} /> },
-  ];
+  const { t } = useLang();
+  const sections = t.varnost.sections.map(s => ({ ...s, icon: sectionIcons[s.id] }));
 
   return (
-    <div className="min-h-screen bg-white text-neutral-900 font-sans selection:bg-emerald-500/30">
+    <div className="min-h-screen bg-cream text-ink-800 font-sans selection:bg-tan-500/20 selection:text-ink-900">
       {/* Navigation Header */}
-      <header className="fixed top-0 inset-x-0 z-50 bg-white/80 backdrop-blur-md border-b border-neutral-200">
+      <header className="fixed top-0 inset-x-0 z-50 bg-cream/80 backdrop-blur-md border-b border-cream-300">
         <div className="mx-auto max-w-5xl px-6 lg:px-8 h-16 flex items-center justify-between">
-          <Link to="/" className="inline-flex items-center gap-2 text-neutral-500 hover:text-emerald-700 transition-colors text-sm font-medium">
-            <ArrowLeft size={16} />
-            Nazaj na prvo stran
+          <Link to="/" className="inline-flex items-center gap-2 text-ink-500 hover:text-ink-900 transition-colors text-sm font-medium">
+            <ArrowLeft size={15} />
+            {t.backHome}
           </Link>
-          <div className="hidden md:flex items-center gap-2">
-            <Link to="/varnost" className="px-3 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
-              Varnost
+          <div className="hidden md:flex items-center gap-3">
+            <LangToggle />
+            <Link to="/varnost" className="font-mono text-[9px] tracking-[0.2em] uppercase px-3 py-1.5 rounded-full bg-ink-900 text-cream">
+              {t.varnost.navSecurity}
             </Link>
-            <Link to="/pogoji-uporabe" className="px-3 py-1 rounded-full text-xs font-medium text-neutral-500 hover:bg-neutral-50 hover:text-neutral-900 transition-colors">
-              Pogoji uporabe
+            <Link to="/pogoji-uporabe" className="font-mono text-[9px] tracking-[0.2em] uppercase px-3 py-1.5 rounded-full text-ink-500 hover:text-ink-900 hover:bg-cream-200 transition-colors">
+              {t.varnost.navTerms}
             </Link>
           </div>
         </div>
@@ -40,17 +43,19 @@ const Varnost: React.FC = () => {
 
       <main className="pt-32 pb-24 px-6 lg:px-8">
         <div className="mx-auto max-w-5xl">
-          <div className="grid lg:grid-cols-[250px_1fr] gap-16">
+          <div className="grid lg:grid-cols-[220px_1fr] gap-16">
+
             {/* Sidebar Navigation */}
             <aside className="hidden lg:block sticky top-32 h-fit">
-              <nav className="space-y-1">
+              <p className="font-mono text-[9px] tracking-[0.22em] uppercase text-ink-400 mb-4 px-3">Razdelki</p>
+              <nav className="space-y-0.5">
                 {sections.map((section) => (
                   <a
                     key={section.id}
                     href={`#${section.id}`}
-                    className="flex items-center gap-3 px-3 py-2 text-sm font-medium text-neutral-500 hover:text-emerald-700 hover:bg-emerald-50 rounded-xl transition-all group"
+                    className="flex items-center gap-2.5 px-3 py-2 text-sm text-ink-500 hover:text-ink-900 hover:bg-cream-200 rounded-lg transition-all group"
                   >
-                    <span className="text-neutral-400 group-hover:text-emerald-600 transition-colors">
+                    <span className="text-ink-400 group-hover:text-ink-700 transition-colors flex-shrink-0">
                       {section.icon}
                     </span>
                     {section.title}
@@ -61,117 +66,91 @@ const Varnost: React.FC = () => {
 
             {/* Main Content */}
             <div className="max-w-3xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 mb-6 rounded-full border border-emerald-200 bg-emerald-50">
-                <Shield size={14} className="text-emerald-700" />
-                <span className="font-sans text-xs font-semibold text-emerald-800 tracking-wide uppercase">Varnost in zasebnost</span>
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 mb-8 rounded-full border border-cream-300 bg-cream-100">
+                <Shield size={12} className="text-ink-600" />
+                <span className="font-mono text-[9px] tracking-[0.22em] uppercase text-ink-500">{t.varnost.badge}</span>
               </div>
-              
-              <h1 className="text-4xl md:text-5xl font-serif text-neutral-950 mb-8">Varnost pri Lexori</h1>
-              
-              <div className="space-y-16 text-neutral-700 leading-relaxed">
+
+              <h1 className="font-serif text-4xl md:text-5xl text-ink-900 tracking-[-0.02em] leading-[1.05] mb-6">{t.varnost.heading}</h1>
+
+              <div className="w-12 h-px bg-cream-400 mb-12" />
+
+              <div className="space-y-14 text-ink-600 leading-relaxed">
                 <section id="uvod">
-                  <h2 className="text-2xl font-serif text-neutral-950 mb-4">Uvod</h2>
-                  <p>
-                    V Lexori jemljemo varnost zelo resno. Kot ponudnik AI‑rešitev za pravnike ravnamo z izjemno občutljivimi podatki, vključno s pravnimi dokumenti in osebnimi informacijami. Zaupnost in integriteta teh podatkov sta za nas na prvem mestu. Na tej strani opisujemo ukrepe, s katerimi varujemo podatke in izpolnjujemo zakonske zahteve. Stran ni izčrpna; posodabljali jo bomo, ko se bodo grožnje in tehnologije spreminjale.
-                  </p>
+                  <h2 className="font-serif text-2xl text-ink-900 tracking-[-0.015em] mb-4">{t.varnost.uvod.title}</h2>
+                  <p className="text-ink-600">{t.varnost.uvod.body}</p>
                 </section>
 
                 <section id="avtentikacija">
-                  <h2 className="text-2xl font-serif text-neutral-950 mb-4">Avtorizacija in avtentikacija</h2>
-                  <p className="mb-4">
-                    Za nadzor dostopa je ključnega pomena, da omogočimo le preverjenim osebam dostop do sistemov. Vodila nas usmerjajo, da moramo poleg uporabniškega imena in gesla uporabiti tudi dodatne varnostne mehanizme, kot sta večfaktorska avtentikacija (MFA) ali enotna prijava (SSO). Na naši platformi uporabljamo:
-                  </p>
-                  <ul className="list-disc pl-6 space-y-3 mb-4">
-                    <li><strong>MFA:</strong> Za prijavo je potrebno vsaj eno dodatno potrdilo (geslo + aplikacija ali varnostni žeton).</li>
-                    <li><strong>Vloga na osnovi pravic:</strong> Uporabnikom so dodeljene najnižje možne pravice, redno pa revidiramo in prilagajamo vloge.</li>
-                    <li><strong>SSO integracije:</strong> Na zahtevo je mogoče uporabiti SSO preko zaupanja vrednih ponudnikov (npr. Azure AD, Okta).</li>
+                  <h2 className="font-serif text-2xl text-ink-900 tracking-[-0.015em] mb-4">{t.varnost.avtentikacija.title}</h2>
+                  <p className="mb-4">{t.varnost.avtentikacija.p1}</p>
+                  <ul className="space-y-2.5 mb-4 pl-0">
+                    {[t.varnost.avtentikacija.li1, t.varnost.avtentikacija.li2, t.varnost.avtentikacija.li3].map((li, i) => (
+                      <li key={i} className="flex items-start gap-3">
+                        <span className="mt-2 w-1 h-1 rounded-full bg-ink-400 flex-shrink-0" />
+                        <span dangerouslySetInnerHTML={{ __html: li }} />
+                      </li>
+                    ))}
                   </ul>
-                  <p>
-                    Dostop do administrativnih funkcij je omejen na pooblaščeno osebje, vse prijave in spremembe pa se beležijo.
-                  </p>
+                  <p>{t.varnost.avtentikacija.p2}</p>
                 </section>
 
                 <section id="zascita-podatkov">
-                  <h2 className="text-2xl font-serif text-neutral-950 mb-4">Zaščita podatkov v tranzitu in mirovanju</h2>
-                  <p className="mb-4">
-                    Vse komunikacije med brskalnikom uporabnika in našimi strežniki so šifrirane s protokolom TLS/SSL. Smernice za oblačne storitve poudarjajo, da je treba podatke med prehodom med omrežji zaščititi z močno enkripcijo. TLS‑certifikati brskalnikom omogočijo preverjanje pristnosti našega strežnika in pomagajo preprečevati napade z posrednikom.
-                  </p>
-                  <p>
-                    Občutljivi podatki v naših podatkovnih bazah so šifrirani v mirovanju (AES‑256). Information Commissioner’s Office (ICO) navaja, da je enkripcija primeren tehnični ukrep za zaščito osebnih podatkov med prenosom in shranjevanjem. Ključe za dešifriranje upravljamo preko sistema za upravljanje ključev (KMS), certifikate pa samodejno obnavljamo, da se izognemo pretečenim potrdilom.
-                  </p>
+                  <h2 className="font-serif text-2xl text-ink-900 tracking-[-0.015em] mb-4">{t.varnost.zascitaPodatkov.title}</h2>
+                  <p className="mb-4">{t.varnost.zascitaPodatkov.p1}</p>
+                  <p>{t.varnost.zascitaPodatkov.p2}</p>
                 </section>
 
                 <section id="infrastruktura">
-                  <h2 className="text-2xl font-serif text-neutral-950 mb-4">Zaščita infrastrukture in redundanca</h2>
-                  <p>
-                    Našo infrastrukturo gostimo v certificiranih podatkovnih centrih z visoko stopnjo fizične varnosti. Ti centri so pod 24‑urnim nadzorom, z nadzornimi kamerami, večnivojskimi sistemi za kontrolo dostopa in redundantnim napajanjem. Sledimo načelom varovanja sredstev in odpornosti: podatki in sistemi morajo biti zaščiteni pred fizičnimi posegi, izgubo, poškodbami ali zaplembo. Podatke zrcalimo v več geografskih lokacijah, redno izvajamo varnostne kopije in testiramo postopke obnove po nesreči.
-                  </p>
+                  <h2 className="font-serif text-2xl text-ink-900 tracking-[-0.015em] mb-4">{t.varnost.infrastruktura.title}</h2>
+                  <p>{t.varnost.infrastruktura.body}</p>
                 </section>
 
                 <section id="operativna-varnost">
-                  <h2 className="text-2xl font-serif text-neutral-950 mb-4">Operativna varnost, monitoring in odziv na incidente</h2>
-                  <p className="mb-4">
-                    Varnost je nenehen proces. Naše operativne prakse so zasnovane tako, da preprečujejo in odkrivajo napade. Uporabljamo večslojni pristop, ki vključuje požarne zidove, zaščito pred DDoS napadi in omejevanje hitrosti prometa. Sistemske aktivnosti (dostopi, spremembe konfiguracij, komunikacije) beležimo v dnevnikih in jih sproti analiziramo.
-                  </p>
-                  <p>
-                    Za obvladovanje incidentov imamo vzpostavljen načrt odziva. Ta zajema identifikacijo, zajezitev, obveščanje, odpravo težav in naknadno analizo. Ekipa za odzive na incidente redno organizira vaje, da se pripravi na različne scenarije.
-                  </p>
+                  <h2 className="font-serif text-2xl text-ink-900 tracking-[-0.015em] mb-4">{t.varnost.operativnaVarnost.title}</h2>
+                  <p className="mb-4">{t.varnost.operativnaVarnost.p1}</p>
+                  <p>{t.varnost.operativnaVarnost.p2}</p>
                 </section>
 
                 <section id="razvoj">
-                  <h2 className="text-2xl font-serif text-neutral-950 mb-4">Varnost pri razvoju programske opreme</h2>
-                  <p className="mb-4">
-                    Naše storitve so zasnovane po načelu “Secure by Design”. Smernice za varno razvojno okolje priporočajo, da se varnost vključi v vse faze življenjskega cikla programske opreme. To vključuje modeliranje groženj, statično analizo kode, notranje in zunanje revizije ter redno posodabljanje odvisnosti.
-                  </p>
-                  <p>
-                    V naš CI/CD proces smo vključili avtomatske teste za odkrivanje ranljivosti. Razvojne ekipe se redno usposabljajo v varnem programiranju in so seznanjene z najnovejšimi grožnjami.
-                  </p>
+                  <h2 className="font-serif text-2xl text-ink-900 tracking-[-0.015em] mb-4">{t.varnost.razvoj.title}</h2>
+                  <p className="mb-4">{t.varnost.razvoj.p1}</p>
+                  <p>{t.varnost.razvoj.p2}</p>
                 </section>
 
                 <section id="tveganja">
-                  <h2 className="text-2xl font-serif text-neutral-950 mb-4">Upravljanje tveganj in dobavna veriga</h2>
-                  <p className="mb-4">
-                    Zavedamo se, da je varnost povezana tudi z našimi partnerji in dobavitelji. Uporabljamo celovit pristop k varnosti dobavne verige, ki vključuje preverjanje tretjih ponudnikov, pogodbeno zavezovanje k enakim varnostnim standardom ter stalno spremljanje skladnosti.
-                  </p>
-                  <p>
-                    Redno izvajamo ocene tveganj (risk assessments) in ocene vpliva na varstvo podatkov (DPIA). Na podlagi teh ocen pripravljamo akcijske načrte za odpravo zaznanih tveganj. Uporabljamo tudi ločevanje med uporabniki – kompromis pri enem uporabniku ne sme vplivati na podatke ali storitve drugega.
-                  </p>
+                  <h2 className="font-serif text-2xl text-ink-900 tracking-[-0.015em] mb-4">{t.varnost.tveganja.title}</h2>
+                  <p className="mb-4">{t.varnost.tveganja.p1}</p>
+                  <p>{t.varnost.tveganja.p2}</p>
                 </section>
 
                 <section id="skladnost">
-                  <h2 className="text-2xl font-serif text-neutral-950 mb-4">Skladnost in certifikati</h2>
-                  <p className="mb-4">
-                    Varnost podatkov je tesno povezana s pravnim okvirom. Priporočila strokovnjakov navajajo, da naj varnostna dokumentacija jasno opredeli, katere standarde in certifikate podjetje podpira. Lexora upošteva Splošno uredbo o varstvu podatkov (GDPR) in sledi načelu integritete in zaupnosti pri obdelavi osebnih podatkov.
-                  </p>
-                  <p>
-                    Naš cilj je pridobiti in vzdrževati certifikate ISO/IEC 27001 in SOC 2. Hkrati sledimo smernicam NCSC, ki vključujejo principe, kot so zaščita podatkov v tranzitu, zaščita sredstev, operativna varnost, identiteta in avtentikacija ter varno upravljanje storitev.
-                  </p>
+                  <h2 className="font-serif text-2xl text-ink-900 tracking-[-0.015em] mb-4">{t.varnost.skladnost.title}</h2>
+                  <p className="mb-4">{t.varnost.skladnost.p1}</p>
+                  <p>{t.varnost.skladnost.p2}</p>
                 </section>
 
                 <section id="osebje">
-                  <h2 className="text-2xl font-serif text-neutral-950 mb-4">Varnost osebja in ozaveščenost</h2>
-                  <p className="mb-4">
-                    Ljudje so pogosto najšibkejši člen v verigi. Skladno s smernicami je treba zaposlene temeljito preveriti in redno usposabljati, da se zmanjša verjetnost nenamernega ali namernega kompromisa. V Lexori izvajamo:
-                  </p>
-                  <ul className="list-disc pl-6 space-y-3">
-                    <li>preverjanje preteklosti novozaposlenih;</li>
-                    <li>redna izobraževanja o phishingu, varni rabi gesel in ravnanju z občutljivimi podatki;</li>
-                    <li>strogo politiko dostopa in odobravanja (principe štirih oči).</li>
+                  <h2 className="font-serif text-2xl text-ink-900 tracking-[-0.015em] mb-4">{t.varnost.osebje.title}</h2>
+                  <p className="mb-4">{t.varnost.osebje.p1}</p>
+                  <ul className="space-y-2.5 pl-0">
+                    {[t.varnost.osebje.li1, t.varnost.osebje.li2, t.varnost.osebje.li3].map((li, i) => (
+                      <li key={i} className="flex items-start gap-3">
+                        <span className="mt-2 w-1 h-1 rounded-full bg-ink-400 flex-shrink-0" />
+                        <span>{li}</span>
+                      </li>
+                    ))}
                   </ul>
                 </section>
 
                 <section id="politika">
-                  <h2 className="text-2xl font-serif text-neutral-950 mb-4">Varnostna politika in transparentnost</h2>
-                  <p>
-                    Naši uporabniki morajo imeti občutek, da so zaščiteni in dobro obveščeni. V svojih dokumentih zato transparentno pojasnjujemo, kako varujemo podatke. Uporabniki nas lahko vedno kontaktirajo, če želijo dodatne informacije ali kopije certifikatov.
-                  </p>
+                  <h2 className="font-serif text-2xl text-ink-900 tracking-[-0.015em] mb-4">{t.varnost.politika.title}</h2>
+                  <p>{t.varnost.politika.body}</p>
                 </section>
 
-                <section id="zakljucek" className="pt-8 border-t border-neutral-100">
-                  <h2 className="text-2xl font-serif text-neutral-950 mb-4">Zaključek</h2>
-                  <p>
-                    Zagotavljanje varnosti in zasebnosti je ključni del našega poslanstva. Nenehno vlagamo v tehnologijo, procese in ljudi, da ostanemo korak pred grožnjami. Ta stran odraža naše trenutno stanje varnostnih ukrepov; redno jo bomo posodabljali glede na spremembe v zakonodaji in najboljših praksah.
-                  </p>
+                <section id="zakljucek" className="pt-10 border-t border-cream-300">
+                  <h2 className="font-serif text-2xl text-ink-900 tracking-[-0.015em] mb-4">{t.varnost.zakljucek.title}</h2>
+                  <p>{t.varnost.zakljucek.body}</p>
                 </section>
               </div>
             </div>
@@ -179,10 +158,9 @@ const Varnost: React.FC = () => {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="bg-neutral-50 border-t border-neutral-200 py-12">
+      <footer className="border-t border-cream-300 py-10">
         <div className="mx-auto max-w-5xl px-6 lg:px-8 text-center">
-          <p className="text-sm text-neutral-500">© {new Date().getFullYear()} Lexora. Vse pravice pridržane.</p>
+          <p className="font-mono text-[10px] tracking-[0.18em] uppercase text-ink-400">© {new Date().getFullYear()} Lexora. {t.footer.copyright}</p>
         </div>
       </footer>
     </div>

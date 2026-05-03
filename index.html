@@ -11,6 +11,11 @@
   <link rel="apple-touch-icon" href="/favicon.png">
   <link rel="shortcut icon" href="/favicon.png" type="image/png">
 
+  <!-- Fonts: Playfair Display (serif), Fragment Mono (mono labels), Inter (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Fragment+Mono:ital@0;1&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
   <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -18,29 +23,59 @@
       theme: {
         extend: {
           colors: {
+            // Legora-inspired warm cream palette
+            cream: {
+              DEFAULT: '#fefefc',
+              50: '#fefefc',
+              100: '#fbfbf9',
+              200: '#f4f4f0',
+              300: '#ecece7',
+              400: '#e0e0dc',
+              500: '#c3c3c3',
+            },
+            ink: {
+              DEFAULT: '#181614',
+              900: '#0a0a0a',
+              800: '#181614',
+              700: '#363636',
+              600: '#474747',
+              500: '#6b6b6b',
+              400: '#989898',
+            },
             neutral: {
-              50: '#f9f9f9',
-              100: '#f3f4f6',
-              200: '#e5e7eb',
-              900: '#171717',
+              50: '#fbfbf9',
+              100: '#f4f4f0',
+              200: '#ecece7',
+              300: '#e0e0dc',
+              400: '#989898',
+              500: '#6b6b6b',
+              600: '#474747',
+              700: '#363636',
+              800: '#181614',
+              900: '#0a0a0a',
               950: '#0a0a0a',
             },
+            // Earthy accents (sparingly used)
+            tan: { 500: '#967868' },
+            sage: { 300: '#a1c699', 500: '#7da66f' },
+            // Keep brand utility colors but muted
             blue: {
-              400: '#3b82f6',
-              500: '#2563eb',
-              600: '#1d4ed8',
-              700: '#1e40af',
+              400: '#bdd4f0',
+              500: '#7ba3d6',
+              600: '#4a7cb5',
+              700: '#2d5b8e',
             },
             emerald: {
-              400: '#34d399',
-              500: '#10b981',
-              600: '#059669',
-              700: '#047857',
+              400: '#a1c699',
+              500: '#7da66f',
+              600: '#5b8a4d',
+              700: '#3f6634',
             }
           },
           fontFamily: {
-            serif: ['Georgia', 'Times New Roman', 'serif'],
+            serif: ['"Playfair Display"', 'Georgia', 'Times New Roman', 'serif'],
             sans: ['Inter', 'system-ui', 'Arial', 'sans-serif'],
+            mono: ['"Fragment Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
           },
           animation: {
             'float-slow': 'float 8s ease-in-out infinite',
@@ -70,29 +105,36 @@
 
   <style>
     /* Global Styles */
-    html { scroll-behavior: smooth; }
-    body { 
-      background-color: #ffffff; 
-      color: #171717; 
+    html { scroll-behavior: smooth; background-color: #fefefc; }
+    body {
+      background-color: #fefefc;
+      color: #181614;
       overflow-x: hidden;
+      font-feature-settings: "ss01", "cv11";
     }
-    
+
     /* Custom Scrollbar */
     ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: #f9f9f9; }
-    ::-webkit-scrollbar-thumb { 
-      background: #d1d5db; 
+    ::-webkit-scrollbar-track { background: #f4f4f0; }
+    ::-webkit-scrollbar-thumb {
+      background: #e0e0dc;
       border-radius: 10px;
     }
-    ::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+    ::-webkit-scrollbar-thumb:hover { background: #989898; }
 
     /* Typography Refinements */
     .font-serif {
-      letter-spacing: -0.02em;
+      letter-spacing: -0.015em;
+      font-feature-settings: "lnum";
     }
-    
+
     .font-sans {
       letter-spacing: -0.01em;
+    }
+
+    .font-mono {
+      letter-spacing: 0;
+      font-feature-settings: "ss01";
     }
 
     /* Gradient Button Flow */
@@ -230,6 +272,28 @@
     .orbit-container { animation: spin 20s linear infinite; }
     .orbit-item { animation: spin 20s linear reverse infinite; }
 
+    /* Hero headline gradient (italic line) — applied directly on Typewriter's span */
+    .hero-gradient-line {
+      background: linear-gradient(120deg, #93c5fd 0%, #60a5fa 50%, #34d399 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Hero ghost button (dark bg) */
+    .hero-btn-ghost {
+      color: rgba(255,255,255,0.65);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(12px);
+      transition: all 0.2s ease;
+    }
+    .hero-btn-ghost:hover {
+      color: rgba(255,255,255,0.9);
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.2);
+    }
+
   </style>
   <script type="importmap">
 {
@@ -244,7 +308,7 @@
 </script>
 <link rel="stylesheet" href="/index.css">
 </head>
-<body class="bg-white text-neutral-900 antialiased selection:bg-blue-500/30 selection:text-neutral-900">
+<body class="bg-cream text-ink-800 antialiased selection:bg-tan-500/20 selection:text-ink-900">
   <div id="root"></div>
 <script type="module" src="/index.tsx"></script>
 </body>

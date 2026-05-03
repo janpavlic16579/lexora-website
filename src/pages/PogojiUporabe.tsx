@@ -1,26 +1,29 @@
 import React from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
+import { useLang, LangToggle } from '../LanguageContext';
 
 const PogojiUporabe: React.FC = () => {
   const location = useLocation();
+  const { t } = useLang();
   return (
     <div className="min-h-screen bg-neutral-950 text-neutral-300 font-sans selection:bg-blue-500/30">
       <header className="fixed top-0 inset-x-0 z-50 bg-neutral-950/80 backdrop-blur-md border-b border-white/10">
         <div className="mx-auto max-w-4xl px-6 lg:px-8 h-16 flex items-center justify-between">
           <Link to="/" className="inline-flex items-center gap-2 text-neutral-400 hover:text-white transition-colors text-sm font-medium">
             <ArrowLeft size={16} />
-            Nazaj na prvo stran
+            {t.legalNav.back}
           </Link>
           <nav className="flex items-center gap-2">
+            <LangToggle className="hidden sm:flex" />
             <Link to="/pogoji-uporabe" className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${location.pathname === '/pogoji-uporabe' ? 'bg-white text-black' : 'bg-white/5 text-neutral-400 hover:bg-white/10 hover:text-white border border-white/10'}`}>
-              Pogoji uporabe
+              {t.legalNav.terms}
             </Link>
             <Link to="/politika-zasebnosti" className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${location.pathname === '/politika-zasebnosti' ? 'bg-white text-black' : 'bg-white/5 text-neutral-400 hover:bg-white/10 hover:text-white border border-white/10'}`}>
-              Politika zasebnosti
+              {t.legalNav.privacyPolicy}
             </Link>
             <Link to="/politika-piskotkov" className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${location.pathname === '/politika-piskotkov' ? 'bg-white text-black' : 'bg-white/5 text-neutral-400 hover:bg-white/10 hover:text-white border border-white/10'}`}>
-              Politika piškotkov
+              {t.legalNav.cookiePolicy}
             </Link>
           </nav>
         </div>
